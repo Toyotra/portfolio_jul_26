@@ -3,16 +3,17 @@ import "./BinaryBackground.css";
 
 const CONFIG = {
   speed: 0.5,
-  fontSize: 10,
+  fontSize: 12,
   chars: "01",
   hoverChars: "!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789",
-  regenerate: false,
   rows: null,
   cols: null,
   canvasBackgroundColor: "black",
-  textColor: "#07ddec",
-  textOpacity: 0.35,
+  textColor: "#42f4e0",
+  textOpacity: 0.05,
   fadeOpacity: 0.02,
+  hoverRadiusCells: 9,
+  stretchFactor: 0.002,
 };
 
 function hexToRgba(hex, opacity) {
@@ -24,7 +25,7 @@ function hexToRgba(hex, opacity) {
   return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
 }
 
-function BinaryBackground() {
+function BinaryBackground({ hoverKey = null }) {
   const canvasRef = useRef(null);
   const hoverRef = useRef(false);
 
@@ -39,7 +40,22 @@ function BinaryBackground() {
     const fontSize = CONFIG.fontSize;
     const speed = CONFIG.speed;
     const chars = CONFIG.chars;
-    const hoverChars = CONFIG.hoverChars;
+    // allow hoverKey to change the hover character set and color
+    const hoverMap = {
+      home: { hoverChars: "01", textColor: "#42f4e0" },
+      about: { hoverChars: "ABOUTabout", textColor: "#f48fb1" },
+      experience: { hoverChars: "EXP!#@", textColor: "#ffd54f" },
+      projects: { hoverChars: "<>/{}[]()", textColor: "#b39ddb" },
+      contact: { hoverChars: "@._-+0123", textColor: "#80cbc4" },
+    };
+    // hover chars/color will be resolved per-frame from either the prop or hovered element's data attribute
+    const hoverRadius = CONFIG.hoverRadiusCells;
+    const stretchFactor = CONFIG.stretchFactor;
+
+    const mousePos = { x: null, y: null };
+    const lastMouse = { x: null, y: null, t: performance.now() };
+    let overlayActive = false;
+      const hoverKeyRef = { current: null };
 
     function resize() {
       canvas.width = window.innerWidth;
@@ -67,14 +83,56 @@ function BinaryBackground() {
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.font = `${fontSize}px monospace`;
-      ctx.fillStyle = hexToRgba(CONFIG.textColor, CONFIG.textOpacity);
+
+      const currentHoverKey = hoverKeyRef.current || hoverKey;
+      const hoverCharsLocal = (currentHoverKey && hoverMap[currentHoverKey]?.hoverChars) || CONFIG.hoverChars;
+      const overrideTextColorLocal = (currentHoverKey && hoverMap[currentHoverKey]?.textColor) || CONFIG.textColor;
+      const overlayForce = !!currentHoverKey;
+      const activeOverlay = overlayActive || overlayForce;
 
       pattern.forEach((row, r) => {
         row.forEach((char, c) => {
           const baseX = c * fontSize;
           const y = r * fontSize + fontSize;
-          ctx.fillText(char, baseX - scrollOffset, y);
-          ctx.fillText(char, baseX - scrollOffset + patternWidth, y);
+
+          // first copy
+          const centerX1 = baseX - scrollOffset + fontSize / 2;
+          const centerY = y - fontSize / 2;
+          let usedChar = char;
+          let usedStyle = hexToRgba(CONFIG.textColor, CONFIG.textOpacity);
+
+          if (activeOverlay && mousePos.x != null) {
+            const dx = centerX1 - mousePos.x;
+            const dy = centerY - mousePos.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist <= hoverRadius * fontSize) {
+              const set = hoverCharsLocal;
+              usedChar = set[Math.abs((r + c) % set.length)];
+              const alpha = 1 - dist / (hoverRadius * fontSize);
+              usedStyle = hexToRgba(overrideTextColorLocal, Math.min(1, CONFIG.textOpacity + 0.3 * alpha));
+            }
+          }
+
+          ctx.fillStyle = usedStyle;
+          ctx.fillText(usedChar, baseX - scrollOffset, y);
+
+          // second copy (wrap)
+          const centerX2 = baseX - scrollOffset + patternWidth + fontSize / 2;
+          usedChar = char;
+          usedStyle = hexToRgba(CONFIG.textColor, CONFIG.textOpacity);
+          if (activeOverlay && mousePos.x != null) {
+            const dx2 = centerX2 - mousePos.x;
+            const dy2 = centerY - mousePos.y;
+            const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+            if (dist2 <= hoverRadius * fontSize) {
+              const set = hoverCharsLocal;
+              usedChar = set[Math.abs((r + c) % set.length)];
+              const alpha2 = 1 - dist2 / (hoverRadius * fontSize);
+              usedStyle = hexToRgba(overrideTextColorLocal, Math.min(1, CONFIG.textOpacity + 0.3 * alpha2));
+            }
+          }
+          ctx.fillStyle = usedStyle;
+          ctx.fillText(usedChar, baseX - scrollOffset + patternWidth, y);
         });
       });
 
@@ -82,37 +140,69 @@ function BinaryBackground() {
       if (scrollOffset >= patternWidth) {
         scrollOffset -= patternWidth;
       }
-
-      animationId = requestAnimationFrame(draw);
     }
+
+    // draw wrapper uses draw() which now replaces nearby pattern characters
+    function drawWithOverlay() {
+      draw();
+      // update last mouse for velocity tracking (not used for scale anymore)
+      const now = performance.now();
+      lastMouse.x = mousePos.x;
+      lastMouse.y = mousePos.y;
+      lastMouse.t = now;
+    }
+
 
     const handleMouseEnter = () => {
       hoverRef.current = true;
-      pattern = getPattern(hoverChars);
     };
 
     const handleMouseLeave = () => {
       hoverRef.current = false;
-      pattern = getPattern(chars);
     };
 
     const handleResize = () => {
       resize();
-      pattern = getPattern(hoverRef.current ? hoverChars : chars);
+      pattern = getPattern(chars);
     };
 
-    draw();
+    // start the combined draw loop
+    function loop() {
+      drawWithOverlay();
+      animationId = requestAnimationFrame(loop);
+    }
+    loop();
     window.addEventListener("resize", handleResize);
     window.addEventListener("mouseenter", handleMouseEnter, true);
     window.addEventListener("mouseleave", handleMouseLeave, true);
+
+    const handleMouseMove = (e) => {
+      mousePos.x = e.clientX;
+      mousePos.y = e.clientY;
+      const el = document.elementFromPoint(mousePos.x, mousePos.y);
+      const semanticTags = ['SECTION','ARTICLE','HEADER','NAV','FOOTER','MAIN','ASIDE','DIV'];
+      const closest = el && el.closest ? el.closest('.ascii-hover') : null;
+      const isTarget = !!closest;
+      const tagMatch = el && semanticTags.includes(el.tagName);
+      overlayActive = !!(isTarget || tagMatch);
+      // read data-hover attribute so markup-only navs can control the hover key
+      if (closest && closest.dataset) {
+        hoverKeyRef.current = closest.dataset.hover || closest.dataset.hoverKey || null;
+      } else {
+        hoverKeyRef.current = null;
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mouseenter", handleMouseEnter, true);
       window.removeEventListener("mouseleave", handleMouseLeave, true);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [hoverKey]);
 
   return (
     <canvas ref={canvasRef} className="binary-background" />

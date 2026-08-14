@@ -6,5 +6,5 @@
   height: 100vh;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(to left, rgb(0, 0, 0), rgb(1, 60, 77));
+  background: linear-gradient(120deg, #000000 0%, #001218 40%, #00242f 100%);
 }

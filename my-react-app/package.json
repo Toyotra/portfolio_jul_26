@@ -19,6 +19,7 @@
     "particles-bg": "^2.5.5",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-router-dom": "^7.18.2",
     "react-tsparticles": "^2.12.2",
     "three": "^0.185.1",
     "tsparticles": "^4.3.2"

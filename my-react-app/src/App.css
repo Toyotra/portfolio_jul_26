@@ -1,35 +1,88 @@
+:root {
+  --border-color: rgba(6, 182, 195, 0.25);
+  --background-color: linear-gradient(to left, rgb(0, 0, 0), rgb(1, 27, 34));
+  --background-container: linear-gradient(to left, rgba(5, 130, 117, 0.25), rgba(58, 63, 63, 0.25));
+}
+
+
 html,
 body,
 #root {
   width: 100%;
   height: 100%;
   margin: 0;
+  font-family: "JetBrains Mono", monospace;
 }
 
 .bodyContainerA{
   width:100vw;
   min-height: 100vh;
-  background-image: linear-gradient(to left, rgb(0, 0, 0), rgb(11, 90, 112));
-  padding-top:25px; 
-  padding-bottom:25px;
+  padding-top:40px; 
+  padding-bottom:40px;
 
-  padding-left:35px; 
-  padding-right:35px;
+  padding-left:60px; 
+  padding-right:60px;
 
 
   box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 .bodyContainerB{
   flex: 1;
   width:100%;
   min-height: 100%;
-  background-image: linear-gradient(to left, rgba(0, 87, 86, 0.805), rgba(21, 161, 200, 0.834));
-  border-radius: 30px;
-  border-width: 10px;
-  border-color: white;
+  background-image: var(--background-container);
+  border-radius: 5px;
+  border: 2px solid var(--border-color);
 
 }
+
+.navbar {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 10px;
+  height:fit-content;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  height: fit-content;
+}
+
+.navLinks button {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+
+  padding-left:20px;
+  padding-right:20px;
+  padding-top:10px;
+  padding-bottom:10px;
+
+  font-size:10px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  transition:0.25s;
+
+}
+
+.navLinks button:hover
+{
+  background-color: rgba(3, 158, 196, 0.573);
+}
+

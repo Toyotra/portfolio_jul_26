@@ -12,11 +12,16 @@
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
+    "@tsparticles/react": "^4.3.2",
     "componentry": "^7.2.0",
+    "developer-icons": "^7.0.1",
     "framer-motion": "^12.42.2",
+    "particles-bg": "^2.5.5",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "three": "^0.185.1"
+    "react-tsparticles": "^2.12.2",
+    "three": "^0.185.1",
+    "tsparticles": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",

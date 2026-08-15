@@ -1,40 +1,58 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sparkles } from '@react-three/drei';
+import { OrbitControls, Sparkles, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import './App.css';
 
-const faceContent = {
-  home: {
-    title: 'Jad Menkara',
-    lines: ['Full Stack Developer', 'Creative Technologist', 'Building digital experiences'],
-    color: '#00ffff',
-  },
-  about: {
-    title: 'About Me',
-    lines: ['Passionate about code', 'Design + Engineering', 'Making ideas real'],
-    color: '#ff00ff',
-  },
-  experiences: {
-    title: 'Experiences',
-    lines: ['5+ years coding', 'React, Three.js, Python', 'Open source contributor'],
-    color: '#bf5af2',
-  },
-  projects: {
-    title: 'Projects',
-    lines: ['Interactive 3D web apps', 'AI-powered tools', 'Creative experiments'],
-    color: '#ffd60a',
-  },
-  cat: {
-    title: 'Cat',
-    lines: ['Meow!', 'Digital companion', 'Always curious'],
-    color: '#ff9f0a',
-  },
-  contact: {
-    title: 'Contact',
-    lines: ['Let\'s connect', 'hello@jadmenkara.com', 'github.com/jadmenkara'],
-    color: '#30d158',
-  },
+const faceHtml = {
+  home: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
+  <div style="width:100%;height:100%;border:3px solid rgba(0,255,255,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+    <h1 style="color:#00ffff;text-shadow:0 0 24px #00ffff;font-size:32px;margin:0;">Jad Menkara</h1>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Full Stack Developer</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Creative Technologist</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Building digital experiences</p>
+  </div>
+</div>`,
+  about: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
+  <div style="width:100%;height:100%;border:3px solid rgba(255,0,255,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+    <h1 style="color:#ff00ff;text-shadow:0 0 24px #ff00ff;font-size:32px;margin:0;">About Me</h1>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Passionate about code</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Design + Engineering</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Making ideas real</p>
+  </div>
+</div>`,
+  experiences: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
+  <div style="width:100%;height:100%;border:3px solid rgba(191,90,242,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+    <h1 style="color:#bf5af2;text-shadow:0 0 24px #bf5af2;font-size:32px;margin:0;">Experiences</h1>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">5+ years coding</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">React, Three.js, Python</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Open source contributor</p>
+  </div>
+</div>`,
+  projects: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
+  <div style="width:100%;height:100%;border:3px solid rgba(255,214,10,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+    <h1 style="color:#ffd60a;text-shadow:0 0 24px #ffd60a;font-size:32px;margin:0;">Projects</h1>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Interactive 3D web apps</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">AI-powered tools</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Creative experiments</p>
+  </div>
+</div>`,
+  cat: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
+  <div style="width:100%;height:100%;border:3px solid rgba(255,159,10,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+    <h1 style="color:#ff9f0a;text-shadow:0 0 24px #ff9f0a;font-size:32px;margin:0;">Cat</h1>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Meow!</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Digital companion</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Always curious</p>
+  </div>
+</div>`,
+  contact: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
+  <div style="width:100%;height:100%;border:3px solid rgba(48,209,88,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+    <h1 style="color:#30d158;text-shadow:0 0 24px #30d158;font-size:32px;margin:0;">Contact</h1>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">Let's connect</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">hello@jadmenkara67.com</p>
+    <p style="color:#e0e0ff;font-size:14px;margin:0;">github.com/jadmenkara</p>
+  </div>
+</div>`,
 };
 
 const rotations = {
@@ -46,62 +64,18 @@ const rotations = {
   contact: [Math.PI / 2, 0, 0],
 };
 
-function createFaceTexture(content) {
-  const canvas = document.createElement('canvas');
-  canvas.width = 512;
-  canvas.height = 512;
-  const ctx = canvas.getContext('2d');
-
-  const gradient = ctx.createLinearGradient(0, 0, 512, 512);
-  gradient.addColorStop(0, '#12122a');
-  gradient.addColorStop(1, '#0a0a1a');
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, 512, 512);
-
-  ctx.strokeStyle = `${content.color}44`;
-  ctx.lineWidth = 3;
-  ctx.strokeRect(15, 15, 482, 482);
-
-  const cx = 256;
-  let y = 180;
-
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-
-  ctx.font = 'bold 42px Montserrat, sans-serif';
-  ctx.fillStyle = content.color;
-  ctx.shadowColor = content.color;
-  ctx.shadowBlur = 24;
-  ctx.fillText(content.title, cx, y);
-  ctx.shadowBlur = 0;
-
-  y += 60;
-  ctx.font = '18px JetBrains Mono, monospace';
-  ctx.fillStyle = '#e0e0ff';
-  content.lines.forEach((line) => {
-    ctx.fillText(line, cx, y);
-    y += 36;
-  });
-
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.needsUpdate = true;
-  return tex;
-}
-
 const sideOrder = ['about', 'projects', 'cat', 'contact', 'home', 'experiences'];
 
-function Cube({ cubeRef, targetRotation }) {
-  const materials = useMemo(() => {
-    return sideOrder.map((side) => {
-      const texture = createFaceTexture(faceContent[side]);
-      return new THREE.MeshStandardMaterial({
-        map: texture,
-        roughness: 0.25,
-        metalness: 0.3,
-      });
-    });
-  }, []); // sideOrder is a module-level constant
+const faceConfigs = {
+  about: { position: [1.1, 0, 0], rotation: [0, Math.PI / 2, 0] },
+  projects: { position: [-1.1, 0, 0], rotation: [0, -Math.PI / 2, 0] },
+  cat: { position: [0, 1.1, 0], rotation: [-Math.PI / 2, 0, 0] },
+  contact: { position: [0, -1.1, 0], rotation: [Math.PI / 2, 0, 0] },
+  home: { position: [0, 0, 1.1], rotation: [0, 0, 0] },
+  experiences: { position: [0, 0, -1.1], rotation: [0, Math.PI, 0] },
+};
 
+function Cube({ cubeRef, targetRotation }) {
   const edgesGeometry = useMemo(
     () => new THREE.EdgesGeometry(new THREE.BoxGeometry(2.2, 2.2, 2.2)),
     []
@@ -129,13 +103,30 @@ function Cube({ cubeRef, targetRotation }) {
   });
 
   return (
-    <group>
-      <mesh ref={cubeRef} position={[0, 0, 0]}>
-        <boxGeometry args={[2.2, 2.2, 2.2]} />
-        {materials.map((mat, i) => (
-          <primitive key={i} object={mat} attach={`material-${i}`} />
-        ))}
-      </mesh>
+    <group ref={cubeRef}>
+      {sideOrder.map((side) => {
+        const config = faceConfigs[side];
+        return (
+          <group key={side} position={config.position} rotation={config.rotation}>
+            <Html
+              center
+              transform
+              distanceFactor={1.5}
+              style={{ width: 512, height: 512 }}
+            >
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  pointerEvents: 'auto',
+                  boxSizing: 'border-box',
+                }}
+                dangerouslySetInnerHTML={{ __html: faceHtml[side] }}
+              />
+            </Html>
+          </group>
+        );
+      })}
       <lineSegments geometry={edgesGeometry}>
         <lineBasicMaterial color="#00ffff" transparent opacity={0.85} />
       </lineSegments>
@@ -212,13 +203,13 @@ function App() {
   return (
     <div
       className="app-container"
-      style={{ '--mouse-x': `${mousePos.x}`, '--mouse-y': `${mousePos.y}` }}
+      style={{ '--mouse-x': mousePos.x, '--mouse-y': mousePos.y }}
     >
       <nav className="sidebar">
         {Object.keys(rotations).map((side) => (
           <button
             key={side}
-            className={`sidebar-btn ${activeSide === side ? 'active' : ''}`}
+            className={'sidebar-btn ' + (activeSide === side ? 'active' : '')}
             onClick={() => handleSideClick(side)}
           >
             {side === 'home' ? 'Jad Menkara' : side.charAt(0).toUpperCase() + side.slice(1)}

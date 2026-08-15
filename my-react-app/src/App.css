@@ -23,9 +23,9 @@ body,
   background:
     radial-gradient(
       circle at calc(var(--mouse-x) * 100%) calc(var(--mouse-y) * 100%),
-      rgba(0, 255, 255, 0.18) 0%,
-      rgba(255, 0, 255, 0.08) 20%,
-      rgba(191, 90, 242, 0.06) 40%,
+      hsla(var(--hue1), 90%, 55%, 0.28) 0%,
+      hsla(var(--hue2), 85%, 52%, 0.18) 20%,
+      hsla(var(--hue3), 80%, 50%, 0.12) 40%,
       transparent 55%
     ),
     linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0f0f23 100%);

@@ -173,7 +173,7 @@ function Scene({ cubeRef, targetRotation }) {
       <Sparkles count={40} scale={3.5} size={1.5} speed={0.4} color="#00ffff" opacity={0.6} />
       <Cube cubeRef={cubeRef} targetRotation={targetRotation} />
       <FloorShadow />
-      <OrbitControls enableZoom={false} enablePan={false} rotateSpeed={0.4} />
+      <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} rotateSpeed={0.4} />
     </>
   );
 }
@@ -203,7 +203,13 @@ function App() {
   return (
     <div
       className="app-container"
-      style={{ '--mouse-x': mousePos.x, '--mouse-y': mousePos.y }}
+      style={{
+        '--mouse-x': mousePos.x,
+        '--mouse-y': mousePos.y,
+        '--hue1': mousePos.x * 360,
+        '--hue2': (mousePos.x * 360 + 80) % 360,
+        '--hue3': (mousePos.x * 360 + 160) % 360,
+      }}
     >
       <nav className="sidebar">
         {Object.keys(rotations).map((side) => (

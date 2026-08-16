@@ -1,11 +1,12 @@
 .cat-face .face {
-  background: #2E1A5F;
+  background: #0c1016;
+  box-shadow: inset 0 0 0 1px rgba(120, 200, 255, 0.08), 0 8px 28px rgba(0, 0, 0, 0.35);
 }
 
 .cat-face .face-title {
-  color: #f4f6f8;
+  color: #e6f0ff;
 }
 
 .cat-face .face-subtitle {
-  color: rgba(210, 200, 255, 0.8);
+  color: rgba(180, 210, 240, 0.7);
 }

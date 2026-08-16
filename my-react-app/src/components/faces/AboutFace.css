@@ -1,11 +1,12 @@
 .about-face .face {
-  background: #1A5F8A;
+  background: #0c1016;
+  box-shadow: inset 0 0 0 1px rgba(120, 200, 255, 0.08), 0 8px 28px rgba(0, 0, 0, 0.35);
 }
 
 .about-face .face-title {
-  color: #f4f6f8;
+  color: #e6f0ff;
 }
 
 .about-face .face-subtitle {
-  color: rgba(200, 230, 255, 0.8);
+  color: rgba(180, 210, 240, 0.7);
 }

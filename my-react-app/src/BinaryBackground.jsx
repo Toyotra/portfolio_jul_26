@@ -2,15 +2,15 @@ import { useEffect, useRef } from "react";
 import "./BinaryBackground.css";
 
 const CONFIG = {
-  speed: 0.5,
-  fontSize: 12,
+  speed: 0.4,
+  fontSize: 11,
   chars: "01",
   hoverChars: "!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789",
   rows: null,
   cols: null,
-  canvasBackgroundColor: "#020508",
-  textColor: "#00D4FF",
-  textOpacity: 0.06,
+  canvasBackgroundColor: "#080c10",
+  textColor: "#4a7a9a",
+  textOpacity: 0.07,
   fadeOpacity: 0.04,
   hoverRadiusCells: 9,
   stretchFactor: 0.002,
@@ -41,18 +41,18 @@ function BinaryBackground({ hoverKey = null }) {
     const speed = CONFIG.speed;
     const chars = CONFIG.chars;
     const hoverMap = {
-      home: { hoverChars: "01", textColor: "#00D4FF" },
-      about: { hoverChars: "ABOUTabout", textColor: "#00D4FF" },
-      experiences: { hoverChars: "EXP!@", textColor: "#00D4FF" },
-      projects: { hoverChars: "<>/{}[]()", textColor: "#00D4FF" },
-      contact: { hoverChars: "@._-+0123", textColor: "#00D4FF" },
+      home: { hoverChars: "01", textColor: "#4a7a9a" },
+      about: { hoverChars: "ABOUTabout", textColor: "#4a7a9a" },
+      experiences: { hoverChars: "EXP!@", textColor: "#4a7a9a" },
+      projects: { hoverChars: "<>/{}[]()", textColor: "#4a7a9a" },
+      contact: { hoverChars: "@._-+0123", textColor: "#4a7a9a" },
     };
     const hoverRadius = CONFIG.hoverRadiusCells;
 
     const mousePos = { x: null, y: null };
     const lastMouse = { x: null, y: null, t: performance.now() };
     let overlayActive = false;
-      const hoverKeyRef = { current: null };
+    const hoverKeyRef = { current: null };
 
     function resize() {
       canvas.width = window.innerWidth;
@@ -144,7 +144,6 @@ function BinaryBackground({ hoverKey = null }) {
       lastMouse.y = mousePos.y;
       lastMouse.t = now;
     }
-
 
     const handleMouseEnter = () => {
       hoverRef.current = true;

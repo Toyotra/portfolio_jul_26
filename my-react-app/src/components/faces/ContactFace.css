@@ -1,11 +1,12 @@
 .contact-face .face {
-  background: #1A2332;
+  background: #0c1016;
+  box-shadow: inset 0 0 0 1px rgba(120, 200, 255, 0.08), 0 8px 28px rgba(0, 0, 0, 0.35);
 }
 
 .contact-face .face-title {
-  color: #f4f6f8;
+  color: #e6f0ff;
 }
 
 .contact-face .face-subtitle {
-  color: rgba(180, 210, 240, 0.8);
+  color: rgba(180, 210, 240, 0.7);
 }

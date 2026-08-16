@@ -6,5 +6,5 @@
   height: 100vh;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(120deg, #f5f0e6 0%, #ede6dc 40%, #e8e3da 100%);
+  background: linear-gradient(160deg, #f4f6f8 0%, #ede8df 50%, #e8e3da 100%);
 }

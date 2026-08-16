@@ -1,71 +1,70 @@
 .projects-face .face-inner {
-  border-color: rgba(138, 36, 36, 0.22);
+  border-color: rgba(74, 95, 120, 0.15);
 }
 
 .projects-face .face-title {
-  color: #8a2424;
-  text-shadow: 0 1px 2px rgba(42, 77, 122, 0.06);
+  color: #4a5f78;
 }
 
 .projects-face .face-subtitle {
-  color: #8a8275;
+  color: #6e737b;
 }
 
 .projects-list {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 10px;
+  margin-top: 10px;
   overflow-y: auto;
   padding-right: 4px;
 }
 
 .projects-list::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 .projects-list::-webkit-scrollbar-track {
-  background: rgba(42, 77, 122, 0.05);
+  background: rgba(61, 74, 92, 0.04);
   border-radius: 3px;
 }
 
 .projects-list::-webkit-scrollbar-thumb {
-  background: rgba(138, 36, 36, 0.3);
+  background: rgba(61, 74, 92, 0.2);
   border-radius: 3px;
 }
 
 .project-card {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
-  padding: 8px 10px;
+  padding: 12px 14px;
   text-align: left;
-  background: rgba(248, 245, 238, 0.8);
-  border: 1px solid rgba(42, 77, 122, 0.12);
-  border-radius: 10px;
+  background: rgba(247, 244, 237, 0.7);
+  border: 1px solid rgba(74, 95, 120, 0.1);
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: inherit;
-  box-shadow: 0 2px 8px rgba(42, 77, 122, 0.04);
+  box-shadow: 0 1px 6px rgba(61, 74, 92, 0.03);
 }
 
 .project-card:hover {
-  border-color: rgba(138, 36, 36, 0.45);
-  background: rgba(248, 245, 238, 0.92);
-  box-shadow: 0 4px 14px rgba(42, 77, 122, 0.08);
-  transform: translateX(4px);
+  border-color: rgba(61, 74, 92, 0.22);
+  background: rgba(247, 244, 237, 0.85);
+  box-shadow: 0 4px 16px rgba(74, 95, 120, 0.06);
+  transform: translateX(3px);
 }
 
 .project-thumb {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
   object-fit: cover;
   object-position: center;
   border-radius: 8px;
-  border: 1px solid rgba(42, 77, 122, 0.15);
+  border: 1px solid rgba(74, 95, 120, 0.1);
 }
 
 .project-card-body {
@@ -84,8 +83,8 @@
 .project-name {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
-  font-weight: 700;
-  color: #8a2424;
+  font-weight: 600;
+  color: #4a5f78;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -94,19 +93,20 @@
 .project-date {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
-  color: #8a8275;
+  color: #6e737b;
   white-space: nowrap;
 }
 
 .project-desc {
   font-size: 11px;
-  color: #4a4235;
+  color: #5e636b;
   margin: 2px 0 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.45;
 }
 
 .project-modal-backdrop {
@@ -114,90 +114,91 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(42, 42, 42, 0.48);
-  backdrop-filter: blur(6px);
+  background: rgba(44, 48, 56, 0.4);
+  backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
+  padding: 5vw;
   box-sizing: border-box;
 }
 
 .project-modal {
   position: relative;
   width: 100%;
-  max-width: 680px;
-  max-height: 90vh;
-  background: linear-gradient(145deg, #ffffff 0%, #faf8f5 100%);
-  border: 1px solid rgba(42, 77, 122, 0.24);
+  max-width: 640px;
+  max-height: 85vh;
+  background: linear-gradient(155deg, #f8f9fb 0%, #f4f6f8 100%);
+  border: 1px solid rgba(74, 95, 120, 0.15);
   border-radius: 16px;
-  padding: 20px 22px 16px;
+  padding: 28px 28px 22px;
   box-sizing: border-box;
-  box-shadow: 0 20px 48px rgba(42, 77, 122, 0.14);
+  box-shadow: 0 16px 40px rgba(74, 95, 120, 0.1);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .project-modal-close {
   position: absolute;
-  top: 8px;
-  right: 10px;
+  top: 12px;
+  right: 14px;
   background: transparent;
   border: none;
-  color: #8a2424;
-  font-size: 22px;
+  color: #4a5f78;
+  font-size: 20px;
   line-height: 1;
   cursor: pointer;
-  padding: 2px 6px;
-  border-radius: 6px;
+  padding: 4px 8px;
+  border-radius: 8px;
   transition: all 0.2s;
 }
 
 .project-modal-close:hover {
-  color: #2b2b2b;
-  background: rgba(138, 36, 36, 0.1);
-  box-shadow: 0 0 10px rgba(138, 36, 36, 0.22);
+  color: #2c3038;
+  background: rgba(74, 95, 120, 0.06);
 }
 
 .project-modal-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 6px;
+  gap: 18px;
+  margin-bottom: 4px;
 }
 
 .project-modal-thumb {
-  width: 88px;
-  height: 88px;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
   object-fit: cover;
   object-position: center;
   border-radius: 12px;
-  border: 1px solid rgba(42, 77, 122, 0.22);
+  border: 1px solid rgba(74, 95, 120, 0.12);
 }
 
 .project-modal-title {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
-  color: #8a2424;
+  font-size: 20px;
+  color: #4a5f78;
   margin: 0;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .project-modal-date {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  color: #8a8275;
+  font-size: 12px;
+  color: #6e737b;
+  margin-top: 4px;
+  display: block;
 }
 
 .project-modal-desc {
-  font-size: 15px;
-  color: #4a4235;
+  font-size: 14px;
+  color: #5e636b;
   margin: 2px 0;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .project-bullets {
@@ -206,14 +207,14 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .project-bullets li {
   position: relative;
-  padding-left: 20px;
+  padding-left: 18px;
   font-size: 13px;
-  color: #5a5a5a;
+  color: #5e636b;
   line-height: 1.5;
 }
 
@@ -221,8 +222,8 @@
   content: "▹";
   position: absolute;
   left: 0;
-  color: #8a2424;
-  font-size: 14px;
+  color: #4a5f78;
+  font-size: 13px;
 }
 
 .project-images {
@@ -233,9 +234,9 @@
 
 .project-image {
   flex: 1 1 48%;
-  height: 150px;
+  height: 140px;
   object-fit: cover;
   object-position: center;
   border-radius: 10px;
-  border: 1px solid rgba(42, 77, 122, 0.15);
+  border: 1px solid rgba(74, 95, 120, 0.1);
 }

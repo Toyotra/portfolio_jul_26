@@ -12,69 +12,60 @@ body,
   margin: 0;
   font-family: 'JetBrains Mono', monospace;
   overflow: hidden;
-  color: #2b2b2b;
-  background: #f5f0e6;
+  color: #2c3038;
+  background: #f4f6f8;
 }
 
 .app-container {
-  --mouse-x: 0.5;
-  --mouse-y: 0.5;
   display: flex;
   width: 100vw;
   height: 100vh;
-  background:
-    radial-gradient(
-      circle at calc(var(--mouse-x) * 100%) calc(var(--mouse-y) * 100%),
-      hsla(var(--hue1), 55%, 58%, 0.12) 0%,
-      hsla(var(--hue2), 50%, 54%, 0.08) 20%,
-      hsla(var(--hue3), 55%, 50%, 0.06) 40%,
-      transparent 55%
-    ),
-    linear-gradient(135deg, #f5f0e6 0%, #ede6dc 50%, #e8e3da 100%);
+  background: linear-gradient(160deg, #f4f6f8 0%, #edf0f4 50%, #e4e9ef 100%);
   overflow: hidden;
 }
 
 .sidebar {
   position: absolute;
   left: 50%;
-  top: 24px;
+  top: 28px;
   transform: translateX(-50%);
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 10px;
   z-index: 10;
-  background: rgba(248, 245, 238, 0.7);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(42, 77, 122, 0.15);
+  background: rgba(244, 246, 248, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(74, 95, 120, 0.12);
   border-radius: 999px;
-  padding: 6px 10px;
-  box-shadow: 0 4px 18px rgba(42, 77, 122, 0.08);
+  padding: 8px 16px;
+  box-shadow: 0 2px 12px rgba(74, 95, 120, 0.06);
 }
 
 .sidebar-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  padding: 8px 14px;
+  font-size: 11px;
+  padding: 10px 18px;
   background: transparent;
   border: none;
-  color: rgba(43, 43, 43, 0.65);
+  color: rgba(44, 48, 56, 0.55);
   cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
   border-radius: 999px;
   white-space: nowrap;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
+  font-weight: 500;
 }
 
 .sidebar-btn:hover {
-  color: rgba(42, 77, 122, 0.95);
-  background: rgba(42, 77, 122, 0.06);
+  color: #4a5f78;
+  background: rgba(74, 95, 120, 0.06);
 }
 
 .sidebar-btn.active {
-  color: #2a4d7a;
-  background: rgba(42, 77, 122, 0.12);
-  box-shadow: 0 0 16px rgba(42, 77, 122, 0.22);
+  color: #4a5f78;
+  background: rgba(74, 95, 120, 0.1);
+  box-shadow: 0 0 0 1px rgba(74, 95, 120, 0.08);
 }
 
 .canvas-container {

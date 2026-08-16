@@ -8,9 +8,9 @@ const CONFIG = {
   hoverChars: "!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789",
   rows: null,
   cols: null,
-  canvasBackgroundColor: "#f5f0e6",
-  textColor: "#2a4d7a",
-  textOpacity: 0.12,
+  canvasBackgroundColor: "#f4f6f8",
+  textColor: "#4a5f78",
+  textOpacity: 0.1,
   fadeOpacity: 0.04,
   hoverRadiusCells: 9,
   stretchFactor: 0.002,
@@ -40,15 +40,13 @@ function BinaryBackground({ hoverKey = null }) {
     const fontSize = CONFIG.fontSize;
     const speed = CONFIG.speed;
     const chars = CONFIG.chars;
-    // allow hoverKey to change the hover character set and color
     const hoverMap = {
-      home: { hoverChars: "01", textColor: "#2a4d7a" },
-      about: { hoverChars: "ABOUTabout", textColor: "#5d6e8c" },
-      experiences: { hoverChars: "EXP!@", textColor: "#5a7247" },
-      projects: { hoverChars: "<>/{}[]()", textColor: "#8a2424" },
-      contact: { hoverChars: "@._-+0123", textColor: "#3a3a3a" },
+      home: { hoverChars: "01", textColor: "#4a5f78" },
+      about: { hoverChars: "ABOUTabout", textColor: "#4a5f78" },
+      experiences: { hoverChars: "EXP!@", textColor: "#4a5f78" },
+      projects: { hoverChars: "<>/{}[]()", textColor: "#4a5f78" },
+      contact: { hoverChars: "@._-+0123", textColor: "#4a5f78" },
     };
-    // hover chars/color will be resolved per-frame from either the prop or hovered element's data attribute
     const hoverRadius = CONFIG.hoverRadiusCells;
     const stretchFactor = CONFIG.stretchFactor;
 
@@ -95,7 +93,6 @@ function BinaryBackground({ hoverKey = null }) {
           const baseX = c * fontSize;
           const y = r * fontSize + fontSize;
 
-          // first copy
           const centerX1 = baseX - scrollOffset + fontSize / 2;
           const centerY = y - fontSize / 2;
           let usedChar = char;
@@ -116,7 +113,6 @@ function BinaryBackground({ hoverKey = null }) {
           ctx.fillStyle = usedStyle;
           ctx.fillText(usedChar, baseX - scrollOffset, y);
 
-          // second copy (wrap)
           const centerX2 = baseX - scrollOffset + patternWidth + fontSize / 2;
           usedChar = char;
           usedStyle = hexToRgba(CONFIG.textColor, CONFIG.textOpacity);
@@ -142,10 +138,8 @@ function BinaryBackground({ hoverKey = null }) {
       }
     }
 
-    // draw wrapper uses draw() which now replaces nearby pattern characters
     function drawWithOverlay() {
       draw();
-      // update last mouse for velocity tracking (not used for scale anymore)
       const now = performance.now();
       lastMouse.x = mousePos.x;
       lastMouse.y = mousePos.y;
@@ -166,7 +160,6 @@ function BinaryBackground({ hoverKey = null }) {
       pattern = getPattern(chars);
     };
 
-    // start the combined draw loop
     function loop() {
       drawWithOverlay();
       animationId = requestAnimationFrame(loop);
@@ -185,7 +178,6 @@ function BinaryBackground({ hoverKey = null }) {
       const isTarget = !!closest;
       const tagMatch = el && semanticTags.includes(el.tagName);
       overlayActive = !!(isTarget || tagMatch);
-      // read data-hover attribute so markup-only navs can control the hover key
       if (closest && closest.dataset) {
         hoverKeyRef.current = closest.dataset.hover || closest.dataset.hoverKey || null;
       } else {

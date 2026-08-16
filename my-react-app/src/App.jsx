@@ -51,10 +51,10 @@ function Cube({ cubeRef, targetRotation }) {
     const geo = new LineGeometry();
     geo.setPositions(positions);
     const mat = new LineMaterial({
-      color: '#2a4d7a',
+      color: '#4a5f78',
       linewidth: 0.035,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.35,
     });
     mat.resolution.set(width, height);
     const line = new Line2(geo, mat);
@@ -117,8 +117,8 @@ function FloorShadow() {
     canvas.height = 256;
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-    gradient.addColorStop(0, 'rgba(42, 77, 122, 0.12)');
-    gradient.addColorStop(0.4, 'rgba(42, 42, 42, 0.03)');
+    gradient.addColorStop(0, 'rgba(74, 95, 120, 0.08)');
+    gradient.addColorStop(0.4, 'rgba(44, 48, 56, 0.02)');
     gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 256, 256);
@@ -145,8 +145,8 @@ function Scene({ cubeRef, targetRotation }) {
       <ambientLight intensity={0.9} />
       <pointLight position={[5, 5, 5]} intensity={0.95} color="#fefefe" />
       <pointLight position={[-5, 3, -5]} intensity={0.7} color="#e8edf8" />
-      <pointLight position={[0, -5, 0]} intensity={0.45} color="#2a4d7a" />
-      <Sparkles count={40} scale={3.5} size={1.5} speed={0.4} color="#2a4d7a" opacity={0.25} />
+      <pointLight position={[0, -5, 0]} intensity={0.45} color="#4a5f78" />
+      <Sparkles count={30} scale={3.5} size={1.2} speed={0.3} color="#4a5f78" opacity={0.15} />
       <Cube cubeRef={cubeRef} targetRotation={targetRotation} />
       <FloorShadow />
       <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} rotateSpeed={0.4} />
@@ -157,19 +157,7 @@ function Scene({ cubeRef, targetRotation }) {
 function App() {
   const [activeSide, setActiveSide] = useState('home');
   const [targetRotation, setTargetRotation] = useState(rotations.home);
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const cubeRef = useRef();
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   const handleSideClick = (side) => {
     setActiveSide(side);
@@ -177,16 +165,7 @@ function App() {
   };
 
   return (
-    <div
-      className="app-container"
-         style={{
-          '--mouse-x': mousePos.x,
-          '--mouse-y': mousePos.y,
-          '--hue1': 205 + mousePos.x * 20,
-          '--hue2': 215 + mousePos.x * 20,
-          '--hue3': 195 + mousePos.x * 20,
-        }}
-    >
+    <div className="app-container">
       <nav className="sidebar">
         {Object.keys(rotations).map((side) => (
           <button
@@ -204,7 +183,7 @@ function App() {
           camera={{ position: [0, 0, 5.5], fov: 45 }}
           gl={{ antialias: true }}
         >
-          <color attach="background" args={['#f5f0e6']} />
+          <color attach="background" args={['#f4f6f8']} />
           <Scene cubeRef={cubeRef} targetRotation={targetRotation} />
         </Canvas>
       </div>

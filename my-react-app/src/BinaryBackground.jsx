@@ -8,10 +8,10 @@ const CONFIG = {
   hoverChars: "!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789",
   rows: null,
   cols: null,
-  canvasBackgroundColor: "black",
-  textColor: "#42f4e0",
-  textOpacity: 0.05,
-  fadeOpacity: 0.02,
+  canvasBackgroundColor: "#f5f0e6",
+  textColor: "#2a4d7a",
+  textOpacity: 0.12,
+  fadeOpacity: 0.04,
   hoverRadiusCells: 9,
   stretchFactor: 0.002,
 };
@@ -42,11 +42,11 @@ function BinaryBackground({ hoverKey = null }) {
     const chars = CONFIG.chars;
     // allow hoverKey to change the hover character set and color
     const hoverMap = {
-      home: { hoverChars: "01", textColor: "#42f4e0" },
-      about: { hoverChars: "ABOUTabout", textColor: "#f48fb1" },
-      experience: { hoverChars: "EXP!#@", textColor: "#ffd54f" },
-      projects: { hoverChars: "<>/{}[]()", textColor: "#b39ddb" },
-      contact: { hoverChars: "@._-+0123", textColor: "#80cbc4" },
+      home: { hoverChars: "01", textColor: "#2a4d7a" },
+      about: { hoverChars: "ABOUTabout", textColor: "#5d6e8c" },
+      experiences: { hoverChars: "EXP!@", textColor: "#5a7247" },
+      projects: { hoverChars: "<>/{}[]()", textColor: "#8a2424" },
+      contact: { hoverChars: "@._-+0123", textColor: "#3a3a3a" },
     };
     // hover chars/color will be resolved per-frame from either the prop or hovered element's data attribute
     const hoverRadius = CONFIG.hoverRadiusCells;

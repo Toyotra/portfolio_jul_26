@@ -1,0 +1,54 @@
+[
+  {
+    "name": "NeuroLens",
+    "date": "2025-08",
+    "description": "A mobile app that uses on-device PyTorch to classify plant diseases from leaf photos in real time.",
+    "thumbnail": "/projects/neurolens/thumb.jpg",
+    "images": ["/projects/neurolens/screen1.jpg", "/projects/neurolens/screen2.jpg"],
+    "bulletPoints": [
+      "Built with React Native + PyTorch Mobile, 98% inference accuracy on a 5k image test set",
+      "Fine-tuned a ResNet-18 model on a custom 12k image dataset of diseased/treated leaves",
+      "Real-time classification at 25ms per frame with 4MB model size via quantization",
+      "Offline-first architecture so the model runs with zero network calls"
+    ]
+  },
+  {
+    "name": "SynthWave Studio",
+    "date": "2025-03",
+    "description": "A browser-based music sequencer that renders an animated 3D synthwave scene with React Three Fiber.",
+    "thumbnail": "/projects/synthwave/thumb.jpg",
+    "images": ["/projects/synthwave/scene1.jpg", "/projects/synthwave/scene2.jpg"],
+    "bulletPoints": [
+      "3D scene powered by @react-three/fiber with custom GLSL shaders for the grid and neon glow",
+      "Step sequencer built with Tone.js, supporting 8 tracks of 16-step patterns",
+      "WebGL audio analysis drives the camera pulsing to the beat via Web Audio API",
+      "Exported as a static site on Vite, deployed to Vercel with instant cold starts"
+    ]
+  },
+  {
+    "name": "OrbitDB Explorer",
+    "date": "2024-11",
+    "description": "A decentralized knowledge graph explorer that syncs documents peer-to-peer using OrbitDB and IPFS.",
+    "thumbnail": "/projects/orbitdb/thumb.jpg",
+    "images": ["/projects/orbitdb/graph1.jpg", "/projects/orbitdb/graph2.jpg"],
+    "bulletPoints": [
+      "Wired up an OrbitDB docstore with CRDT conflict resolution over a libp2p pubsub mesh",
+      "Rendered an interactive force-directed graph with d3 and WebGL for 5k+ node datasets",
+      "Implemented a custom diff renderer so only changed nodes are re-synced between peers",
+      "Added end-to-end encryption for private graphs using RSA key pairs stored in localStorage"
+    ]
+  },
+  {
+    "name": "TaskForge CLI",
+    "date": "2024-06",
+    "description": "A Rust-powered developer productivity CLI that scaffolds React components, Express routes, and test stubs from templates.",
+    "thumbnail": "/projects/taskforge/thumb.jpg",
+    "images": ["/projects/taskforge/demo1.jpg"],
+    "bulletPoints": [
+      "Parses a YAML schema to generate type-safe components with configurable naming conventions",
+      "Zero-deps core written in Rust and compiled to a single native binary via Cargo",
+      "Plugin system lets teams ship custom templates as WASM modules loaded at runtime",
+      "Used by 200+ devs internally; cuts new feature setup time from 15 min to 20 seconds"
+    ]
+  }
+]

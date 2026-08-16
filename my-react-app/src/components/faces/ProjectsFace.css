@@ -1,0 +1,241 @@
+.projects-face .face-inner {
+  border-color: rgba(138, 36, 36, 0.22);
+}
+
+.projects-face .face-title {
+  color: #8a2424;
+  text-shadow: 0 1px 2px rgba(42, 77, 122, 0.06);
+}
+
+.projects-face .face-subtitle {
+  color: #8a8275;
+}
+
+.projects-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.projects-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.projects-list::-webkit-scrollbar-track {
+  background: rgba(42, 77, 122, 0.05);
+  border-radius: 3px;
+}
+
+.projects-list::-webkit-scrollbar-thumb {
+  background: rgba(138, 36, 36, 0.3);
+  border-radius: 3px;
+}
+
+.project-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  text-align: left;
+  background: rgba(248, 245, 238, 0.8);
+  border: 1px solid rgba(42, 77, 122, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: inherit;
+  box-shadow: 0 2px 8px rgba(42, 77, 122, 0.04);
+}
+
+.project-card:hover {
+  border-color: rgba(138, 36, 36, 0.45);
+  background: rgba(248, 245, 238, 0.92);
+  box-shadow: 0 4px 14px rgba(42, 77, 122, 0.08);
+  transform: translateX(4px);
+}
+
+.project-thumb {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  border: 1px solid rgba(42, 77, 122, 0.15);
+}
+
+.project-card-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.project-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.project-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #8a2424;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #8a8275;
+  white-space: nowrap;
+}
+
+.project-desc {
+  font-size: 11px;
+  color: #4a4235;
+  margin: 2px 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(42, 42, 42, 0.48);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.project-modal {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  background: linear-gradient(145deg, #ffffff 0%, #faf8f5 100%);
+  border: 1px solid rgba(42, 77, 122, 0.24);
+  border-radius: 16px;
+  padding: 20px 22px 16px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 48px rgba(42, 77, 122, 0.14);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #8a2424;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.project-modal-close:hover {
+  color: #2b2b2b;
+  background: rgba(138, 36, 36, 0.1);
+  box-shadow: 0 0 10px rgba(138, 36, 36, 0.22);
+}
+
+.project-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 6px;
+}
+
+.project-modal-thumb {
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  border: 1px solid rgba(42, 77, 122, 0.22);
+}
+
+.project-modal-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: #8a2424;
+  margin: 0;
+  font-weight: 400;
+}
+
+.project-modal-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #8a8275;
+}
+
+.project-modal-desc {
+  font-size: 15px;
+  color: #4a4235;
+  margin: 2px 0;
+  line-height: 1.5;
+}
+
+.project-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-bullets li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 13px;
+  color: #5a5a5a;
+  line-height: 1.5;
+}
+
+.project-bullets li::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: #8a2424;
+  font-size: 14px;
+}
+
+.project-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.project-image {
+  flex: 1 1 48%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  border: 1px solid rgba(42, 77, 122, 0.15);
+}

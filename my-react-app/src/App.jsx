@@ -3,57 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sparkles, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import './App.css';
-
-const faceHtml = {
-  home: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
-  <div style="width:100%;height:100%;border:3px solid rgba(0,255,255,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
-    <h1 style="color:#00ffff;text-shadow:0 0 24px #00ffff;font-size:32px;margin:0;">Jad Menkara</h1>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Full Stack Developer</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Creative Technologist</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Building digital experiences</p>
-  </div>
-</div>`,
-  about: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
-  <div style="width:100%;height:100%;border:3px solid rgba(255,0,255,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
-    <h1 style="color:#ff00ff;text-shadow:0 0 24px #ff00ff;font-size:32px;margin:0;">About Me</h1>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Passionate about code</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Design + Engineering</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Making ideas real</p>
-  </div>
-</div>`,
-  experiences: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
-  <div style="width:100%;height:100%;border:3px solid rgba(191,90,242,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
-    <h1 style="color:#bf5af2;text-shadow:0 0 24px #bf5af2;font-size:32px;margin:0;">Experiences</h1>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">5+ years coding</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">React, Three.js, Python</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Open source contributor</p>
-  </div>
-</div>`,
-  projects: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
-  <div style="width:100%;height:100%;border:3px solid rgba(255,214,10,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
-    <h1 style="color:#ffd60a;text-shadow:0 0 24px #ffd60a;font-size:32px;margin:0;">Projects</h1>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Interactive 3D web apps</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">AI-powered tools</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Creative experiments</p>
-  </div>
-</div>`,
-  cat: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
-  <div style="width:100%;height:100%;border:3px solid rgba(255,159,10,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
-    <h1 style="color:#ff9f0a;text-shadow:0 0 24px #ff9f0a;font-size:32px;margin:0;">Cat</h1>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Meow!</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Digital companion</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Always curious</p>
-  </div>
-</div>`,
-  contact: `<div style="width:100%;height:100%;background:linear-gradient(135deg,#12122a,#0a0a1a);padding:20px;box-sizing:border-box;font-family:sans-serif;color:#fff;">
-  <div style="width:100%;height:100%;border:3px solid rgba(48,209,88,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
-    <h1 style="color:#30d158;text-shadow:0 0 24px #30d158;font-size:32px;margin:0;">Contact</h1>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">Let's connect</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">hello@jadmenkara67.com</p>
-    <p style="color:#e0e0ff;font-size:14px;margin:0;">github.com/jadmenkara</p>
-  </div>
-</div>`,
-};
+import { faceComponents } from './components/faces';
 
 const rotations = {
   home: [0, 0, 0],
@@ -106,6 +56,7 @@ function Cube({ cubeRef, targetRotation }) {
     <group ref={cubeRef}>
       {sideOrder.map((side) => {
         const config = faceConfigs[side];
+        const FaceComponent = faceComponents[side];
         return (
           <group key={side} position={config.position} rotation={config.rotation}>
             <Html
@@ -114,21 +65,15 @@ function Cube({ cubeRef, targetRotation }) {
               distanceFactor={1.5}
               style={{ width: 512, height: 512 }}
             >
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  pointerEvents: 'auto',
-                  boxSizing: 'border-box',
-                }}
-                dangerouslySetInnerHTML={{ __html: faceHtml[side] }}
-              />
+              <div className="face-host">
+                <FaceComponent />
+              </div>
             </Html>
           </group>
         );
       })}
       <lineSegments geometry={edgesGeometry}>
-        <lineBasicMaterial color="#00ffff" transparent opacity={0.85} />
+        <lineBasicMaterial color="#2a4d7a" transparent opacity={0.5} />
       </lineSegments>
     </group>
   );
@@ -141,8 +86,8 @@ function FloorShadow() {
     canvas.height = 256;
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-    gradient.addColorStop(0, 'rgba(0, 255, 255, 0.35)');
-    gradient.addColorStop(0.4, 'rgba(255, 0, 255, 0.12)');
+    gradient.addColorStop(0, 'rgba(42, 77, 122, 0.12)');
+    gradient.addColorStop(0.4, 'rgba(42, 42, 42, 0.03)');
     gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 256, 256);
@@ -166,11 +111,11 @@ function FloorShadow() {
 function Scene({ cubeRef, targetRotation }) {
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <pointLight position={[5, 5, 5]} intensity={1.2} color="#ff00ff" />
-      <pointLight position={[-5, 3, -5]} intensity={0.7} color="#00ffff" />
-      <pointLight position={[0, -5, 0]} intensity={0.4} color="#bf5af2" />
-      <Sparkles count={40} scale={3.5} size={1.5} speed={0.4} color="#00ffff" opacity={0.6} />
+      <ambientLight intensity={0.9} />
+      <pointLight position={[5, 5, 5]} intensity={0.95} color="#fefefe" />
+      <pointLight position={[-5, 3, -5]} intensity={0.7} color="#e8edf8" />
+      <pointLight position={[0, -5, 0]} intensity={0.45} color="#2a4d7a" />
+      <Sparkles count={40} scale={3.5} size={1.5} speed={0.4} color="#2a4d7a" opacity={0.25} />
       <Cube cubeRef={cubeRef} targetRotation={targetRotation} />
       <FloorShadow />
       <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} rotateSpeed={0.4} />
@@ -203,13 +148,13 @@ function App() {
   return (
     <div
       className="app-container"
-      style={{
-        '--mouse-x': mousePos.x,
-        '--mouse-y': mousePos.y,
-        '--hue1': mousePos.x * 360,
-        '--hue2': (mousePos.x * 360 + 80) % 360,
-        '--hue3': (mousePos.x * 360 + 160) % 360,
-      }}
+         style={{
+          '--mouse-x': mousePos.x,
+          '--mouse-y': mousePos.y,
+          '--hue1': 205 + mousePos.x * 20,
+          '--hue2': 215 + mousePos.x * 20,
+          '--hue3': 195 + mousePos.x * 20,
+        }}
     >
       <nav className="sidebar">
         {Object.keys(rotations).map((side) => (
@@ -228,7 +173,7 @@ function App() {
           camera={{ position: [0, 0, 5.5], fov: 45 }}
           gl={{ antialias: true }}
         >
-          <color attach="background" args={['#0a0a1a']} />
+          <color attach="background" args={['#f5f0e6']} />
           <Scene cubeRef={cubeRef} targetRotation={targetRotation} />
         </Canvas>
       </div>

@@ -1,6 +1,9 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Sparkles, Html } from '@react-three/drei';
+import { Line2 } from 'three/examples/jsm/lines/Line2';
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
+import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial';
 import * as THREE from 'three';
 import './App.css';
 import { faceComponents } from './components/faces';
@@ -26,12 +29,42 @@ const faceConfigs = {
 };
 
 function Cube({ cubeRef, targetRotation }) {
-  const edgesGeometry = useMemo(
-    () => new THREE.EdgesGeometry(new THREE.BoxGeometry(2.2, 2.2, 2.2)),
-    []
-  );
+  const lineRef = useRef();
+  const { width, height } = useThree((state) => state.size);
+
+  const edgeLine = useMemo(() => {
+    const s = 1.1;
+    const positions = [
+      -s, s, s,  s, s, s,
+      s, s, s,  s,-s, s,
+      s,-s, s, -s,-s, s,
+      -s,-s, s, -s, s, s,
+      -s, s,-s,  s, s,-s,
+      s, s,-s,  s,-s,-s,
+      s,-s,-s, -s,-s,-s,
+      -s,-s,-s, -s, s,-s,
+      -s, s, s, -s, s,-s,
+      s, s, s,  s, s,-s,
+      s,-s, s,  s,-s,-s,
+      -s,-s, s, -s,-s,-s,
+    ];
+    const geo = new LineGeometry();
+    geo.setPositions(positions);
+    const mat = new LineMaterial({
+      color: '#2a4d7a',
+      linewidth: 0.035,
+      transparent: true,
+      opacity: 0.6,
+    });
+    mat.resolution.set(width, height);
+    const line = new Line2(geo, mat);
+    return line;
+  }, [width, height]);
 
   useFrame((state) => {
+    if (lineRef.current) {
+      lineRef.current.material.resolution.set(width, height);
+    }
     if (!cubeRef.current) return;
     const { clock } = state;
     cubeRef.current.rotation.x = THREE.MathUtils.lerp(
@@ -62,7 +95,7 @@ function Cube({ cubeRef, targetRotation }) {
             <Html
               center
               transform
-              distanceFactor={1.5}
+              distanceFactor={1.72}
               style={{ width: 512, height: 512 }}
             >
               <div className="face-host">
@@ -72,9 +105,7 @@ function Cube({ cubeRef, targetRotation }) {
           </group>
         );
       })}
-      <lineSegments geometry={edgesGeometry}>
-        <lineBasicMaterial color="#2a4d7a" transparent opacity={0.5} />
-      </lineSegments>
+      <primitive ref={lineRef} object={edgeLine} />
     </group>
   );
 }

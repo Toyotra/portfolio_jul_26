@@ -1,7 +1,11 @@
-.contact-face .face-inner {
-  border-color: rgba(74, 95, 120, 0.15);
+.contact-face .face {
+  background: #1A2332;
 }
 
 .contact-face .face-title {
-  color: #4a5f78;
+  color: #f4f6f8;
+}
+
+.contact-face .face-subtitle {
+  color: rgba(180, 210, 240, 0.8);
 }

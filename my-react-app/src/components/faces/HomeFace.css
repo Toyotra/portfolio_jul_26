@@ -1,7 +1,11 @@
-.home-face .face-inner {
-  border-color: rgba(74, 95, 120, 0.15);
+.home-face .face {
+  background: #0F4C4C;
 }
 
 .home-face .face-title {
-  color: #4a5f78;
+  color: #f4f6f8;
+}
+
+.home-face .face-subtitle {
+  color: rgba(180, 230, 220, 0.8);
 }

@@ -1,6 +1,6 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Sparkles, Html } from '@react-three/drei';
+import { OrbitControls, Html } from '@react-three/drei';
 import { Line2 } from 'three/examples/jsm/lines/Line2';
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial';
@@ -51,10 +51,10 @@ function Cube({ cubeRef, targetRotation }) {
     const geo = new LineGeometry();
     geo.setPositions(positions);
     const mat = new LineMaterial({
-      color: '#4a5f78',
-      linewidth: 0.035,
+      color: '#00D4FF',
+      linewidth: 0.04,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.7,
     });
     mat.resolution.set(width, height);
     const line = new Line2(geo, mat);
@@ -117,8 +117,8 @@ function FloorShadow() {
     canvas.height = 256;
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-    gradient.addColorStop(0, 'rgba(74, 95, 120, 0.08)');
-    gradient.addColorStop(0.4, 'rgba(44, 48, 56, 0.02)');
+    gradient.addColorStop(0, 'rgba(0, 180, 220, 0.25)');
+    gradient.addColorStop(0.5, 'rgba(0, 100, 140, 0.08)');
     gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 256, 256);
@@ -127,7 +127,7 @@ function FloorShadow() {
   }, []);
 
   return (
-    <mesh position={[0, -1.35, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+    <mesh position={[0, -1.4, 0]} rotation={[-Math.PI / 2, 0, 0]}>
       <planeGeometry args={[5.5, 5.5]} />
       <meshBasicMaterial
         map={texture}
@@ -139,16 +139,26 @@ function FloorShadow() {
   );
 }
 
+function Floor() {
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.8, 0]}>
+      <planeGeometry args={[14, 14]} />
+      <meshBasicMaterial color="#020508" />
+    </mesh>
+  );
+}
+
 function Scene({ cubeRef, targetRotation }) {
   return (
     <>
-      <ambientLight intensity={0.9} />
-      <pointLight position={[5, 5, 5]} intensity={0.95} color="#fefefe" />
-      <pointLight position={[-5, 3, -5]} intensity={0.7} color="#e8edf8" />
-      <pointLight position={[0, -5, 0]} intensity={0.45} color="#4a5f78" />
-      <Sparkles count={30} scale={3.5} size={1.2} speed={0.3} color="#4a5f78" opacity={0.15} />
+      <ambientLight intensity={0.35} />
+      <pointLight position={[5, 5, 5]} intensity={1.2} color="#fefefe" />
+      <pointLight position={[-5, 3, -5]} intensity={0.6} color="#e0f0ff" />
+      <pointLight position={[0, -4, -3]} intensity={0.8} color="#00B4D8" />
+      <pointLight position={[3, 2, -4]} intensity={0.5} color="#7B2FFF" />
       <Cube cubeRef={cubeRef} targetRotation={targetRotation} />
       <FloorShadow />
+      <Floor />
       <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} rotateSpeed={0.4} />
     </>
   );
@@ -183,7 +193,7 @@ function App() {
           camera={{ position: [0, 0, 5.5], fov: 45 }}
           gl={{ antialias: true }}
         >
-          <color attach="background" args={['#f4f6f8']} />
+          <color attach="background" args={['#020508']} />
           <Scene cubeRef={cubeRef} targetRotation={targetRotation} />
         </Canvas>
       </div>

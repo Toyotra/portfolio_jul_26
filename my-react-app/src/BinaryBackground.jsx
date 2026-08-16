@@ -8,9 +8,9 @@ const CONFIG = {
   hoverChars: "!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789",
   rows: null,
   cols: null,
-  canvasBackgroundColor: "#f4f6f8",
-  textColor: "#4a5f78",
-  textOpacity: 0.1,
+  canvasBackgroundColor: "#020508",
+  textColor: "#00D4FF",
+  textOpacity: 0.06,
   fadeOpacity: 0.04,
   hoverRadiusCells: 9,
   stretchFactor: 0.002,
@@ -41,11 +41,11 @@ function BinaryBackground({ hoverKey = null }) {
     const speed = CONFIG.speed;
     const chars = CONFIG.chars;
     const hoverMap = {
-      home: { hoverChars: "01", textColor: "#4a5f78" },
-      about: { hoverChars: "ABOUTabout", textColor: "#4a5f78" },
-      experiences: { hoverChars: "EXP!@", textColor: "#4a5f78" },
-      projects: { hoverChars: "<>/{}[]()", textColor: "#4a5f78" },
-      contact: { hoverChars: "@._-+0123", textColor: "#4a5f78" },
+      home: { hoverChars: "01", textColor: "#00D4FF" },
+      about: { hoverChars: "ABOUTabout", textColor: "#00D4FF" },
+      experiences: { hoverChars: "EXP!@", textColor: "#00D4FF" },
+      projects: { hoverChars: "<>/{}[]()", textColor: "#00D4FF" },
+      contact: { hoverChars: "@._-+0123", textColor: "#00D4FF" },
     };
     const hoverRadius = CONFIG.hoverRadiusCells;
     const stretchFactor = CONFIG.stretchFactor;

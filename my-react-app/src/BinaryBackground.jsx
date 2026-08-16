@@ -48,7 +48,6 @@ function BinaryBackground({ hoverKey = null }) {
       contact: { hoverChars: "@._-+0123", textColor: "#00D4FF" },
     };
     const hoverRadius = CONFIG.hoverRadiusCells;
-    const stretchFactor = CONFIG.stretchFactor;
 
     const mousePos = { x: null, y: null };
     const lastMouse = { x: null, y: null, t: performance.now() };

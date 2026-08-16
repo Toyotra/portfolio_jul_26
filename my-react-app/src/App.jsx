@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import { Line2 } from 'three/examples/jsm/lines/Line2';
@@ -13,8 +13,8 @@ const rotations = {
   about: [0, -Math.PI / 2, 0],
   experiences: [0, Math.PI, 0],
   projects: [0, Math.PI / 2, 0],
-  cat: [-Math.PI / 2, 0, 0],
-  contact: [Math.PI / 2, 0, 0],
+  cat: [Math.PI / 2, 0, 0],
+  contact: [-Math.PI / 2, 0, 0],
 };
 
 const sideOrder = ['about', 'projects', 'cat', 'contact', 'home', 'experiences'];

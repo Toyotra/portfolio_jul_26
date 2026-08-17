@@ -33,6 +33,7 @@ const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref
   const targetSpeedRef = useRef(NORMAL_SPEED);
   const rafRef = useRef(null);
   const oneSetHeightRef = useRef(0);
+  const prevImagesRef = useRef(null);
   const directionRef = useRef(direction);
 
   useEffect(() => {
@@ -50,8 +51,22 @@ const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref
     const total = streamRef.current.scrollHeight;
     if (total > 0) {
       oneSetHeightRef.current = total / 2;
+      if (prevImagesRef.current !== null) {
+        offsetRef.current = offsetRef.current % oneSetHeightRef.current;
+      }
     }
   }, [images]);
+
+  useEffect(() => {
+    if (prevImagesRef.current !== images) {
+      prevImagesRef.current = images;
+      offsetRef.current = 0;
+      oneSetHeightRef.current = 0;
+    }
+    if (oneSetHeightRef.current > 0) {
+      offsetRef.current = ((offsetRef.current % oneSetHeightRef.current) + oneSetHeightRef.current) % oneSetHeightRef.current;
+    }
+  });
 
   useEffect(() => {
     if (oneSetHeightRef.current === 0 && streamRef.current) {
@@ -78,7 +93,7 @@ const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref
       if (!hovered) {
         offsetRef.current += speedRef.current * (delta / 16.67) * directionRef.current;
         if (oneSetHeightRef.current > 0) {
-          offsetRef.current %= oneSetHeightRef.current;
+          offsetRef.current = ((offsetRef.current % oneSetHeightRef.current) + oneSetHeightRef.current) % oneSetHeightRef.current;
         }
       }
 
@@ -148,6 +163,10 @@ const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref
                   onMouseEnter={() => setHoveredImageIdx(i)}
                   onMouseLeave={() => setHoveredImageIdx(null)}
                 >
+                  <div className="ad-rail__image-corner ad-rail__image-corner--tl" />
+                  <div className="ad-rail__image-corner ad-rail__image-corner--tr" />
+                  <div className="ad-rail__image-corner ad-rail__image-corner--bl" />
+                  <div className="ad-rail__image-corner ad-rail__image-corner--br" />
                   <img
                     src={toLowRes(src)}
                     alt=""

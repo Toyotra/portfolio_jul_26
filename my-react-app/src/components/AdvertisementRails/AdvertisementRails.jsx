@@ -63,7 +63,7 @@ function AdvertisementRails({ activeSide }) {
   return (
     <>
       <AdvertisementRail ref={leftRef} images={leftImages} side="left" seed={0} direction={1} />
-      <AdvertisementRail ref={rightRef} images={rightImages} side="right" seed={40} direction={-1} />
+      <AdvertisementRail ref={rightRef} images={rightImages} side="right" seed={800} direction={-1} />
     </>
   );
 }

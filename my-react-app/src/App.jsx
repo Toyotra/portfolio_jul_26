@@ -1,5 +1,6 @@
 import SidePanel from './SidePanel';
 import CustomCursor from './CustomCursor';
+import AdvertisementRails from './components/AdvertisementRails/AdvertisementRails';
 import { useState, useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
@@ -141,6 +142,7 @@ function App() {
       <CustomCursor />
       <SidePanel side="left" />
       <SidePanel side="right" />
+      <AdvertisementRails activeSide={activeSide} />
 
       <nav className="sidebar">
         {Object.keys(rotations).map((side) => (

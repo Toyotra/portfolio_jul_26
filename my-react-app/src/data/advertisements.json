@@ -1,0 +1,76 @@
+{
+  "home": {
+    "left": [
+      "/ads/home/left/01.webp",
+      "/ads/home/left/02.webp",
+      "/ads/home/left/03.webp",
+      "/ads/home/left/04.webp"
+    ],
+    "right": [
+      "/ads/home/right/01.webp",
+      "/ads/home/right/02.webp",
+      "/ads/home/right/03.webp",
+      "/ads/home/right/04.webp"
+    ]
+  },
+  "about": {
+    "left": [
+      "/ads/about/left/01.webp",
+      "/ads/about/left/02.webp",
+      "/ads/about/left/03.webp"
+    ],
+    "right": [
+      "/ads/about/right/01.webp",
+      "/ads/about/right/02.webp",
+      "/ads/about/right/03.webp"
+    ]
+  },
+  "experiences": {
+    "left": [
+      "/ads/experiences/left/01.webp",
+      "/ads/experiences/left/02.webp",
+      "/ads/experiences/left/03.webp",
+      "/ads/experiences/left/04.webp"
+    ],
+    "right": [
+      "/ads/experiences/right/01.webp",
+      "/ads/experiences/right/02.webp",
+      "/ads/experiences/right/03.webp",
+      "/ads/experiences/right/04.webp"
+    ]
+  },
+  "projects": {
+    "left": [
+      "/ads/projects/left/01.webp",
+      "/ads/projects/left/02.webp",
+      "/ads/projects/left/03.webp"
+    ],
+    "right": [
+      "/ads/projects/right/01.webp",
+      "/ads/projects/right/02.webp",
+      "/ads/projects/right/03.webp"
+    ]
+  },
+  "cat": {
+    "left": [
+      "/ads/cat/left/01.webp",
+      "/ads/cat/left/02.webp"
+    ],
+    "right": [
+      "/ads/cat/right/01.webp",
+      "/ads/cat/right/02.webp"
+    ]
+  },
+  "contact": {
+    "left": [
+      "/ads/contact/left/01.webp",
+      "/ads/contact/left/02.webp",
+      "/ads/contact/left/03.webp"
+    ],
+    "right": [
+      "/ads/contact/right/01.webp",
+      "/ads/contact/right/02.webp",
+      "/ads/contact/right/03.webp"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 /* ============================================================
    AdvertisementRails.css — Full-viewport vertical image streams
-   Futuristic transparent advertising displays
+   Futuristic wireframe + transparent advertising displays
    ============================================================ */
 
 /* ─── Base rail wrapper ──────────────────────────────────── */
@@ -18,7 +18,7 @@
 .ad-rail--left  { left: 160px; }
 .ad-rail--right { right: 160px; }
 
-/* ─── Outer frame (mostly transparent) ───────────────────── */
+/* ─── Outer frame (transparent with wireframe overlay) ───── */
 .ad-rail__frame {
   position: relative;
   width: 100%;
@@ -29,19 +29,33 @@
   overflow: visible;
 }
 
-/* ─── Thin architectural edge lines ──────────────────────── */
-.ad-rail__edge {
+/* ─── Wireframe overlay ──────────────────────────────────── */
+.ad-rail__wireframe {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  overflow: hidden;
+}
+
+.ad-rail__wireframe-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 15%, rgba(255,255,255,0.12) 85%, transparent 100%);
+}
+
+.ad-rail__wireframe-col {
   position: absolute;
   top: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.18) 15%, rgba(255,255,255,0.18) 85%, transparent 100%);
-  pointer-events: none;
-  z-index: 6;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.12) 15%, rgba(255,255,255,0.12) 85%, transparent 100%);
 }
 
-.ad-rail--left .ad-rail__edge  { right: 0; }
-.ad-rail--right .ad-rail__edge { left: 0; }
+.ad-rail__wireframe-col--left  { left: 0; }
+.ad-rail__wireframe-col--right { right: 0; }
 
 /* ─── Viewport (overflow hidden for stream) ──────────────── */
 .ad-rail__viewport {
@@ -60,13 +74,25 @@
   z-index: 1;
 }
 
+.ad-rail__stream--spinning .ad-rail__image img {
+  filter: grayscale(40%) brightness(0.15) contrast(1.1) blur(3px);
+}
+
+.ad-rail__stream--fast .ad-rail__image img {
+  filter: grayscale(40%) brightness(0.2) contrast(1.1) blur(6px);
+}
+
+.ad-rail__stream--extreme .ad-rail__image img {
+  filter: grayscale(40%) brightness(0.1) contrast(1.1) blur(12px);
+}
+
 /* ─── Individual image card (wider, transparent bg) ──────── */
 .ad-rail__image {
   width: 100%;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   aspect-ratio: 16/9;
   background: transparent;
   transition: filter 0.4s ease, transform 0.4s ease;
@@ -77,8 +103,10 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: grayscale(40%) brightness(0.55) contrast(1.05);
-  transition: filter 0.4s ease, transform 0.4s ease;
+  position: absolute;
+  inset: 0;
+  filter: grayscale(40%) brightness(0.35) contrast(1.05);
+  transition: filter 0.4s ease, transform 0.4s ease, opacity 0.3s ease;
 }
 
 .ad-rail__image--active {
@@ -92,7 +120,28 @@
 }
 
 .ad-rail__image--dim img {
-  filter: grayscale(60%) brightness(0.3) contrast(0.8);
+  filter: grayscale(60%) brightness(0.2) contrast(0.8);
+}
+
+/* ─── Placeholder / blur-up layers ──────────────────────── */
+.ad-rail__image > img:not(.ad-rail__image--placeholder) {
+  opacity: 0;
+}
+
+.ad-rail__image > img.ad-rail__image--placeholder {
+  position: absolute;
+  inset: 0;
+  filter: grayscale(40%) brightness(0.35) contrast(1.05) blur(12px);
+  transform: scale(1.1);
+  transition: opacity 0.4s ease;
+}
+
+.ad-rail__image > img:not(.ad-rail__image--placeholder).ad-rail__image--loaded {
+  opacity: 1;
+}
+
+.ad-rail__image > img.ad-rail__image--placeholder.ad-rail__image--loaded {
+  opacity: 0;
 }
 
 /* ─── Scanlines overlay ──────────────────────────────────── */
@@ -103,8 +152,8 @@
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 0, 0, 0.08) 2px,
-    rgba(0, 0, 0, 0.08) 4px
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
   );
   pointer-events: none;
   z-index: 3;
@@ -114,7 +163,7 @@
 .ad-rail__vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%);
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.4) 100%);
   pointer-events: none;
   z-index: 4;
 }
@@ -132,6 +181,20 @@
 .ad-rail__corner--tr { top: 0;  right: 0; border-top: 1px solid rgba(255,255,255,0.35); border-right: 1px solid rgba(255,255,255,0.35); }
 .ad-rail__corner--bl { bottom: 0; left: 0;  border-bottom: 1px solid rgba(255,255,255,0.35); border-left: 1px solid rgba(255,255,255,0.35); }
 .ad-rail__corner--br { bottom: 0; right: 0; border-bottom: 1px solid rgba(255,255,255,0.35); border-right: 1px solid rgba(255,255,255,0.35); }
+
+/* ─── Edge accent line ───────────────────────────────────── */
+.ad-rail__edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.15) 15%, rgba(255,255,255,0.15) 85%, transparent 100%);
+  pointer-events: none;
+  z-index: 6;
+}
+
+.ad-rail--left .ad-rail__edge  { right: 0; }
+.ad-rail--right .ad-rail__edge { left: 0; }
 
 /* ─── Tiny glitch on image hover ─────────────────────────── */
 @keyframes ad-rail-glitch {

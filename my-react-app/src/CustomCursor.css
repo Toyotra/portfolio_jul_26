@@ -45,6 +45,11 @@
   transform: scale(1.2) rotate(0deg);
 }
 
+.icon-ad {
+  opacity: 0;
+  transform: scale(1.2) rotate(0deg);
+}
+
 .custom-cursor.hover-interactive .icon-crosshair {
   opacity: 0;
   transform: scale(0.6) rotate(0deg);
@@ -56,6 +61,11 @@
 }
 
 .custom-cursor.hover-interactive .icon-rect {
+  opacity: 0;
+  transform: scale(0.6) rotate(0deg);
+}
+
+.custom-cursor.hover-interactive .icon-ad {
   opacity: 0;
   transform: scale(0.6) rotate(0deg);
 }
@@ -73,6 +83,38 @@
 .custom-cursor.hover-text .icon-rect {
   opacity: 1;
   transform: scale(1) rotate(0deg);
+}
+
+.custom-cursor.hover-text .icon-ad {
+  opacity: 0;
+  transform: scale(0.6) rotate(0deg);
+}
+
+.custom-cursor.hover-ad .icon-crosshair {
+  opacity: 0;
+  transform: scale(0.6) rotate(0deg);
+}
+
+.custom-cursor.hover-ad .icon-diamond {
+  opacity: 0;
+  transform: scale(0.6) rotate(0deg);
+}
+
+.custom-cursor.hover-ad .icon-rect {
+  opacity: 0;
+  transform: scale(0.6) rotate(0deg);
+}
+
+.custom-cursor.hover-ad .icon-ad {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  animation: cursor-ad-spin 0.6s linear infinite;
+}
+
+@keyframes cursor-ad-spin {
+  0%   { transform: scale(1) rotate(0deg); }
+  50%  { transform: scale(1.15) rotate(180deg); }
+  100% { transform: scale(1) rotate(360deg); }
 }
 
 @media (hover: none) {

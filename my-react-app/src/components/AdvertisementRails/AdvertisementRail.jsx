@@ -1,20 +1,43 @@
-import { forwardRef, useImperativeHandle, useMemo, useRef, useState, useEffect } from 'react';
+import { forwardRef, useImperativeHandle, useMemo, useRef, useState, useEffect, useLayoutEffect } from 'react';
 import './AdvertisementRails.css';
 
 const NORMAL_SPEED = 0.3;
 const FAST_SPEED = 14;
 const LERP_FACTOR = 0.18;
 
-const AdvertisementRail = forwardRef(({ images, side, seed }, ref) => {
+const toLowRes = (src) => {
+  try {
+    const url = new URL(src);
+    const parts = url.pathname.split('/').filter(Boolean);
+    const last = parts[parts.length - 1];
+    const secondLast = parts[parts.length - 2];
+    if (/^\d+$/.test(last) && /^\d+$/.test(secondLast)) {
+      parts[parts.length - 2] = '40';
+      parts[parts.length - 1] = '23';
+      url.pathname = '/' + parts.join('/');
+      return url.toString();
+    }
+  } catch {
+    // noop
+  }
+  return src;
+};
+
+const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref) => {
   const streamRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [hoveredImageIdx, setHoveredImageIdx] = useState(null);
-  const childHoverCountRef = useRef(0);
+  const [loaded, setLoaded] = useState(() => new Set());
   const offsetRef = useRef(seed);
   const speedRef = useRef(NORMAL_SPEED);
   const targetSpeedRef = useRef(NORMAL_SPEED);
   const rafRef = useRef(null);
   const oneSetHeightRef = useRef(0);
+  const directionRef = useRef(direction);
+
+  useEffect(() => {
+    directionRef.current = direction;
+  }, [direction]);
 
   useImperativeHandle(ref, () => ({
     setSpeedTarget: (s) => {
@@ -22,11 +45,22 @@ const AdvertisementRail = forwardRef(({ images, side, seed }, ref) => {
     },
   }));
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!streamRef.current) return;
     const total = streamRef.current.scrollHeight;
-    oneSetHeightRef.current = total / 2;
+    if (total > 0) {
+      oneSetHeightRef.current = total / 2;
+    }
   }, [images]);
+
+  useEffect(() => {
+    if (oneSetHeightRef.current === 0 && streamRef.current) {
+      const total = streamRef.current.scrollHeight;
+      if (total > 0) {
+        oneSetHeightRef.current = total / 2;
+      }
+    }
+  });
 
   useEffect(() => {
     let lastTime = performance.now();
@@ -42,7 +76,7 @@ const AdvertisementRail = forwardRef(({ images, side, seed }, ref) => {
       }
 
       if (!hovered) {
-        offsetRef.current += speedRef.current * (delta / 16.67);
+        offsetRef.current += speedRef.current * (delta / 16.67) * directionRef.current;
         if (oneSetHeightRef.current > 0) {
           offsetRef.current %= oneSetHeightRef.current;
         }
@@ -50,6 +84,15 @@ const AdvertisementRail = forwardRef(({ images, side, seed }, ref) => {
 
       if (streamRef.current) {
         streamRef.current.style.transform = `translateY(${-offsetRef.current}px)`;
+        if (speedRef.current > 200) {
+          streamRef.current.classList.add('ad-rail__stream--spinning', 'ad-rail__stream--extreme');
+          streamRef.current.classList.remove('ad-rail__stream--fast');
+        } else if (speedRef.current > 20) {
+          streamRef.current.classList.add('ad-rail__stream--spinning', 'ad-rail__stream--fast');
+          streamRef.current.classList.remove('ad-rail__stream--extreme');
+        } else {
+          streamRef.current.classList.remove('ad-rail__stream--spinning', 'ad-rail__stream--fast', 'ad-rail__stream--extreme');
+        }
       }
 
       rafRef.current = requestAnimationFrame(animate);
@@ -61,17 +104,23 @@ const AdvertisementRail = forwardRef(({ images, side, seed }, ref) => {
     };
   }, [hovered]);
 
-  const doubledImages = useMemo(() => (images.length > 0 ? [...images, ...images] : []), [images]);
+  const tripledImages = useMemo(() => (images.length > 0 ? [...images, ...images, ...images] : []), [images]);
+
+  const handleImageLoad = (src) => {
+    setLoaded((prev) => {
+      const next = new Set(prev);
+      next.add(src);
+      return next;
+    });
+  };
 
   return (
     <div
       className={`ad-rail ad-rail--${side}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => {
-        if (childHoverCountRef.current === 0) {
-          setHovered(false);
-          setHoveredImageIdx(null);
-        }
+        setHovered(false);
+        setHoveredImageIdx(null);
       }}
     >
       <div className="ad-rail__frame">
@@ -82,10 +131,10 @@ const AdvertisementRail = forwardRef(({ images, side, seed }, ref) => {
 
         <div className="ad-rail__viewport">
           <div ref={streamRef} className="ad-rail__stream">
-            {doubledImages.map((src, i) => {
-              const originalIdx = i % images.length;
-              const isDim = hoveredImageIdx !== null && originalIdx !== hoveredImageIdx;
-              const isActive = hoveredImageIdx !== null && originalIdx === hoveredImageIdx;
+            {tripledImages.map((src, i) => {
+              const isActive = hoveredImageIdx === i;
+              const isDim = hoveredImageIdx !== null && !isActive;
+              const isLoaded = loaded.has(src);
               return (
                 <div
                   key={`${side}-${i}`}
@@ -96,19 +145,24 @@ const AdvertisementRail = forwardRef(({ images, side, seed }, ref) => {
                   ]
                     .filter(Boolean)
                     .join(' ')}
-                  onMouseEnter={(e) => {
-                    childHoverCountRef.current += 1;
-                    setHoveredImageIdx(originalIdx);
-                  }}
-                  onMouseLeave={(e) => {
-                    childHoverCountRef.current = Math.max(0, childHoverCountRef.current - 1);
-                    setHoveredImageIdx(null);
-                    if (childHoverCountRef.current === 0) {
-                      setHovered(false);
-                    }
-                  }}
+                  onMouseEnter={() => setHoveredImageIdx(i)}
+                  onMouseLeave={() => setHoveredImageIdx(null)}
                 >
-                  <img src={src} alt="" loading="lazy" />
+                  <img
+                    src={toLowRes(src)}
+                    alt=""
+                    loading="eager"
+                    className={['ad-rail__image--placeholder', isLoaded ? 'ad-rail__image--loaded' : '']
+                      .filter(Boolean)
+                      .join(' ')}
+                  />
+                  <img
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    className={isLoaded ? 'ad-rail__image--loaded' : ''}
+                    onLoad={() => handleImageLoad(src)}
+                  />
                 </div>
               );
             })}
@@ -116,6 +170,12 @@ const AdvertisementRail = forwardRef(({ images, side, seed }, ref) => {
 
           <div className="ad-rail__scanlines" />
           <div className="ad-rail__vignette" />
+        </div>
+
+        <div className="ad-rail__wireframe">
+          <div className="ad-rail__wireframe-row" />
+          <div className="ad-rail__wireframe-col ad-rail__wireframe-col--left" />
+          <div className="ad-rail__wireframe-col ad-rail__wireframe-col--right" />
         </div>
 
         <div className="ad-rail__edge" />

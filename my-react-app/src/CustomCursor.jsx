@@ -6,6 +6,7 @@ function CustomCursor() {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [hoverType, setHoverType] = useState('none');
   const [isClicking, setIsClicking] = useState(false);
+  const [isAdHover, setIsAdHover] = useState(false);
   const rafRef = useRef();
 
   useEffect(() => {
@@ -17,15 +18,19 @@ function CustomCursor() {
         'p, span, h1, h2, h3, h4, h5, h6, li, td, th, label, strong, em, b, i, small, big, a, .text-content'
       );
       const interactiveEl = target.closest(
-        'button, .sidebar-btn, input, textarea, [role="button"], .interactive'
+        'button, .sidebar-btn, input, textarea, [role="button"], .interactive, .ad-rail__image'
       );
 
       if (interactiveEl) {
+        const isAd = target.closest('.ad-rail__image');
         setHoverType('interactive');
+        setIsAdHover(!!isAd);
       } else if (textEl) {
         setHoverType('text');
+        setIsAdHover(false);
       } else {
         setHoverType('none');
+        setIsAdHover(false);
       }
     };
 
@@ -74,7 +79,7 @@ function CustomCursor() {
 
   return (
     <div
-      className={`custom-cursor ${hoverType === 'interactive' ? 'hover-interactive' : ''} ${hoverType === 'text' ? 'hover-text' : ''} ${isClicking ? 'clicking' : ''}`}
+      className={`custom-cursor ${hoverType === 'interactive' ? 'hover-interactive' : ''} ${hoverType === 'text' ? 'hover-text' : ''} ${isClicking ? 'clicking' : ''} ${isAdHover ? 'hover-ad' : ''}`}
       style={{
         left: cursorPos.x,
         top: cursorPos.y,
@@ -134,6 +139,11 @@ function CustomCursor() {
         <line x1="5" y1="6" x2="5" y2="18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
         <line x1="19" y1="6" x2="19" y2="18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
         <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+      </svg>
+
+      <svg className="cursor-icon icon-ad" viewBox="0 0 24 24" fill="none">
+        <polygon points="12,2 22,20 2,20" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" fill="none" />
+        <circle cx="12" cy="16" r="1.5" fill="currentColor" />
       </svg>
     </div>
   );

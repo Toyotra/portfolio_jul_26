@@ -3,7 +3,7 @@ import AdvertisementRail from './AdvertisementRail';
 import adsData from '../../data/advertisements.json';
 
 const NORMAL_SPEED = 0.3;
-const FAST_SPEED = 14;
+const FAST_SPEED = 900;
 
 function AdvertisementRails({ activeSide }) {
   const leftRef = useRef(null);
@@ -12,6 +12,18 @@ function AdvertisementRails({ activeSide }) {
   const [rightImages, setRightImages] = useState(() => adsData[activeSide]?.right || []);
   const prevSideRef = useRef(activeSide);
   const transitionIdRef = useRef(0);
+
+  useEffect(() => {
+    const allImages = Object.values(adsData).flatMap((section) => [...section.left, ...section.right]);
+    const seen = new Set();
+    allImages.forEach((src) => {
+      if (!seen.has(src)) {
+        seen.add(src);
+        const img = new Image();
+        img.src = src;
+      }
+    });
+  }, []);
 
   const handleSideChange = useCallback(
     (side) => {
@@ -26,13 +38,13 @@ function AdvertisementRails({ activeSide }) {
         if (transitionIdRef.current !== id) return;
         setLeftImages(adsData[side]?.left || []);
         setRightImages(adsData[side]?.right || []);
-      }, 150);
+      }, 80);
 
       const decelTimer = setTimeout(() => {
         if (transitionIdRef.current !== id) return;
         leftRef.current?.setSpeedTarget(NORMAL_SPEED);
         rightRef.current?.setSpeedTarget(NORMAL_SPEED);
-      }, 220);
+      }, 300);
 
       prevSideRef.current = side;
 
@@ -50,8 +62,8 @@ function AdvertisementRails({ activeSide }) {
 
   return (
     <>
-      <AdvertisementRail ref={leftRef} images={leftImages} side="left" seed={0} />
-      <AdvertisementRail ref={rightRef} images={rightImages} side="right" seed={40} />
+      <AdvertisementRail ref={leftRef} images={leftImages} side="left" seed={0} direction={1} />
+      <AdvertisementRail ref={rightRef} images={rightImages} side="right" seed={40} direction={-1} />
     </>
   );
 }

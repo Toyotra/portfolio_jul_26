@@ -155,6 +155,12 @@ const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref
         <div className="ad-rail__corner ad-rail__corner--hbl" />
         <div className="ad-rail__corner ad-rail__corner--hbr" />
 
+        {/* Corner glows */}
+        <div className="ad-rail__corner-glow ad-rail__corner-glow--tl" />
+        <div className="ad-rail__corner-glow ad-rail__corner-glow--tr" />
+        <div className="ad-rail__corner-glow ad-rail__corner-glow--bl" />
+        <div className="ad-rail__corner-glow ad-rail__corner-glow--br" />
+
         {/* Recessed viewport (screen cavity) */}
         <div className="ad-rail__viewport">
           <div ref={streamRef} className="ad-rail__stream">

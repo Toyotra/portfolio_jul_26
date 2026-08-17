@@ -129,11 +129,10 @@ function CustomCursor() {
       </svg>
 
       <svg className="cursor-icon icon-rect" viewBox="0 0 24 24" fill="none">
-        <line x1="6" y1="5" x2="18" y2="5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1="6" y1="19" x2="18" y2="19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1="5" y1="6" x2="5" y2="18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1="19" y1="6" x2="19" y2="18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-        <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+        <line x1="8" y1="3" x2="16" y2="3" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+        <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+        <line x1="8" y1="7" x2="8" y2="17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+        <line x1="16" y1="7" x2="16" y2="17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
       </svg>
     </div>
   );

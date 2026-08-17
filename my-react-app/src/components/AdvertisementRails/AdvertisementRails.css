@@ -24,13 +24,13 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background: #080808;
-  border: 1px solid rgba(255,255,255,0.05);
+  background: #050505;
+  border: 1px solid rgba(255,255,255,0.08);
   box-shadow:
-    0 0 0 1px rgba(0,0,0,0.9),
-    0 8px 32px rgba(0,0,0,0.5),
-    0 2px 8px rgba(0,0,0,0.3),
-    inset 0 0 40px rgba(0,0,0,0.2);
+    0 0 0 1px rgba(0,0,0,1),
+    0 12px 48px rgba(0,0,0,0.7),
+    0 4px 12px rgba(0,0,0,0.4),
+    inset 0 0 60px rgba(0,0,0,0.3);
   overflow: visible;
 }
 
@@ -39,11 +39,11 @@
   content: '';
   position: absolute;
   inset: 2px;
-  background: #0a0a0a;
-  border: 1px solid rgba(255,255,255,0.04);
+  background: #080808;
+  border: 1px solid rgba(255,255,255,0.06);
   box-shadow:
-    inset 0 0 16px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.02),
+    inset 0 0 24px rgba(0,0,0,0.8),
+    inset 0 1px 0 rgba(255,255,255,0.03),
     inset 0 -1px 0 rgba(255,255,255,0.01);
   pointer-events: none;
   z-index: 1;
@@ -53,13 +53,14 @@
 .ad-rail__frame::after {
   content: '';
   position: absolute;
-  inset: 5px;
-  background: #060606;
-  border: 1px solid rgba(255,255,255,0.05);
+  inset: 6px;
+  background: #030303;
+  border: 1px solid rgba(255,255,255,0.07);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.03),
+    inset 0 1px 0 rgba(255,255,255,0.04),
     inset 0 -1px 0 rgba(255,255,255,0.01),
-    0 0 0 1px rgba(0,0,0,0.9);
+    0 0 0 1px rgba(0,0,0,1),
+    0 0 12px rgba(0,0,0,0.6);
   pointer-events: none;
   z-index: 2;
 }
@@ -67,14 +68,14 @@
 /* ─── Recessed viewport (screen cavity) ──────────────────── */
 .ad-rail__viewport {
   position: absolute;
-  inset: 7px;
+  inset: 9px;
   overflow: hidden;
-  background: #010101;
-  border: 1px solid rgba(255,255,255,0.03);
+  background: #000000;
+  border: 1px solid rgba(255,255,255,0.04);
   box-shadow:
-    inset 0 0 20px rgba(0,0,0,1),
-    inset 0 0 6px rgba(0,0,0,0.9),
-    inset 0 0 2px rgba(0,0,0,0.8);
+    inset 0 0 30px rgba(0,0,0,1),
+    inset 0 0 12px rgba(0,0,0,0.95),
+    inset 0 0 4px rgba(0,0,0,0.9);
   z-index: 3;
 }
 
@@ -83,16 +84,16 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(255,255,255,0.012) 0%, transparent 60%);
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.025) 0%, transparent 55%);
   pointer-events: none;
   z-index: 5;
-  opacity: 0.8;
-  transition: opacity 0.8s ease, background 0.8s ease;
+  opacity: 0.9;
+  transition: opacity 0.6s ease, background 0.6s ease;
 }
 
 .ad-rail:hover .ad-rail__viewport::before {
-  opacity: 1.2;
-  background: radial-gradient(ellipse at center, rgba(255,255,255,0.018) 0%, transparent 60%);
+  opacity: 1;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.04) 0%, transparent 55%);
 }
 
 /* Screen edge highlight — subtle light on cavity rim */
@@ -100,10 +101,10 @@
   content: '';
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
   box-shadow:
-    inset 0 0 6px rgba(255,255,255,0.008),
-    0 0 3px rgba(255,255,255,0.004);
+    inset 0 0 10px rgba(255,255,255,0.015),
+    0 0 6px rgba(255,255,255,0.008);
   pointer-events: none;
   z-index: 6;
 }
@@ -118,15 +119,15 @@
 }
 
 .ad-rail__stream--spinning .ad-rail__image img {
-  filter: grayscale(40%) brightness(0.25) contrast(1.1) blur(3px);
+  filter: grayscale(40%) brightness(0.22) contrast(1.15) blur(3px);
 }
 
 .ad-rail__stream--fast .ad-rail__image img {
-  filter: grayscale(40%) brightness(0.2) contrast(1.1) blur(6px);
+  filter: grayscale(40%) brightness(0.18) contrast(1.15) blur(6px);
 }
 
 .ad-rail__stream--extreme .ad-rail__image img {
-  filter: grayscale(40%) brightness(0.15) contrast(1.1) blur(12px);
+  filter: grayscale(40%) brightness(0.12) contrast(1.15) blur(12px);
 }
 
 /* ─── Image cards ────────────────────────────────────────── */
@@ -136,9 +137,9 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: 16/9;
-  background: #020202;
+  background: #000000;
   transition: filter 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 /* Top edge highlight — subtle screen reflection */
@@ -149,7 +150,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
   z-index: 2;
   pointer-events: none;
 }
@@ -160,8 +161,8 @@
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px),
-    linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.01) 100%);
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px),
+    linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.015) 100%);
   pointer-events: none;
   z-index: 3;
 }
@@ -173,44 +174,44 @@
   display: block;
   position: absolute;
   inset: 0;
-  filter: grayscale(40%) brightness(0.5) contrast(1.05);
+  filter: grayscale(40%) brightness(0.55) contrast(1.1);
   transition: filter 0.4s ease, transform 0.4s ease, opacity 0.3s ease;
 }
 
 .ad-rail__image--active {
   z-index: 2;
-  transform: scale(1.02);
+  transform: scale(1.03);
   opacity: 1;
 }
 
 .ad-rail__image--active img {
-  filter: grayscale(0%) brightness(1.35) contrast(1.15);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15), 0 0 24px rgba(255, 255, 255, 0.05);
+  filter: grayscale(0%) brightness(1.4) contrast(1.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.25), 0 0 40px rgba(255, 255, 255, 0.08);
 }
 
 .ad-rail__image--dim img {
-  filter: grayscale(60%) brightness(0.3) contrast(0.85);
+  filter: grayscale(60%) brightness(0.25) contrast(0.85);
 }
 
 /* ─── Image corner registration marks ───────────────────── */
 .ad-rail__image-corner {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   z-index: 4;
   pointer-events: none;
-  opacity: 0.12;
+  opacity: 0.15;
   transition: opacity 0.4s ease;
 }
 
 .ad-rail__image--active .ad-rail__image-corner {
-  opacity: 0.4;
+  opacity: 0.5;
 }
 
-.ad-rail__image-corner--tl { top: 4px;  left: 4px;  border-top: 1px solid rgba(255,255,255,0.5); border-left: 1px solid rgba(255,255,255,0.5); }
-.ad-rail__image-corner--tr { top: 4px;  right: 4px; border-top: 1px solid rgba(255,255,255,0.5); border-right: 1px solid rgba(255,255,255,0.5); }
-.ad-rail__image-corner--bl { bottom: 4px; left: 4px;  border-bottom: 1px solid rgba(255,255,255,0.5); border-left: 1px solid rgba(255,255,255,0.5); }
-.ad-rail__image-corner--br { bottom: 4px; right: 4px; border-bottom: 1px solid rgba(255,255,255,0.5); border-right: 1px solid rgba(255,255,255,0.5); }
+.ad-rail__image-corner--tl { top: 4px;  left: 4px;  border-top: 1px solid rgba(255,255,255,0.6); border-left: 1px solid rgba(255,255,255,0.6); }
+.ad-rail__image-corner--tr { top: 4px;  right: 4px; border-top: 1px solid rgba(255,255,255,0.6); border-right: 1px solid rgba(255,255,255,0.6); }
+.ad-rail__image-corner--bl { bottom: 4px; left: 4px;  border-bottom: 1px solid rgba(255,255,255,0.6); border-left: 1px solid rgba(255,255,255,0.6); }
+.ad-rail__image-corner--br { bottom: 4px; right: 4px; border-bottom: 1px solid rgba(255,255,255,0.6); border-right: 1px solid rgba(255,255,255,0.6); }
 
 /* ─── Scanlines overlay ──────────────────────────────────── */
 .ad-rail__scanlines {
@@ -220,8 +221,8 @@
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 0, 0, 0.03) 2px,
-    rgba(0, 0, 0, 0.03) 4px
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 4px
   );
   pointer-events: none;
   z-index: 4;
@@ -231,7 +232,7 @@
 .ad-rail__vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.3) 100%);
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%);
   pointer-events: none;
   z-index: 5;
 }
@@ -239,22 +240,22 @@
 /* ─── Frame corners (structural) ─────────────────────────── */
 .ad-rail__corner {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   z-index: 8;
   pointer-events: none;
 }
 
-.ad-rail__corner--tl { top: 0;  left: 0;  border-top: 1px solid rgba(255,255,255,0.2); border-left: 1px solid rgba(255,255,255,0.2); }
-.ad-rail__corner--tr { top: 0;  right: 0; border-top: 1px solid rgba(255,255,255,0.2); border-right: 1px solid rgba(255,255,255,0.2); }
-.ad-rail__corner--bl { bottom: 0; left: 0;  border-bottom: 1px solid rgba(255,255,255,0.2); border-left: 1px solid rgba(255,255,255,0.2); }
-.ad-rail__corner--br { bottom: 0; right: 0; border-bottom: 1px solid rgba(255,255,255,0.2); border-right: 1px solid rgba(255,255,255,0.2); }
+.ad-rail__corner--tl { top: 0;  left: 0;  border-top: 1px solid rgba(255,255,255,0.25); border-left: 1px solid rgba(255,255,255,0.25); }
+.ad-rail__corner--tr { top: 0;  right: 0; border-top: 1px solid rgba(255,255,255,0.25); border-right: 1px solid rgba(255,255,255,0.25); }
+.ad-rail__corner--bl { bottom: 0; left: 0;  border-bottom: 1px solid rgba(255,255,255,0.25); border-left: 1px solid rgba(255,255,255,0.25); }
+.ad-rail__corner--br { bottom: 0; right: 0; border-bottom: 1px solid rgba(255,255,255,0.25); border-right: 1px solid rgba(255,255,255,0.25); }
 
 /* Inner housing corners */
-.ad-rail__corner--hl { top: 2px;  left: 2px;  border-top: 1px solid rgba(255,255,255,0.12); border-left: 1px solid rgba(255,255,255,0.12); }
-.ad-rail__corner--hr { top: 2px;  right: 2px; border-top: 1px solid rgba(255,255,255,0.12); border-right: 1px solid rgba(255,255,255,0.12); }
-.ad-rail__corner--hbl { bottom: 2px; left: 2px;  border-bottom: 1px solid rgba(255,255,255,0.12); border-left: 1px solid rgba(255,255,255,0.12); }
-.ad-rail__corner--hbr { bottom: 2px; right: 2px; border-bottom: 1px solid rgba(255,255,255,0.12); border-right: 1px solid rgba(255,255,255,0.12); }
+.ad-rail__corner--hl { top: 2px;  left: 2px;  border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.15); }
+.ad-rail__corner--hr { top: 2px;  right: 2px; border-top: 1px solid rgba(255,255,255,0.15); border-right: 1px solid rgba(255,255,255,0.15); }
+.ad-rail__corner--hbl { bottom: 2px; left: 2px;  border-bottom: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.15); }
+.ad-rail__corner--hbr { bottom: 2px; right: 2px; border-bottom: 1px solid rgba(255,255,255,0.15); border-right: 1px solid rgba(255,255,255,0.15); }
 
 /* ─── Mounting brackets ──────────────────────────────────── */
 .ad-rail__mount {
@@ -267,10 +268,10 @@
   top: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 28px;
-  height: 3px;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
+  width: 36px;
+  height: 4px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 1px;
 }
 
@@ -278,10 +279,10 @@
   bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 28px;
-  height: 3px;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
+  width: 36px;
+  height: 4px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 1px;
 }
 
@@ -295,12 +296,12 @@
   width: 2px;
   height: 2px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-  box-shadow: inset 0 0 1px rgba(0,0,0,0.9);
+  background: rgba(255,255,255,0.12);
+  box-shadow: inset 0 0 1px rgba(0,0,0,1);
 }
 
-.ad-rail__mount::before { left: 4px; }
-.ad-rail__mount::after { right: 4px; }
+.ad-rail__mount::before { left: 5px; }
+.ad-rail__mount::after { right: 5px; }
 
 /* ─── Status indicator ───────────────────────────────────── */
 .ad-rail__status {
@@ -310,33 +311,33 @@
   pointer-events: none;
 }
 
-.ad-rail--left .ad-rail__status { right: 8px; }
-.ad-rail--right .ad-rail__status { left: 8px; }
+.ad-rail--left .ad-rail__status { right: 10px; }
+.ad-rail--right .ad-rail__status { left: 10px; }
 
 .ad-rail__status-dot {
-  width: 3px;
-  height: 3px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  box-shadow: 0 0 2px rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.25);
+  box-shadow: 0 0 3px rgba(255,255,255,0.08);
   transition: all 0.3s ease;
 }
 
 .ad-rail:hover .ad-rail__status-dot {
-  background: rgba(255,255,255,0.7);
-  box-shadow: 0 0 4px rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 0 6px rgba(255,255,255,0.35);
 }
 
 /* Transition mode — status indicator activates */
 .ad-rail:has(.ad-rail__stream--spinning) .ad-rail__status-dot {
-  background: rgba(255,255,255,0.9);
-  box-shadow: 0 0 6px rgba(255,255,255,0.4);
-  animation: ad-rail-status-pulse 0.6s ease-in-out infinite;
+  background: #00e5ff;
+  box-shadow: 0 0 8px rgba(0,229,255,0.6), 0 0 16px rgba(0,229,255,0.2);
+  animation: ad-rail-status-pulse 0.5s ease-in-out infinite;
 }
 
 @keyframes ad-rail-status-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(0,229,255,0.6), 0 0 16px rgba(0,229,255,0.2); }
+  50% { opacity: 0.4; box-shadow: 0 0 3px rgba(0,229,255,0.3), 0 0 8px rgba(0,229,255,0.1); }
 }
 
 /* ─── Edge ticks ─────────────────────────────────────────── */
@@ -344,15 +345,15 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 4px;
+  width: 5px;
   z-index: 8;
   pointer-events: none;
   background: repeating-linear-gradient(
     180deg,
     transparent 0px,
-    transparent 19px,
-    rgba(255,255,255,0.04) 19px,
-    rgba(255,255,255,0.04) 20px
+    transparent 18px,
+    rgba(255,255,255,0.06) 18px,
+    rgba(255,255,255,0.06) 20px
   );
 }
 
@@ -373,7 +374,7 @@
   left: 8px;
   right: 8px;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 15%, rgba(255,255,255,0.05) 85%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 15%, rgba(255,255,255,0.08) 85%, transparent 100%);
 }
 
 .ad-rail__tech-vline {
@@ -381,7 +382,7 @@
   top: 8px;
   bottom: 8px;
   width: 1px;
-  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.05) 15%, rgba(255,255,255,0.05) 85%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 15%, rgba(255,255,255,0.08) 85%, transparent 100%);
 }
 
 /* ─── Edge accent line ───────────────────────────────────── */
@@ -390,7 +391,7 @@
   top: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.08) 80%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.12) 20%, rgba(255,255,255,0.12) 80%, transparent 100%);
   pointer-events: none;
   z-index: 10;
 }
@@ -412,7 +413,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 80%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.08) 80%, transparent 100%);
 }
 
 .ad-rail__wireframe-col {
@@ -420,7 +421,7 @@
   top: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 80%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.08) 80%, transparent 100%);
 }
 
 .ad-rail__wireframe-col--left  { left: 8px; }
@@ -429,54 +430,84 @@
 /* ─── Transition effects ─────────────────────────────────── */
 .ad-rail:has(.ad-rail__stream--spinning) .ad-rail__viewport {
   box-shadow:
-    inset 0 0 20px rgba(0,0,0,1),
-    inset 0 0 6px rgba(0,0,0,0.9),
-    inset 0 0 2px rgba(0,0,0,0.8),
-    0 0 8px rgba(255,255,255,0.015);
+    inset 0 0 30px rgba(0,0,0,1),
+    inset 0 0 12px rgba(0,0,0,0.95),
+    inset 0 0 4px rgba(0,0,0,0.9),
+    0 0 16px rgba(255,255,255,0.02);
 }
 
 .ad-rail:has(.ad-rail__stream--spinning) .ad-rail__viewport::after {
-  border-color: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
   box-shadow:
-    inset 0 0 8px rgba(255,255,255,0.015),
-    0 0 4px rgba(255,255,255,0.01);
+    inset 0 0 12px rgba(255,255,255,0.02),
+    0 0 8px rgba(255,255,255,0.015);
 }
 
 .ad-rail:has(.ad-rail__stream--spinning) .ad-rail__frame {
   box-shadow:
-    0 0 0 1px rgba(0,0,0,0.9),
-    0 8px 32px rgba(0,0,0,0.5),
-    0 2px 8px rgba(0,0,0,0.3),
-    inset 0 0 40px rgba(0,0,0,0.2),
-    0 0 16px rgba(255,255,255,0.01);
+    0 0 0 1px rgba(0,0,0,1),
+    0 12px 48px rgba(0,0,0,0.7),
+    0 4px 12px rgba(0,0,0,0.4),
+    inset 0 0 60px rgba(0,0,0,0.3),
+    0 0 24px rgba(255,255,255,0.015);
 }
 
 /* ─── Hover effects ──────────────────────────────────────── */
 .ad-rail:hover .ad-rail__edge {
-  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.18) 20%, rgba(255,255,255,0.18) 80%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.25) 20%, rgba(255,255,255,0.25) 80%, transparent 100%);
 }
 
 .ad-rail:hover .ad-rail__frame {
   box-shadow:
-    0 0 0 1px rgba(0,0,0,0.9),
-    0 8px 32px rgba(0,0,0,0.5),
-    0 2px 8px rgba(0,0,0,0.3),
-    inset 0 0 40px rgba(0,0,0,0.2),
-    0 0 12px rgba(255,255,255,0.015);
+    0 0 0 1px rgba(0,0,0,1),
+    0 12px 48px rgba(0,0,0,0.7),
+    0 4px 12px rgba(0,0,0,0.4),
+    inset 0 0 60px rgba(0,0,0,0.3),
+    0 0 20px rgba(255,255,255,0.02);
 }
 
 /* ─── Glitch animation on image hover (preserved) ────────── */
 @keyframes ad-rail-glitch {
-  0%   { transform: translate(0) scale(1.02); }
-  20%  { transform: translate(-1px, 1px) scale(1.02); }
-  40%  { transform: translate(1px, -1px) scale(1.02); }
-  60%  { transform: translate(-1px, -1px) scale(1.02); }
-  80%  { transform: translate(1px, 1px) scale(1.02); }
-  100% { transform: translate(0) scale(1.02); }
+  0%   { transform: translate(0) scale(1.03); }
+  20%  { transform: translate(-1px, 1px) scale(1.03); }
+  40%  { transform: translate(1px, -1px) scale(1.03); }
+  60%  { transform: translate(-1px, -1px) scale(1.03); }
+  80%  { transform: translate(1px, 1px) scale(1.03); }
+  100% { transform: translate(0) scale(1.03); }
 }
 
 .ad-rail__image--active {
   animation: ad-rail-glitch 0.25s ease;
+}
+
+/* ─── WOW DETAILS ────────────────────────────────────────── */
+
+/* Active corner illumination */
+.ad-rail__corner-glow {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 8;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ad-rail__corner-glow--tl { top: -4px; left: -4px; }
+.ad-rail__corner-glow--tr { top: -4px; right: -4px; }
+.ad-rail__corner-glow--bl { bottom: -4px; left: -4px; }
+.ad-rail__corner-glow--br { bottom: -4px; right: -4px; }
+
+.ad-rail:hover .ad-rail__corner-glow {
+  opacity: 1;
+}
+
+.ad-rail__corner-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 0 8px rgba(255,255,255,0.15);
 }
 
 /* ─── Responsive ─────────────────────────────────────────── */

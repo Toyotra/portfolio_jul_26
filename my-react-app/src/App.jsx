@@ -1,4 +1,5 @@
 import SidePanel from './SidePanel';
+import CustomCursor from './CustomCursor';
 import { useState, useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
@@ -112,44 +113,6 @@ function Cube({ cubeRef, targetRotation }) {
   );
 }
 
-function FloorShadow() {
-  const texture = useMemo(() => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 256;
-    canvas.height = 256;
-    const ctx = canvas.getContext('2d');
-    const gradient = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-    gradient.addColorStop(0, 'rgba(0, 0, 0, 0.12)');
-    gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.04)');
-    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 256, 256);
-    const tex = new THREE.CanvasTexture(canvas);
-    return tex;
-  }, []);
-
-  return (
-    <mesh position={[0, -1.4, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-      <planeGeometry args={[5.5, 5.5]} />
-      <meshBasicMaterial
-        map={texture}
-        transparent
-        depthWrite={false}
-        side={THREE.DoubleSide}
-      />
-    </mesh>
-  );
-}
-
-function Floor() {
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.8, 0]}>
-      <planeGeometry args={[14, 14]} />
-      <meshBasicMaterial color="#000000" />
-    </mesh>
-  );
-}
-
 function Scene({ cubeRef, targetRotation }) {
   return (
     <>
@@ -158,8 +121,6 @@ function Scene({ cubeRef, targetRotation }) {
       <pointLight position={[-5, 3, -5]} intensity={0.5} color="#e0e0e0" />
       <pointLight position={[0, -4, -3]} intensity={0.4} color="#ffffff" />
       <Cube cubeRef={cubeRef} targetRotation={targetRotation} />
-      <FloorShadow />
-      <Floor />
       <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} rotateSpeed={0.4} />
     </>
   );
@@ -177,6 +138,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <CustomCursor />
       <SidePanel side="left" />
       <SidePanel side="right" />
 

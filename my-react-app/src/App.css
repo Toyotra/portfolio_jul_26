@@ -10,6 +10,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  cursor: none !important;
 }
 
 html,
@@ -24,6 +25,8 @@ body,
   background: #f5f5f5;
 }
 
+
+/*grid lines for background*/
 .app-container {
   display: flex;
   width: 100vw;

@@ -2,15 +2,15 @@ import { useEffect, useRef } from "react";
 import "./BinaryBackground.css";
 
 const CONFIG = {
-  speed: 0.4,
+  speed: 0.3,
   fontSize: 11,
   chars: "01",
   hoverChars: "!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789",
   rows: null,
   cols: null,
-  canvasBackgroundColor: "#080c10",
-  textColor: "#4a7a9a",
-  textOpacity: 0.07,
+  canvasBackgroundColor: "#f5f5f5",
+  textColor: "#000000",
+  textOpacity: 0.08,
   fadeOpacity: 0.04,
   hoverRadiusCells: 9,
   stretchFactor: 0.002,
@@ -41,11 +41,11 @@ function BinaryBackground({ hoverKey = null }) {
     const speed = CONFIG.speed;
     const chars = CONFIG.chars;
     const hoverMap = {
-      home: { hoverChars: "01", textColor: "#4a7a9a" },
-      about: { hoverChars: "ABOUTabout", textColor: "#4a7a9a" },
-      experiences: { hoverChars: "EXP!@", textColor: "#4a7a9a" },
-      projects: { hoverChars: "<>/{}[]()", textColor: "#4a7a9a" },
-      contact: { hoverChars: "@._-+0123", textColor: "#4a7a9a" },
+      home: { hoverChars: "01", textColor: "#000000" },
+      about: { hoverChars: "ABOUTabout", textColor: "#000000" },
+      experiences: { hoverChars: "EXP!@", textColor: "#000000" },
+      projects: { hoverChars: "<>/{}[]()", textColor: "#000000" },
+      contact: { hoverChars: "@._-+0123", textColor: "#000000" },
     };
     const hoverRadius = CONFIG.hoverRadiusCells;
 

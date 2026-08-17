@@ -6,5 +6,9 @@
   height: 100vh;
   z-index: -1;
   pointer-events: none;
-  background: #080c10;
+  background-color: #f5f5f5;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
 }

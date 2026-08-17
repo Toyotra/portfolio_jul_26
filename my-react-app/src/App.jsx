@@ -1,3 +1,4 @@
+import SidePanel from './SidePanel';
 import { useState, useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
@@ -6,6 +7,7 @@ import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial';
 import * as THREE from 'three';
 import './App.css';
+import './SidePanel.css';
 import { faceComponents } from './components/faces';
 
 const rotations = {
@@ -175,6 +177,9 @@ function App() {
 
   return (
     <div className="app-container">
+      <SidePanel side="left" />
+      <SidePanel side="right" />
+
       <nav className="sidebar">
         {Object.keys(rotations).map((side) => (
           <button

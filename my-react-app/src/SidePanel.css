@@ -1,0 +1,547 @@
+/* ============================================================
+   SidePanel.css — Futuristic animated side panels
+   Architecture + cyberpunk monochrome aesthetic
+   ============================================================ */
+
+/* ─── Reset for panel internals ──────────────────────────── */
+.sp *, .sp *::before, .sp *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── Base panel wrapper ─────────────────────────────────── */
+.sp {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 88px;
+  height: 82vh;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sp--left  { left: 10px; }
+.sp--right { right: 10px; }
+
+/* ─── Outer shell ────────────────────────────────────────── */
+.sp-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #080808;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.02),
+    inset 1px 0 0 rgba(255, 255, 255, 0.03),
+    inset -1px 0 0 rgba(255, 255, 255, 0.03),
+    0 0 30px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+/* ─── Inner recessed panel ───────────────────────────────── */
+.sp-inner {
+  position: absolute;
+  inset: 5px;
+  background: #040404;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+}
+
+/* ─── Ambient corner indicators ──────────────────────────── */
+.sp-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  z-index: 10;
+}
+.sp-corner--tl { top: 5px;  left: 5px;  border-top: 1px solid rgba(255,255,255,0.25); border-left: 1px solid rgba(255,255,255,0.25); }
+.sp-corner--tr { top: 5px;  right: 5px; border-top: 1px solid rgba(255,255,255,0.25); border-right: 1px solid rgba(255,255,255,0.25); }
+.sp-corner--bl { bottom: 5px; left: 5px;  border-bottom: 1px solid rgba(255,255,255,0.25); border-left: 1px solid rgba(255,255,255,0.25); }
+.sp-corner--br { bottom: 5px; right: 5px; border-bottom: 1px solid rgba(255,255,255,0.25); border-right: 1px solid rgba(255,255,255,0.25); }
+
+/* ─── SVG background layer ───────────────────────────────── */
+.sp-bg-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.12;
+}
+
+/* ─── Traveling horizontal scan line ─────────────────────── */
+.sp-scan {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.02) 8%,
+    rgba(255, 255, 255, 0.55) 28%,
+    rgba(255, 255, 255, 0.90) 50%,
+    rgba(255, 255, 255, 0.55) 72%,
+    rgba(255, 255, 255, 0.02) 92%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 5px rgba(255, 255, 255, 0.12),
+    0 0 12px rgba(255, 255, 255, 0.04);
+  animation: sp-scan var(--scan-dur, 6s) var(--scan-delay, 0s) linear infinite;
+  z-index: 5;
+}
+
+@keyframes sp-scan {
+  0%   { top: -4%; opacity: 0; }
+  4%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { top: 104%; opacity: 0; }
+}
+
+/* ─── Scan glow halo (tight, premium) ───────────────────── */
+.sp-scan-halo {
+  position: absolute;
+  left: 10%;
+  width: 80%;
+  height: 28px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.055) 0%, transparent 70%);
+  animation: sp-scan var(--scan-dur, 6s) var(--scan-delay, 0s) linear infinite;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* ─── Segmented light bar ────────────────────────────────── */
+.sp-bar-track {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 68%;
+  top: 16%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 6;
+}
+
+.sp-bar-seg {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-bar-seg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.35);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: sp-seg-fill var(--seg-dur, 3s) var(--seg-delay, 0s) ease-in-out infinite;
+}
+
+@keyframes sp-seg-fill {
+  0%, 30%  { transform: scaleX(0); opacity: 0; }
+  38%      { transform: scaleX(1); opacity: 1; }
+  55%      { transform: scaleX(1); opacity: 1; }
+  62%      { transform: scaleX(0); opacity: 0; }
+  100%     { transform: scaleX(0); opacity: 0; }
+}
+
+/* ─── Rotating geometric ring ────────────────────────────── */
+.sp-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  animation: sp-ring-spin var(--ring-dur, 20s) linear infinite;
+  z-index: 3;
+}
+
+.sp-ring--outer {
+  width: 72%;
+  aspect-ratio: 1;
+}
+.sp-ring--inner {
+  width: 46%;
+  aspect-ratio: 1;
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.07);
+  animation-direction: reverse;
+  animation-duration: var(--ring-dur-inner, 14s);
+}
+
+@keyframes sp-ring-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ─── Rotating diamond SVG ring ──────────────────────────── */
+.sp-diamond-svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 60%;
+  z-index: 3;
+  animation: sp-ring-spin var(--diamond-dur, 28s) linear infinite;
+}
+
+/* ─── Blinking indicator dots ────────────────────────────── */
+.sp-dots {
+  position: absolute;
+  right: 7px;
+  top: 14%;
+  height: 72%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 7;
+  padding: 2px 0;
+}
+
+.sp-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  animation: sp-dot-blink var(--dot-dur, 3s) var(--dot-delay, 0s) ease-in-out infinite;
+}
+
+@keyframes sp-dot-blink {
+  0%, 20%  { background: rgba(255,255,255,0.1); box-shadow: none; }
+  35%      { background: rgba(255,255,255,0.9); box-shadow: 0 0 4px rgba(255,255,255,0.4); }
+  50%      { background: rgba(255,255,255,0.1); box-shadow: none; }
+  100%     { background: rgba(255,255,255,0.1); box-shadow: none; }
+}
+
+/* ─── Left-side dots column ──────────────────────────────── */
+.sp-dots--left { right: auto; left: 7px; }
+
+/* ─── Traveling horizontal wire segments ─────────────────── */
+.sp-wires {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 38%;
+  top: 31%;
+  z-index: 6;
+  overflow: hidden;
+}
+
+.sp-wire {
+  position: absolute;
+  left: -100%;
+  width: 180%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.0) 10%,
+    rgba(255,255,255,0.22) 30%,
+    rgba(255,255,255,0.55) 50%,
+    rgba(255,255,255,0.22) 70%,
+    rgba(255,255,255,0.0) 90%,
+    transparent 100%
+  );
+  animation: sp-wire-travel var(--wire-dur, 7s) var(--wire-delay, 0s) linear infinite;
+}
+
+@keyframes sp-wire-travel {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+/* ─── Vertical ruler ticks ───────────────────────────────── */
+.sp-ticks {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0.18;
+}
+
+.sp-tick {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.sp-tick--major { width: 100%; opacity: 1; }
+.sp-tick--minor { width: 55%;  opacity: 0.5; }
+
+.sp-tick-zone {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  animation: sp-ticks-scroll var(--ticks-dur, 12s) linear infinite;
+}
+
+@keyframes sp-ticks-scroll {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* ─── Active window highlight ────────────────────────────── */
+.sp-window {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 4;
+  overflow: hidden;
+}
+
+.sp-window::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  animation: sp-window-sweep var(--window-dur, 5s) var(--window-delay, 0s) linear infinite;
+}
+
+@keyframes sp-window-sweep {
+  0%   { left: -60%; }
+  100% { left: 160%; }
+}
+
+.sp-window-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 5.5px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.28);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.sp-window--top    { top: 9px; }
+.sp-window--bottom { bottom: 9px; }
+
+/* ─── Mechanical cutout ──────────────────────────────────── */
+.sp-cutout {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #020202;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 8px rgba(0,0,0,1);
+  z-index: 4;
+  overflow: hidden;
+}
+
+.sp-cutout--top {
+  top: 44px;
+  width: 38px;
+  height: 20px;
+}
+
+.sp-cutout--bottom {
+  bottom: 44px;
+  width: 38px;
+  height: 20px;
+}
+
+.sp-cutout-pulse {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.04);
+  animation: sp-cutout-pulse var(--cutout-dur, 4s) var(--pulse-delay, 0s) ease-in-out infinite;
+}
+
+@keyframes sp-cutout-pulse {
+  0%, 60%  { opacity: 0; }
+  70%      { opacity: 1; }
+  85%      { opacity: 0.5; }
+  100%     { opacity: 0; }
+}
+
+/* ─── Top / bottom caps ──────────────────────────────────── */
+.sp-cap {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 18px;
+  z-index: 8;
+  overflow: hidden;
+  background: #050505;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.sp-cap--top    { top: 0; }
+.sp-cap--bottom { bottom: 0; border-top: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+
+.sp-cap-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 200%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.0) 15%,
+    rgba(255,255,255,0.4) 40%,
+    rgba(255,255,255,0.7) 50%,
+    rgba(255,255,255,0.4) 60%,
+    rgba(255,255,255,0.0) 85%,
+    transparent 100%
+  );
+  animation: sp-cap-flow var(--cap-dur, 4s) var(--cap-delay, 0s) linear infinite;
+}
+
+@keyframes sp-cap-flow {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.sp-cap-cap-dot {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  box-shadow: 0 0 5px rgba(255,255,255,0.4);
+  animation: sp-cap-dot-pulse var(--cap-dot-dur, 2.5s) var(--cap-dot-delay, 0s) ease-in-out infinite;
+}
+
+@keyframes sp-cap-dot-pulse {
+  0%, 30%  { opacity: 0.2; }
+  40%      { opacity: 1; }
+  55%      { opacity: 0.2; }
+  100%     { opacity: 0.2; }
+}
+
+/* ─── Waveform strip ─────────────────────────────────────── */
+.sp-wave {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.sp-wave--top    { top: 20px; }
+.sp-wave--bottom { bottom: 20px; }
+
+.sp-wave svg {
+  width: 100%;
+  height: 100%;
+  animation: sp-wave-scroll var(--wave-dur, 8s) var(--wave-delay, 0s) linear infinite;
+}
+
+@keyframes sp-wave-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── Center structural seam line ────────────────────────── */
+.sp-seam {
+  position: absolute;
+  top: 22px;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255,255,255,0.08) 10%,
+    rgba(255,255,255,0.15) 40%,
+    rgba(255,255,255,0.15) 60%,
+    rgba(255,255,255,0.08) 90%,
+    transparent 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ─── Secondary edge accent line ─────────────────────────── */
+.sp-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255,255,255,0.2) 20%,
+    rgba(255,255,255,0.2) 80%,
+    transparent 100%
+  );
+  z-index: 9;
+  pointer-events: none;
+}
+
+.sp--left  .sp-edge { right: -1px; }
+.sp--right .sp-edge { left: -1px; }
+
+/* ─── Subtle breathing glow on shell edges ───────────────── */
+.sp-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  animation: sp-shell-breathe 6s ease-in-out infinite;
+}
+
+@keyframes sp-shell-breathe {
+  0%, 100% { box-shadow: inset 0 0 0 rgba(255,255,255,0), 0 0 0 rgba(255,255,255,0); }
+  50%       { box-shadow: inset 0 0 20px rgba(255,255,255,0.012), 0 0 8px rgba(255,255,255,0.015); }
+}
+
+/* ─── Responsive: mobile ─────────────────────────────────── */
+@media (max-width: 640px) {
+  .sp {
+    width: 52px;
+  }
+  .sp--left  { left: 4px; }
+  .sp--right { right: 4px; }
+
+  .sp-inner { inset: 3px; }
+  .sp-shell { border-color: rgba(255,255,255,0.07); }
+
+  .sp-window { display: none; }
+  .sp-cutout { display: none; }
+  .sp-cap    { display: none; }
+
+  .sp-ring--outer { width: 60%; }
+  .sp-ring--inner { width: 38%; }
+
+  .sp-dots { display: none; }
+
+  .sp-bar-track { height: 50%; top: 25%; }
+
+  .sp-wave { display: none; }
+
+  .sp-corner { width: 6px; height: 6px; }
+  .sp-corner--tl { top: 3px;  left: 3px; }
+  .sp-corner--tr { top: 3px;  right: 3px; }
+  .sp-corner--bl { bottom: 3px; left: 3px; }
+  .sp-corner--br { bottom: 3px; right: 3px; }
+}

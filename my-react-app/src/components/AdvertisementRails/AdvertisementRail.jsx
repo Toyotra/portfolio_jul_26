@@ -139,11 +139,23 @@ const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref
       }}
     >
       <div className="ad-rail__frame">
+        {/* Mounting brackets */}
+        <div className="ad-rail__mount ad-rail__mount--top" />
+        <div className="ad-rail__mount ad-rail__mount--bottom" />
+
+        {/* Outer structural corners */}
         <div className="ad-rail__corner ad-rail__corner--tl" />
         <div className="ad-rail__corner ad-rail__corner--tr" />
         <div className="ad-rail__corner ad-rail__corner--bl" />
         <div className="ad-rail__corner ad-rail__corner--br" />
 
+        {/* Inner housing corners */}
+        <div className="ad-rail__corner ad-rail__corner--hl" />
+        <div className="ad-rail__corner ad-rail__corner--hr" />
+        <div className="ad-rail__corner ad-rail__corner--hbl" />
+        <div className="ad-rail__corner ad-rail__corner--hbr" />
+
+        {/* Recessed viewport (screen cavity) */}
         <div className="ad-rail__viewport">
           <div ref={streamRef} className="ad-rail__stream">
             {tripledImages.map((src, i) => {
@@ -191,12 +203,30 @@ const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref
           <div className="ad-rail__vignette" />
         </div>
 
+        {/* Technical overlay */}
+        <div className="ad-rail__technical">
+          <div className="ad-rail__tech-hline" style={{top: '25%'}} />
+          <div className="ad-rail__tech-hline" style={{top: '75%'}} />
+          <div className="ad-rail__tech-vline" style={{left: '12%'}} />
+          <div className="ad-rail__tech-vline" style={{right: '12%'}} />
+        </div>
+
+        {/* Wireframe overlay */}
         <div className="ad-rail__wireframe">
-          <div className="ad-rail__wireframe-row" />
+          <div className="ad-rail__wireframe-row" style={{top: '50%'}} />
           <div className="ad-rail__wireframe-col ad-rail__wireframe-col--left" />
           <div className="ad-rail__wireframe-col ad-rail__wireframe-col--right" />
         </div>
 
+        {/* Status indicator */}
+        <div className="ad-rail__status">
+          <div className="ad-rail__status-dot" />
+        </div>
+
+        {/* Edge ticks */}
+        <div className="ad-rail__edge-ticks" />
+
+        {/* Edge accent */}
         <div className="ad-rail__edge" />
       </div>
     </div>

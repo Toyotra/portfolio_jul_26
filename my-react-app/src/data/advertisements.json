@@ -1,18 +1,18 @@
 {
   "home": {
     "left": [
-      "https://picsum.photos/seed/ad-home-l1/360/640",
-      "https://picsum.photos/seed/ad-home-l2/360/640",
-      "https://picsum.photos/seed/ad-home-l3/360/640",
-      "https://picsum.photos/seed/ad-home-l4/360/640",
-      "https://picsum.photos/seed/ad-home-l5/360/640"
+      "/typing.png",
+      "/a.jpg",
+      "/car.webp",
+      "/b.jpg",
+      "/c.webp"
     ],
     "right": [
-      "https://picsum.photos/seed/ad-home-r1/360/640",
-      "https://picsum.photos/seed/ad-home-r2/360/640",
-      "https://picsum.photos/seed/ad-home-r3/360/640",
-      "https://picsum.photos/seed/ad-home-r4/360/640",
-      "https://picsum.photos/seed/ad-home-r5/360/640"
+      "/typing.png",
+      "/a.jpg",
+      "/car.webp",
+      "/b.jpg",
+      "/c.webp"
     ]
   },
   "about": {

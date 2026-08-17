@@ -1,0 +1,449 @@
+/* ============================================================
+   LoadingScreen.css — Architectural cyberpunk startup loader
+   Monochrome. Precise. Cinematic.
+   ============================================================ */
+
+/* ─── Reset ─────────────────────────────────────────────────── */
+.startup-loader,
+.startup-loader *,
+.startup-loader *::before,
+.startup-loader *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── Full-screen overlay ───────────────────────────────────── */
+.startup-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  animation: overlayIn 0.3s ease;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.startup-loader.startup-exit {
+  animation: overlayOut 0.6s ease forwards;
+}
+
+@keyframes overlayOut {
+  0%   { opacity: 1; }
+  35%  { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+/* ─── Background grid ───────────────────────────────────────── */
+.startup-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Corner brackets ───────────────────────────────────────── */
+.startup-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  animation: cornerFadeIn 0.4s ease forwards;
+}
+
+.startup-corner--tl { top: 24px; left: 24px; border-top: 1px solid rgba(255,255,255,0.4); border-left: 1px solid rgba(255,255,255,0.4); animation-delay: 0.1s; }
+.startup-corner--tr { top: 24px; right: 24px; border-top: 1px solid rgba(255,255,255,0.4); border-right: 1px solid rgba(255,255,255,0.4); animation-delay: 0.15s; }
+.startup-corner--bl { bottom: 24px; left: 24px; border-bottom: 1px solid rgba(255,255,255,0.4); border-left: 1px solid rgba(255,255,255,0.4); animation-delay: 0.2s; }
+.startup-corner--br { bottom: 24px; right: 24px; border-bottom: 1px solid rgba(255,255,255,0.4); border-right: 1px solid rgba(255,255,255,0.4); animation-delay: 0.25s; }
+
+@keyframes cornerFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── Thin horizontal rules ─────────────────────────────────── */
+.startup-rule {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  animation: ruleFadeIn 0.5s ease forwards;
+}
+
+.startup-rule--top { top: 70px; animation-delay: 0.3s; }
+.startup-rule--bottom { bottom: 70px; animation-delay: 0.35s; }
+
+@keyframes ruleFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── Main content ──────────────────────────────────────────── */
+.startup-content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 90%;
+  max-width: 600px;
+}
+
+/* ─── Top text ──────────────────────────────────────────────── */
+.startup-text-top {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: textFadeIn 0.5s ease 0.2s forwards;
+}
+
+@keyframes textFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Center structure container ────────────────────────────── */
+.startup-center {
+  position: relative;
+  width: min(55vw, 55vh, 420px);
+  height: min(55vw, 55vh, 420px);
+  overflow: hidden;
+}
+
+.startup-cube-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ─── Cube edges ────────────────────────────────────────────── */
+.startup-cube-edge {
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 1;
+  stroke-linecap: square;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: drawLine 0.5s ease forwards, edgeBrighten 0.35s ease 1.85s forwards;
+}
+
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes edgeBrighten {
+  0%   { stroke: rgba(255, 255, 255, 0.85); }
+  100% { stroke: rgba(255, 255, 255, 1); filter: drop-shadow(0 0 3px rgba(255,255,255,0.4)); }
+}
+
+/* ─── Architectural cross lines ─────────────────────────────── */
+.startup-arch-line--thin {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 0.5;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: drawLine 0.4s ease forwards;
+}
+
+/* ─── Architectural extension lines ─────────────────────────── */
+.startup-arch-line {
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-width: 0.5;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: drawLine 0.4s ease forwards;
+}
+
+/* ─── Vertex brackets ───────────────────────────────────────── */
+.startup-vertex-group {
+  opacity: 0;
+  animation: vertexAppear 0.3s ease forwards;
+}
+
+@keyframes vertexAppear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.startup-vertex-dot {
+  fill: rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  animation: dotAppear 0.3s ease 0.15s forwards;
+}
+
+@keyframes dotAppear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── Scanning line ─────────────────────────────────────────── */
+.startup-scan-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.02) 10%,
+    rgba(255,255,255,0.35) 40%,
+    rgba(255,255,255,0.5) 50%,
+    rgba(255,255,255,0.35) 60%,
+    rgba(255,255,255,0.02) 90%,
+    transparent 100%
+  );
+  box-shadow: 0 0 6px rgba(255,255,255,0.06), 0 0 12px rgba(255,255,255,0.03);
+  animation: scanMove 2s ease-in-out 0.9s infinite;
+  pointer-events: none;
+  z-index: 6;
+}
+
+@keyframes scanMove {
+  0%   { top: -5%; opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { top: 105%; opacity: 0; }
+}
+
+/* ─── Center glow ───────────────────────────────────────────── */
+.startup-center::before {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle, rgba(255,255,255,0.025) 0%, transparent 65%);
+  animation: centerPulse 2.5s ease-in-out;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes centerPulse {
+  0%, 100% { opacity: 0; transform: scale(0.95); }
+  50%      { opacity: 1; transform: scale(1.05); }
+}
+
+/* ─── Progress indicator ────────────────────────────────────── */
+.startup-progress {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 320px;
+  opacity: 0;
+  animation: textFadeIn 0.5s ease 0.4s forwards;
+}
+
+.startup-progress-track {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.startup-progress-seg {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.startup-progress-seg--active {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.25);
+}
+
+.startup-progress-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+  min-width: 32px;
+  text-align: right;
+}
+
+/* ─── Micro details ─────────────────────────────────────────── */
+.startup-micro {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.18);
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  animation: microFadeIn 0.4s ease forwards;
+}
+
+.startup-micro--tl { top: 24px; left: 56px; animation-delay: 0.5s; }
+.startup-micro--tr { top: 24px; right: 56px; animation-delay: 0.55s; }
+.startup-micro--bl { bottom: 24px; left: 56px; animation-delay: 0.6s; }
+.startup-micro--br { bottom: 24px; right: 56px; animation-delay: 0.65s; }
+
+@keyframes microFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.startup-micro-sep {
+  color: rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Exit flash ────────────────────────────────────────────── */
+.startup-loader.startup-exit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.03);
+  z-index: 50;
+  pointer-events: none;
+  animation: exitFlash 0.5s ease;
+}
+
+@keyframes exitFlash {
+  0%   { opacity: 0; }
+  40%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.startup-loader.startup-exit .startup-cube-edge {
+  animation: edgeFadeOut 0.45s ease forwards;
+}
+
+@keyframes edgeFadeOut {
+  to { opacity: 0; }
+}
+
+.startup-loader.startup-exit .startup-arch-line,
+.startup-loader.startup-exit .startup-vertex-group {
+  animation: edgeFadeOut 0.35s ease forwards;
+}
+
+.startup-loader.startup-exit .startup-scan-line {
+  animation: edgeFadeOut 0.3s ease forwards;
+}
+
+/* ─── EXE line ───────────────────────────────────────────────── */
+.startup-exe-line {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0;
+  animation: textFadeIn 0.5s ease 0.7s forwards;
+}
+
+.startup-exe-prefix {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.startup-exe-text {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.startup-exe-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 11px;
+  background: rgba(255, 255, 255, 0.55);
+  animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .startup-content {
+    gap: 24px;
+  }
+
+  .startup-text-top {
+    font-size: 9px;
+    letter-spacing: 0.28em;
+  }
+
+  .startup-center {
+    width: min(70vw, 70vh, 320px);
+    height: min(70vw, 70vh, 320px);
+  }
+
+  .startup-progress-track {
+    gap: 2px;
+  }
+
+  .startup-progress-pct {
+    font-size: 9px;
+    min-width: 28px;
+  }
+
+  .startup-micro {
+    font-size: 7px;
+    gap: 4px;
+  }
+
+  .startup-micro--tl { left: 40px; top: 16px; }
+  .startup-micro--tr { right: 40px; top: 16px; }
+  .startup-micro--bl { left: 40px; bottom: 16px; }
+  .startup-micro--br { right: 40px; bottom: 16px; }
+
+  .startup-corner { width: 16px; height: 16px; }
+  .startup-corner--tl { top: 12px; left: 12px; }
+  .startup-corner--tr { top: 12px; right: 12px; }
+  .startup-corner--bl { bottom: 12px; left: 12px; }
+  .startup-corner--br { bottom: 12px; right: 12px; }
+
+  .startup-rule--top { top: 48px; }
+  .startup-rule--bottom { bottom: 48px; }
+}
+
+@media (max-width: 380px) {
+  .startup-center {
+    width: min(85vw, 85vh, 260px);
+    height: min(85vw, 85vh, 260px);
+  }
+
+  .startup-micro {
+    display: none;
+  }
+
+  .startup-progress {
+    max-width: 260px;
+  }
+}

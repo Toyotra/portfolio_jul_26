@@ -1,7 +1,8 @@
 import SidePanel from './SidePanel';
 import CustomCursor from './CustomCursor';
 import AdvertisementRails from './components/AdvertisementRails/AdvertisementRails';
-import { useState, useRef, useMemo } from 'react';
+import StartupLoader from './components/LoadingScreen';
+import { useState, useRef, useMemo, useCallback } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import { Line2 } from 'three/examples/jsm/lines/Line2';
@@ -130,7 +131,12 @@ function Scene({ cubeRef, targetRotation }) {
 function App() {
   const [activeSide, setActiveSide] = useState('home');
   const [targetRotation, setTargetRotation] = useState(rotations.home);
+  const [startupComplete, setStartupComplete] = useState(false);
   const cubeRef = useRef();
+
+  const handleStartupComplete = useCallback(() => {
+    setStartupComplete(true);
+  }, []);
 
   const handleSideClick = (side) => {
     setActiveSide(side);
@@ -139,6 +145,7 @@ function App() {
 
   return (
     <div className="app-container">
+      {!startupComplete && <StartupLoader onComplete={handleStartupComplete} />}
       <CustomCursor />
       <SidePanel side="left" />
       <SidePanel side="right" />

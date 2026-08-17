@@ -118,8 +118,7 @@ const AdvertisementRail = forwardRef(({ images, side, seed }, ref) => {
           <div className="ad-rail__vignette" />
         </div>
 
-        <div className="ad-rail__fade ad-rail__fade--top" />
-        <div className="ad-rail__fade ad-rail__fade--bottom" />
+        <div className="ad-rail__edge" />
       </div>
     </div>
   );

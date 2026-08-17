@@ -1,76 +1,76 @@
 {
   "home": {
     "left": [
-      "/ads/home/left/01.webp",
-      "/ads/home/left/02.webp",
-      "/ads/home/left/03.webp",
-      "/ads/home/left/04.webp"
+      "https://picsum.photos/seed/ad-home-l1/360/640",
+      "https://picsum.photos/seed/ad-home-l2/360/640",
+      "https://picsum.photos/seed/ad-home-l3/360/640",
+      "https://picsum.photos/seed/ad-home-l4/360/640"
     ],
     "right": [
-      "/ads/home/right/01.webp",
-      "/ads/home/right/02.webp",
-      "/ads/home/right/03.webp",
-      "/ads/home/right/04.webp"
+      "https://picsum.photos/seed/ad-home-r1/360/640",
+      "https://picsum.photos/seed/ad-home-r2/360/640",
+      "https://picsum.photos/seed/ad-home-r3/360/640",
+      "https://picsum.photos/seed/ad-home-r4/360/640"
     ]
   },
   "about": {
     "left": [
-      "/ads/about/left/01.webp",
-      "/ads/about/left/02.webp",
-      "/ads/about/left/03.webp"
+      "https://picsum.photos/seed/ad-about-l1/360/640",
+      "https://picsum.photos/seed/ad-about-l2/360/640",
+      "https://picsum.photos/seed/ad-about-l3/360/640"
     ],
     "right": [
-      "/ads/about/right/01.webp",
-      "/ads/about/right/02.webp",
-      "/ads/about/right/03.webp"
+      "https://picsum.photos/seed/ad-about-r1/360/640",
+      "https://picsum.photos/seed/ad-about-r2/360/640",
+      "https://picsum.photos/seed/ad-about-r3/360/640"
     ]
   },
   "experiences": {
     "left": [
-      "/ads/experiences/left/01.webp",
-      "/ads/experiences/left/02.webp",
-      "/ads/experiences/left/03.webp",
-      "/ads/experiences/left/04.webp"
+      "https://picsum.photos/seed/ad-exp-l1/360/640",
+      "https://picsum.photos/seed/ad-exp-l2/360/640",
+      "https://picsum.photos/seed/ad-exp-l3/360/640",
+      "https://picsum.photos/seed/ad-exp-l4/360/640"
     ],
     "right": [
-      "/ads/experiences/right/01.webp",
-      "/ads/experiences/right/02.webp",
-      "/ads/experiences/right/03.webp",
-      "/ads/experiences/right/04.webp"
+      "https://picsum.photos/seed/ad-exp-r1/360/640",
+      "https://picsum.photos/seed/ad-exp-r2/360/640",
+      "https://picsum.photos/seed/ad-exp-r3/360/640",
+      "https://picsum.photos/seed/ad-exp-r4/360/640"
     ]
   },
   "projects": {
     "left": [
-      "/ads/projects/left/01.webp",
-      "/ads/projects/left/02.webp",
-      "/ads/projects/left/03.webp"
+      "https://picsum.photos/seed/ad-proj-l1/360/640",
+      "https://picsum.photos/seed/ad-proj-l2/360/640",
+      "https://picsum.photos/seed/ad-proj-l3/360/640"
     ],
     "right": [
-      "/ads/projects/right/01.webp",
-      "/ads/projects/right/02.webp",
-      "/ads/projects/right/03.webp"
+      "https://picsum.photos/seed/ad-proj-r1/360/640",
+      "https://picsum.photos/seed/ad-proj-r2/360/640",
+      "https://picsum.photos/seed/ad-proj-r3/360/640"
     ]
   },
   "cat": {
     "left": [
-      "/ads/cat/left/01.webp",
-      "/ads/cat/left/02.webp"
+      "https://picsum.photos/seed/ad-cat-l1/360/640",
+      "https://picsum.photos/seed/ad-cat-l2/360/640"
     ],
     "right": [
-      "/ads/cat/right/01.webp",
-      "/ads/cat/right/02.webp"
+      "https://picsum.photos/seed/ad-cat-r1/360/640",
+      "https://picsum.photos/seed/ad-cat-r2/360/640"
     ]
   },
   "contact": {
     "left": [
-      "/ads/contact/left/01.webp",
-      "/ads/contact/left/02.webp",
-      "/ads/contact/left/03.webp"
+      "https://picsum.photos/seed/ad-contact-l1/360/640",
+      "https://picsum.photos/seed/ad-contact-l2/360/640",
+      "https://picsum.photos/seed/ad-contact-l3/360/640"
     ],
     "right": [
-      "/ads/contact/right/01.webp",
-      "/ads/contact/right/02.webp",
-      "/ads/contact/right/03.webp"
+      "https://picsum.photos/seed/ad-contact-r1/360/640",
+      "https://picsum.photos/seed/ad-contact-r2/360/640",
+      "https://picsum.photos/seed/ad-contact-r3/360/640"
     ]
   }
 }

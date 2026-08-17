@@ -150,23 +150,42 @@ function Floor() {
 
 function CameraRig({ activeScreen }) {
   const { camera } = useThree();
+  const returningRef = useRef(false);
 
   useFrame((state, delta) => {
-    let target = new THREE.Vector3(0, 0, 5.5);
-    let lookAt = new THREE.Vector3(0, 0, 0);
+    const defaultPos = new THREE.Vector3(0, 0, 5.5);
+    const defaultLook = new THREE.Vector3(0, 0, 0);
+    let target = defaultPos.clone();
+    let lookAt = defaultLook.clone();
 
     if (activeScreen === 'left') {
-      target.set(-2.2, 0.4, 1.8);
-      lookAt.set(-3.2, 0, -2.8);
+      target.set(-2.2, 0.35, 2.2);
+      lookAt.set(-2.6, 0, -1.4);
+      returningRef.current = false;
     } else if (activeScreen === 'right') {
-      target.set(2.2, 0.4, 1.8);
-      lookAt.set(3.2, 0, -2.8);
+      target.set(2.2, 0.35, 2.2);
+      lookAt.set(2.6, 0, -1.4);
+      returningRef.current = false;
+    } else if (returningRef.current) {
+      target = defaultPos.clone();
+      lookAt = defaultLook.clone();
+    }
+
+    const dist = camera.position.distanceTo(target);
+    if (dist < 0.05 && !activeScreen) {
+      returningRef.current = false;
+      return;
+    }
+
+    if (!activeScreen && dist > 0.05) {
+      returningRef.current = true;
     }
 
     camera.position.lerp(target, delta * 2.5);
     const currentLook = new THREE.Vector3();
     camera.getWorldDirection(currentLook);
-    currentLook.lerp(lookAt.clone().sub(camera.position).normalize(), delta * 2.5);
+    const desiredLook = lookAt.clone().sub(camera.position).normalize();
+    currentLook.lerp(desiredLook, delta * 2.5);
     camera.lookAt(camera.position.clone().add(currentLook));
   });
 
@@ -193,12 +212,12 @@ function TVScreen({ position, rotation, active }) {
 
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
-      <mesh ref={meshRef} position={[0, 0, 0.01]}>
-        <planeGeometry args={[2.4, 1.35]} />
-        <meshBasicMaterial color="#05070a" />
+      <mesh position={[0, 0, -0.01]}>
+        <planeGeometry args={[3.2, 1.4]} />
+        <meshBasicMaterial color="#080c12" />
       </mesh>
       {active && (
-        <Html center transform distanceFactor={1.9}>
+        <Html center transform distanceFactor={1.72} style={{ width: 640, height: 280 }}>
           <div style={tvStyle}>
             {images.map((src, idx) => (
               <img key={idx} src={src} alt="" style={tvImgStyle} />
@@ -207,7 +226,7 @@ function TVScreen({ position, rotation, active }) {
         </Html>
       )}
       <mesh position={[0, 0, -0.02]}>
-        <boxGeometry args={[2.6, 1.5, 0.08]} />
+        <boxGeometry args={[3.4, 1.6, 0.08]} />
         <meshStandardMaterial color="#0b0f14" roughness={0.7} metalness={0.4} />
       </mesh>
     </group>
@@ -215,25 +234,27 @@ function TVScreen({ position, rotation, active }) {
 }
 
 const tvStyle = {
-  width: '512px',
-  height: '288px',
+  width: '640px',
+  height: '280px',
   background: '#05070a',
-  border: '1px solid rgba(0, 212, 255, 0.25)',
+  border: '1px solid rgba(0, 212, 255, 0.45)',
+  borderRadius: '2px',
   display: 'flex',
   flexWrap: 'wrap',
   gap: '6px',
   padding: '8px',
   boxSizing: 'border-box',
+  boxShadow: '0 0 0 1px rgba(0, 212, 255, 0.15), inset 0 0 18px rgba(0, 212, 255, 0.08)',
 };
 
 const tvImgStyle = {
   width: 'calc(50% - 3px)',
-  height: '136px',
+  height: '132px',
   objectFit: 'cover',
   border: '1px solid rgba(0, 212, 255, 0.12)',
 };
 
-function Scene({ cubeRef, targetRotation, activeScreen }) {
+function Scene({ cubeRef, targetRotation, activeScreen, controlsEnabled }) {
   return (
     <>
       <ambientLight intensity={0.35} />
@@ -244,20 +265,18 @@ function Scene({ cubeRef, targetRotation, activeScreen }) {
       <CameraRig activeScreen={activeScreen} />
       <Cube cubeRef={cubeRef} targetRotation={targetRotation} />
       <TVScreen
-        position={[-3.2, 0, -2.8]}
-        rotation={[0, 0.65, 0]}
+        position={[-2.6, 0, -1.4]}
+        rotation={[0, 0.52, 0]}
         active={activeScreen === 'left'}
       />
       <TVScreen
-        position={[3.2, 0, -2.8]}
-        rotation={[0, -0.65, 0]}
+        position={[2.6, 0, -1.4]}
+        rotation={[0, -0.52, 0]}
         active={activeScreen === 'right'}
       />
       <FloorShadow />
       <Floor />
-      {!activeScreen && (
-        <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} rotateSpeed={0.4} />
-      )}
+      <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} rotateSpeed={0.4} enabled={controlsEnabled} />
     </>
   );
 }
@@ -266,16 +285,33 @@ function App() {
   const [activeSide, setActiveSide] = useState('home');
   const [targetRotation, setTargetRotation] = useState(rotations.home);
   const [activeScreen, setActiveScreen] = useState(null);
+  const [controlsEnabled, setControlsEnabled] = useState(true);
   const cubeRef = useRef();
 
   const handleSideClick = (side) => {
-    setActiveSide(side);
-    setTargetRotation(rotations[side]);
-    setActiveScreen(null);
+    if (activeScreen) {
+      setActiveScreen(null);
+      setControlsEnabled(false);
+      setTimeout(() => {
+        setControlsEnabled(true);
+        setActiveSide(side);
+        setTargetRotation(rotations[side]);
+      }, 900);
+    } else {
+      setActiveSide(side);
+      setTargetRotation(rotations[side]);
+    }
   };
 
   const handleTVClick = (screen) => {
-    setActiveScreen(screen === activeScreen ? null : screen);
+    if (screen === activeScreen) {
+      setActiveScreen(null);
+      setControlsEnabled(false);
+      setTimeout(() => setControlsEnabled(true), 900);
+    } else {
+      setActiveScreen(screen);
+      setControlsEnabled(false);
+    }
   };
 
   return (
@@ -310,7 +346,7 @@ function App() {
           gl={{ antialias: true }}
         >
           <color attach="background" args={['#020508']} />
-          <Scene cubeRef={cubeRef} targetRotation={targetRotation} activeScreen={activeScreen} />
+          <Scene cubeRef={cubeRef} targetRotation={targetRotation} activeScreen={activeScreen} controlsEnabled={controlsEnabled} />
         </Canvas>
       </div>
     </div>

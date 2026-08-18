@@ -16,13 +16,15 @@
   justify-content: center;
   
   align-items:center;
+  padding:10px;
   /*height:fit-content;*/
 
 }
 
 .homeImages img{
-  width:130px;
+  width:180px;
   height:auto;
   margin-left:10px;
   margin-right:10px;
+  box-shadow: 3px 3px;
 }

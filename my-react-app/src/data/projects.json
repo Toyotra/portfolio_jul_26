@@ -5,6 +5,7 @@
     "description": "Hack The 6ix Winner. Built an autonomous rover+robotic arm robot that uses SLAM and computer vision to autonomous navigate and pikc up fruits, automating a largely hand-done process.",
     "thumbnail": "/pomme/20260719_082636.jpg",
     "ad-image": "/pomme/20260719_082636.jpg",
+    "link": "",
     "images": [
         "public/pomme/20260718_040921 (1).jpg", 
         "public/pomme/20260719_060426.jpg",
@@ -31,6 +32,7 @@
     "description": "Gold + Best Engineering @ Windsor Science Fair. Designed and manufactured a novel bionic arm using a custrom control mechanism that utilizes bicep and tricep electromyographic sensors and custom signal processing algorithms.",
     "thumbnail": "public/bionic-arm/Media (1).jpeg",
     "ad-image": "public/bionic-arm/Media (1).jpeg",
+    "link": "",
     "images": [
       "public/bionic-arm/Media (1).jpeg", 
       "public/bionic-arm/Media (4).jpeg",
@@ -54,6 +56,7 @@
     "description": "MasseyHacks 1st Place",
     "thumbnail": "public/gci/thumbnail.jpg",
     "ad-image": "public/gci/thumbnail.jpg",
+    "link": "",
     "images": [
       "public/gci/thumbnail.jpg", 
       "public/gci/2.jpg",
@@ -72,6 +75,7 @@
     "description": "MasseyHacks 1st Place",
     "thumbnail": "public/gci/thumbnail.jpg",
     "ad-image": "public/gci/thumbnail.jpg",
+    "link": "",
     "images": [
       "public/gci/thumbnail.jpg", 
       "public/gci/2.jpg",
@@ -90,6 +94,7 @@
     "description": "MasseyHacks 1st Place",
     "thumbnail": "public/gci/thumbnail.jpg",
     "ad-image": "public/gci/thumbnail.jpg",
+    "link": "",
     "images": [
       "public/gci/thumbnail.jpg", 
       "public/gci/2.jpg",
@@ -108,6 +113,7 @@
     "description": "MasseyHacks 1st Place",
     "thumbnail": "public/gci/thumbnail.jpg",
     "ad-image": "public/gci/thumbnail.jpg",
+    "link": "",
     "images": [
       "public/gci/thumbnail.jpg", 
       "public/gci/2.jpg",

@@ -16,7 +16,22 @@ function ProjectCard({ project, onClick }) {
       <div className="project-card-body">
         <div className="project-card-head">
           <span className="project-name">{project.name}</span>
-          <span className="project-date">{project.date}</span>
+          <div className="project-card-meta">
+            {project.link ? (
+              <a
+                className="project-link-widget"
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                aria-label={`Open ${project.name} link`}
+                title={project.link}
+              >
+                ↗
+              </a>
+            ) : null}
+            <span className="project-date">{project.date}</span>
+          </div>
         </div>
         <p className="project-desc">{project.description}</p>
       </div>

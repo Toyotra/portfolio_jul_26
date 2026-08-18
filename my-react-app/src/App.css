@@ -28,7 +28,7 @@ body,
 
 /*grid lines for background*/
 .app-container {
-  display: flex;
+  position: relative;
   width: 100vw;
   height: 100vh;
   background-color: #f5f5f5;
@@ -76,6 +76,21 @@ body,
   overflow: hidden;
 }
 
+@media (max-width: 640px) {
+  .sidebar {
+    top: 12px;
+    padding: 0;
+    max-width: 92vw;
+    overflow-x: auto;
+  }
+
+  .sidebar-btn {
+    font-size: 9px;
+    padding: 8px 10px;
+    letter-spacing: 0.04em;
+  }
+}
+
 .sidebar-btn::before {
   content: '';
   position: absolute;
@@ -109,8 +124,21 @@ body,
 }
 
 .canvas-container {
-  flex: 1;
-  height: 100vh;
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
+}
+
+@media (min-width: 1025px) {
+  .canvas-container {
+    left: 380px;
+    right: 380px;
+  }
+}
+
+@media (min-width: 1201px) {
+  .canvas-container {
+    left: 560px;
+    right: 560px;
+  }
 }

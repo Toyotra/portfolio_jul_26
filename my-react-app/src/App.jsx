@@ -2,7 +2,7 @@ import SidePanel from './SidePanel';
 import CustomCursor from './CustomCursor';
 import AdvertisementRails from './components/AdvertisementRails/AdvertisementRails';
 import StartupLoader from './components/LoadingScreen';
-import { useState, useRef, useMemo, useCallback } from 'react';
+import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import { Line2 } from 'three/examples/jsm/lines/Line2';
@@ -12,6 +12,27 @@ import * as THREE from 'three';
 import './App.css';
 import './SidePanel.css';
 import { faceComponents } from './components/faces';
+
+const useShowAdRails = () => {
+  const [showRails, setShowRails] = useState(() => window.innerWidth > 1024);
+
+  useEffect(() => {
+    let raf;
+    const handleResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        setShowRails(window.innerWidth > 1024);
+      });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return { showRails };
+};
 
 const rotations = {
   home: [0, 0, 0],
@@ -133,6 +154,7 @@ function App() {
   const [targetRotation, setTargetRotation] = useState(rotations.home);
   const [startupComplete, setStartupComplete] = useState(false);
   const cubeRef = useRef();
+  const { showRails } = useShowAdRails();
 
   const handleStartupComplete = useCallback(() => {
     setStartupComplete(true);
@@ -149,7 +171,7 @@ function App() {
       <CustomCursor />
       <SidePanel side="left" />
       <SidePanel side="right" />
-      <AdvertisementRails activeSide={activeSide} />
+      {showRails && <AdvertisementRails activeSide={activeSide} />}
 
       <nav className="sidebar">
         {Object.keys(rotations).map((side) => (
@@ -164,12 +186,14 @@ function App() {
       </nav>
 
       <div className="canvas-container">
-        <Canvas
-          camera={{ position: [0, 0, 5.5], fov: 45 }}
-          gl={{ antialias: true }}
-        >
-          <Scene cubeRef={cubeRef} targetRotation={targetRotation} />
-        </Canvas>
+      <Canvas
+        style={{ width: '100%', height: '100%' }}
+        resize={{ scroll: false }}
+        camera={{ position: [0, 0, 5.5], fov: 45 }}
+        gl={{ antialias: true }}
+      >
+        <Scene cubeRef={cubeRef} targetRotation={targetRotation} />
+      </Canvas>
       </div>
     </div>
   );

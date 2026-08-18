@@ -26,44 +26,98 @@
     ]
   },
   {
-    "name": "SynthWave Studio",
-    "date": "2025-03",
-    "description": "A browser-based music sequencer that renders an animated 3D synthwave scene with React Three Fiber.",
-    "thumbnail": "/projects/synthwave/thumb.jpg",
-    "ad-image": "/projects/synthwave/ad.webp",
-    "images": ["/projects/synthwave/scene1.jpg", "/projects/synthwave/scene2.jpg"],
+    "name": "sEMG Bionic Arm",
+    "date": "2023-06 --> 2024-03",
+    "description": "Gold + Best Engineering @ Windsor Science Fair. Designed and manufactured a novel bionic arm using a custrom control mechanism that utilizes bicep and tricep electromyographic sensors and custom signal processing algorithms.",
+    "thumbnail": "public/bionic-arm/Media (1).jpeg",
+    "ad-image": "public/bionic-arm/Media (1).jpeg",
+    "images": [
+      "public/bionic-arm/Media (1).jpeg", 
+      "public/bionic-arm/Media (4).jpeg",
+      "public/bionic-arm/Media.jpeg", 
+      "public/bionic-arm/shared image.jpg", 
+      "public/bionic-arm/win.jpeg",
+      "public/bionic-arm/MicrosoftTeams-image (9).png",
+      "public/bionic-arm/MicrosoftTeams-image (1) (1).png",
+      "public/bionic-arm/IMG_7532 (1).jpg"
+    ],
     "bulletPoints": [
-      "3D scene powered by @react-three/fiber with custom GLSL shaders for the grid and neon glow",
-      "Step sequencer built with Tone.js, supporting 8 tracks of 16-step patterns",
-      "WebGL audio analysis drives the camera pulsing to the beat via Web Audio API",
-      "Exported as a static site on Vite, deployed to Vercel with instant cold starts"
+      "Designed a modular CAD design in Fusion 360 via joints and master sketch techniques for modularity and easy iteration",
+      "Engineered a custom tendon-driven finger actuation system, fabricated via FDM 3D-printing for precise finger movement",
+      "Implemented and assisted in programming a Raspberry Pi Pico MCU for device control",
+      "Designed and soldered a custom 20A PCB, implementing sEMG control, 5DOF via servos, and easy peripheral access"
     ]
   },
   {
-    "name": "OrbitDB Explorer",
-    "date": "2024-11",
-    "description": "A decentralized knowledge graph explorer that syncs documents peer-to-peer using OrbitDB and IPFS.",
-    "thumbnail": "/projects/orbitdb/thumb.jpg",
-    "ad-image": "/projects/orbitdb/ad.webp",
-    "images": ["/projects/orbitdb/graph1.jpg", "/projects/orbitdb/graph2.jpg"],
+    "name": "GCI-Gauntlet: Assistance Device for Patients with Dementia Using Computer Vision and TTS",
+    "date": "2025-05",
+    "description": "MasseyHacks 1st Place",
+    "thumbnail": "public/gci/thumbnail.jpg",
+    "ad-image": "public/gci/thumbnail.jpg",
+    "images": [
+      "public/gci/thumbnail.jpg", 
+      "public/gci/2.jpg",
+      "public/gci/3.jpg",
+      "public/gci/1.jpg"],
     "bulletPoints": [
-      "Wired up an OrbitDB docstore with CRDT conflict resolution over a libp2p pubsub mesh",
-      "Rendered an interactive force-directed graph with d3 and WebGL for 5k+ node datasets",
-      "Implemented a custom diff renderer so only changed nodes are re-synced between peers",
-      "Added end-to-end encryption for private graphs using RSA key pairs stored in localStorage"
+      "Built a wearable gauntlet with face recognition and TTS capabilities to assist users with dementia",
+      "Designed and 3D-printed a custom chassis and integrated embedded electronics with PWM control for seamless interaction",
+      "Developed a Flask-based web app for live visual feedback, incorporating a server and database",
+      "Designed and Implemented a custom system where the gauntlet could be pointed at a user, and their name is spoken on a bluetooth speaker using TTS"
     ]
   },
   {
-    "name": "TaskForge CLI",
-    "date": "2024-06",
-    "description": "A Rust-powered developer productivity CLI that scaffolds React components, Express routes, and test stubs from templates.",
-    "thumbnail": "/projects/taskforge/thumb.jpg",
-    "images": ["/projects/taskforge/demo1.jpg"],
+    "name": "GCI-Gauntlet: Assistance Device for Patients with Dementia Using Computer Vision and TTS",
+    "date": "2025-05",
+    "description": "MasseyHacks 1st Place",
+    "thumbnail": "public/gci/thumbnail.jpg",
+    "ad-image": "public/gci/thumbnail.jpg",
+    "images": [
+      "public/gci/thumbnail.jpg", 
+      "public/gci/2.jpg",
+      "public/gci/3.jpg",
+      "public/gci/1.jpg"],
     "bulletPoints": [
-      "Parses a YAML schema to generate type-safe components with configurable naming conventions",
-      "Zero-deps core written in Rust and compiled to a single native binary via Cargo",
-      "Plugin system lets teams ship custom templates as WASM modules loaded at runtime",
-      "Used by 200+ devs internally; cuts new feature setup time from 15 min to 20 seconds"
+      "Built a wearable gauntlet with face recognition and TTS capabilities to assist users with dementia",
+      "Designed and 3D-printed a custom chassis and integrated embedded electronics with PWM control for seamless interaction",
+      "Developed a Flask-based web app for live visual feedback, incorporating a server and database",
+      "Designed and Implemented a custom system where the gauntlet could be pointed at a user, and their name is spoken on a bluetooth speaker using TTS"
+    ]
+  },
+  {
+    "name": "GCI-Gauntlet: Assistance Device for Patients with Dementia Using Computer Vision and TTS",
+    "date": "2025-05",
+    "description": "MasseyHacks 1st Place",
+    "thumbnail": "public/gci/thumbnail.jpg",
+    "ad-image": "public/gci/thumbnail.jpg",
+    "images": [
+      "public/gci/thumbnail.jpg", 
+      "public/gci/2.jpg",
+      "public/gci/3.jpg",
+      "public/gci/1.jpg"],
+    "bulletPoints": [
+      "Built a wearable gauntlet with face recognition and TTS capabilities to assist users with dementia",
+      "Designed and 3D-printed a custom chassis and integrated embedded electronics with PWM control for seamless interaction",
+      "Developed a Flask-based web app for live visual feedback, incorporating a server and database",
+      "Designed and Implemented a custom system where the gauntlet could be pointed at a user, and their name is spoken on a bluetooth speaker using TTS"
+    ]
+  },
+  {
+    "name": "GCI-Gauntlet: Assistance Device for Patients with Dementia Using Computer Vision and TTS",
+    "date": "2025-05",
+    "description": "MasseyHacks 1st Place",
+    "thumbnail": "public/gci/thumbnail.jpg",
+    "ad-image": "public/gci/thumbnail.jpg",
+    "images": [
+      "public/gci/thumbnail.jpg", 
+      "public/gci/2.jpg",
+      "public/gci/3.jpg",
+      "public/gci/1.jpg"],
+    "bulletPoints": [
+      "Built a wearable gauntlet with face recognition and TTS capabilities to assist users with dementia",
+      "Designed and 3D-printed a custom chassis and integrated embedded electronics with PWM control for seamless interaction",
+      "Developed a Flask-based web app for live visual feedback, incorporating a server and database",
+      "Designed and Implemented a custom system where the gauntlet could be pointed at a user, and their name is spoken on a bluetooth speaker using TTS"
     ]
   }
 ]

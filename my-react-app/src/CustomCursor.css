@@ -79,26 +79,6 @@
   transform: scale(0.6) rotate(0deg);
 }
 
-.custom-cursor.hover-text .icon-crosshair {
-  opacity: 0;
-  transform: scale(0.6) rotate(0deg);
-}
-
-.custom-cursor.hover-text .icon-diamond {
-  opacity: 0;
-  transform: scale(0.6) rotate(0deg);
-}
-
-.custom-cursor.hover-text {
-  width: 48px;
-  height: 24px;
-}
-
-.custom-cursor.hover-text .icon-rect {
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
-}
-
 @media (hover: none) {
   .custom-cursor {
     display: none;

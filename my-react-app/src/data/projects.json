@@ -6,16 +6,23 @@
     "thumbnail": "/pomme/20260719_082636.jpg",
     "ad-image": "/pomme/20260719_082636.jpg",
     "images": [
-        "/projects/neurolens/screen1.jpg", 
-        "/projects/neurolens/screen2.jpg"
+        "public/pomme/20260718_040921 (1).jpg", 
+        "public/pomme/20260719_060426.jpg",
+        "public/pomme/20260719_082636.jpg",
+        "public/pomme/20260719_145901-2.jpg",
+        "public/pomme/fadsfadf.png",
+        "public/pomme/gallery (1).jpg",
+        "public/pomme/S1340027.JPG",
+        "public/pomme/gallery (2).jpg",
+        "public/pomme/gallery (3).jpg"
   
   
   ],
     "bulletPoints": [
-      "Built with React Native + PyTorch Mobile, 98% inference accuracy on a 5k image test set",
-      "Fine-tuned a ResNet-18 model on a custom 12k image dataset of diseased/treated leaves",
-      "Real-time classification at 25ms per frame with 4MB model size via quantization",
-      "Offline-first architecture so the model runs with zero network calls"
+      "Designed a 3D-printed, 400mm, 4-DOF robotic arm capable of holding fruits 3-70mm in diameter, and up to 500g, for <$100",
+      "Implemented seamless, low latency communication between a Raspberry Pi 5 (Ubuntu), and an Arduino Uno Q (Debian), using a Flask server in under 36 hours",
+      "Designed and manufactured a custom rover, 100cm in length, 50cm in width, capable of carrying up to 10kg for under $150",
+      "Designed to successfully run autonomously using 2D LiDAR+SLAM and computer vision (yolo) running in parallel"
     ]
   },
   {

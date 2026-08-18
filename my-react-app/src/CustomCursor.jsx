@@ -17,10 +17,13 @@ function CustomCursor() {
         'p, span, h1, h2, h3, h4, h5, h6, li, td, th, label, strong, em, b, i, small, big, a, .text-content'
       );
       const interactiveEl = target.closest(
-        'button, .sidebar-btn, input, textarea, [role="button"], .interactive, .ad-rail__image'
+        'button, .sidebar-btn, input, textarea, [role="button"], .interactive'
       );
+      const adRailEl = target.closest('.ad-rail__image');
 
-      if (interactiveEl) {
+      if (adRailEl) {
+        setHoverType('ad-rail');
+      } else if (interactiveEl) {
         setHoverType('interactive');
       } else if (textEl) {
         setHoverType('text');
@@ -74,7 +77,7 @@ function CustomCursor() {
 
   return (
     <div
-      className={`custom-cursor ${hoverType === 'interactive' ? 'hover-interactive' : ''} ${hoverType === 'text' ? 'hover-text' : ''} ${isClicking ? 'clicking' : ''}`}
+      className={`custom-cursor ${hoverType === 'interactive' ? 'hover-interactive' : ''} ${hoverType === 'text' ? 'hover-text' : ''} ${hoverType === 'ad-rail' ? 'hover-ad-rail' : ''} ${isClicking ? 'clicking' : ''}`}
       style={{
         left: cursorPos.x,
         top: cursorPos.y,

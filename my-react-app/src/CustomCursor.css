@@ -8,7 +8,7 @@
   z-index: 99999;
   transform: translate(-50%, -50%);
   color: #111111;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
 }
 
 .custom-cursor.clicking {
@@ -56,6 +56,25 @@
 }
 
 .custom-cursor.hover-interactive .icon-rect {
+  opacity: 0;
+  transform: scale(0.6) rotate(0deg);
+}
+
+.custom-cursor.hover-ad-rail {
+  color: #ffffff;
+}
+
+.custom-cursor.hover-ad-rail .icon-crosshair {
+  opacity: 0;
+  transform: scale(0.6) rotate(0deg);
+}
+
+.custom-cursor.hover-ad-rail .icon-diamond {
+  opacity: 1;
+  transform: scale(1) rotate(45deg);
+}
+
+.custom-cursor.hover-ad-rail .icon-rect {
   opacity: 0;
   transform: scale(0.6) rotate(0deg);
 }

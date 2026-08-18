@@ -1,0 +1,41 @@
+{
+  "Software": [
+    { "name": "Fusion 360", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fusion/fusion-original.svg" },
+    { "name": "Solidworks", "src": "/3ds-com-logo.png" },
+    { "name": "KiCAD", "src": "/kicad.png" },
+    { "name": "Altium Designer", "src": "/altium-designer.png" },
+    { "name": "Autodesk Inventor", "src": "/inventor.svg" },
+    { "name": "STM32 Cube IDE", "src": "/stm32.svg" },
+    { "name": "Unity", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" },
+    { "name": "Claude Code", "src": "https://devicons.io/devicons/icons/claude-code.svg" },
+    { "name": "Flask", "src": "/flask.png" },
+    { "name": "Orca Slicer", "src": "https://orcaslicer3d.com/wp-content/uploads/2025/07/cropped-orca-slicer-logo.webp" },
+    { "name": "Prusa Slicer", "src": "/prusa-slicer.jpg" }
+  ],
+  "Languages": [
+    { "name": "C++", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" },
+    { "name": "Python", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+    { "name": "Java", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" },
+    { "name": "C#", "src": "https://devicons.io/devicons/icons/c-sharp.svg" },
+    { "name": "R", "src": "https://devicons.io/devicons/icons/r-lang.svg" }
+  ],
+  "Technologies": [
+    { "name": "Matlab Simulink", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matlab/matlab-original.svg" },
+    { "name": "ROS2", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ros/ros-original.svg" },
+    { "name": "Linux", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" },
+    { "name": "Git", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
+    { "name": "Docker", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
+    { "name": "OpenCV", "src": "https://devicons.io/devicons/icons/opencv.svg" },
+    { "name": "PyTorch", "src": "https://devicons.io/devicons/icons/pytorch-icon.svg" },
+    { "name": "Raspberry Pi", "src": "https://devicons.io/devicons/icons/raspberry-pi.svg" },
+    { "name": "Tensorflow", "src": "https://devicons.io/devicons/icons/tensorflow.svg" },
+    { "name": "Vim", "src": "https://devicons.io/devicons/icons/vim.svg" },
+    { "name": "MongoDB", "src": "https://devicons.io/devicons/icons/mongodb-icon.svg" }
+  ],
+  "Hardware": [
+    { "name": "Arduino", "src": "https://devicons.io/devicons/icons/arduino.svg" },
+    { "name": "STM32", "src": "/stm32.png" },
+    { "name": "Soldering", "src": "/Soldering iron icon 3 (1).svg" },
+    { "name": "3D Printing", "src": "/3dprinter.webp" }
+  ]
+}

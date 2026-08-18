@@ -23,7 +23,7 @@ const toLowRes = (src) => {
   return src;
 };
 
-const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref) => {
+const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1, adProjects = [], onProjectSelect }, ref) => {
   const streamRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [hoveredImageIdx, setHoveredImageIdx] = useState(null);
@@ -129,6 +129,13 @@ const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref
     });
   };
 
+  const handleImageClick = (index) => {
+    const project = adProjects[index % adProjects.length];
+    if (project && onProjectSelect) {
+      onProjectSelect(project.project);
+    }
+  };
+
   return (
     <div
       className={`ad-rail ad-rail--${side}`}
@@ -180,6 +187,7 @@ const AdvertisementRail = forwardRef(({ images, side, seed, direction = 1 }, ref
                     .join(' ')}
                   onMouseEnter={() => setHoveredImageIdx(i)}
                   onMouseLeave={() => setHoveredImageIdx(null)}
+                  onClick={() => handleImageClick(i)}
                 >
                   <div className="ad-rail__image-corner ad-rail__image-corner--tl" />
                   <div className="ad-rail__image-corner ad-rail__image-corner--tr" />

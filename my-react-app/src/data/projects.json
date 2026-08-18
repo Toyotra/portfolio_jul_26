@@ -1,10 +1,16 @@
 [
   {
-    "name": "NeuroLens",
-    "date": "2025-08",
-    "description": "A mobile app that uses on-device PyTorch to classify plant diseases from leaf photos in real time.",
-    "thumbnail": "/projects/neurolens/thumb.jpg",
-    "images": ["/projects/neurolens/screen1.jpg", "/projects/neurolens/screen2.jpg"],
+    "name": "Pomme - Autonomous Agricultural Automation Robot w/LiDAR and CV",
+    "date": "2026-07",
+    "description": "Hack The 6ix Winner. Built an autonomous rover+robotic arm robot that uses SLAM and computer vision to autonomous navigate and pikc up fruits, automating a largely hand-done process.",
+    "thumbnail": "/pomme/20260719_082636.jpg",
+    "ad-image": "/pomme/20260719_082636.jpg",
+    "images": [
+        "/projects/neurolens/screen1.jpg", 
+        "/projects/neurolens/screen2.jpg"
+  
+  
+  ],
     "bulletPoints": [
       "Built with React Native + PyTorch Mobile, 98% inference accuracy on a 5k image test set",
       "Fine-tuned a ResNet-18 model on a custom 12k image dataset of diseased/treated leaves",
@@ -17,6 +23,7 @@
     "date": "2025-03",
     "description": "A browser-based music sequencer that renders an animated 3D synthwave scene with React Three Fiber.",
     "thumbnail": "/projects/synthwave/thumb.jpg",
+    "ad-image": "/projects/synthwave/ad.webp",
     "images": ["/projects/synthwave/scene1.jpg", "/projects/synthwave/scene2.jpg"],
     "bulletPoints": [
       "3D scene powered by @react-three/fiber with custom GLSL shaders for the grid and neon glow",
@@ -30,6 +37,7 @@
     "date": "2024-11",
     "description": "A decentralized knowledge graph explorer that syncs documents peer-to-peer using OrbitDB and IPFS.",
     "thumbnail": "/projects/orbitdb/thumb.jpg",
+    "ad-image": "/projects/orbitdb/ad.webp",
     "images": ["/projects/orbitdb/graph1.jpg", "/projects/orbitdb/graph2.jpg"],
     "bulletPoints": [
       "Wired up an OrbitDB docstore with CRDT conflict resolution over a libp2p pubsub mesh",

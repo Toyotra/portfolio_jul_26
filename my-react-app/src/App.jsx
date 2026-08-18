@@ -54,7 +54,7 @@ const faceConfigs = {
   experiences: { position: [0, 0, -1.1], rotation: [0, Math.PI, 0] },
 };
 
-function Cube({ cubeRef, targetRotation }) {
+function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
   const lineRef = useRef();
   const { width, height } = useThree((state) => state.size);
 
@@ -125,7 +125,10 @@ function Cube({ cubeRef, targetRotation }) {
               style={{ width: 512, height: 512 }}
             >
               <div className="face-host">
-                <FaceComponent />
+                <FaceComponent
+                  selectedProject={selectedProject}
+                  onSelectProject={onSelectProject}
+                />
               </div>
             </Html>
           </group>
@@ -136,14 +139,19 @@ function Cube({ cubeRef, targetRotation }) {
   );
 }
 
-function Scene({ cubeRef, targetRotation }) {
+function Scene({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
   return (
     <>
       <ambientLight intensity={0.5} />
       <pointLight position={[5, 5, 5]} intensity={1.0} color="#ffffff" />
       <pointLight position={[-5, 3, -5]} intensity={0.5} color="#e0e0e0" />
       <pointLight position={[0, -4, -3]} intensity={0.4} color="#ffffff" />
-      <Cube cubeRef={cubeRef} targetRotation={targetRotation} />
+      <Cube
+        cubeRef={cubeRef}
+        targetRotation={targetRotation}
+        selectedProject={selectedProject}
+        onSelectProject={onSelectProject}
+      />
       <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} rotateSpeed={0.4} />
     </>
   );
@@ -153,6 +161,7 @@ function App() {
   const [activeSide, setActiveSide] = useState('home');
   const [targetRotation, setTargetRotation] = useState(rotations.home);
   const [startupComplete, setStartupComplete] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
   const cubeRef = useRef();
   const { showRails } = useShowAdRails();
 
@@ -160,10 +169,17 @@ function App() {
     setStartupComplete(true);
   }, []);
 
-  const handleSideClick = (side) => {
+  const handleSideClick = useCallback((side) => {
     setActiveSide(side);
     setTargetRotation(rotations[side]);
-  };
+  }, []);
+
+  const handleProjectSelect = useCallback((project) => {
+    if (activeSide !== 'projects') {
+      handleSideClick('projects');
+    }
+    setSelectedProject(project);
+  }, [activeSide, handleSideClick]);
 
   return (
     <div className="app-container">
@@ -171,7 +187,7 @@ function App() {
       <CustomCursor />
       <SidePanel side="left" />
       <SidePanel side="right" />
-      {showRails && <AdvertisementRails activeSide={activeSide} />}
+      {showRails && <AdvertisementRails activeSide={activeSide} onProjectSelect={handleProjectSelect} />}
 
       <nav className="sidebar">
         {Object.keys(rotations).map((side) => (
@@ -192,7 +208,12 @@ function App() {
         camera={{ position: [0, 0, 5.5], fov: 45 }}
         gl={{ antialias: true }}
       >
-        <Scene cubeRef={cubeRef} targetRotation={targetRotation} />
+        <Scene
+          cubeRef={cubeRef}
+          targetRotation={targetRotation}
+          selectedProject={selectedProject}
+          onSelectProject={handleProjectSelect}
+        />
       </Canvas>
       </div>
     </div>

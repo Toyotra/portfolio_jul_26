@@ -1,27 +1,27 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import AdvertisementRail from './AdvertisementRail';
-import adsData from '../../data/advertisements.json';
+import projectsData from '../../data/projects.json';
 
 const NORMAL_SPEED = 0.3;
 const FAST_SPEED = 900;
 
-function AdvertisementRails({ activeSide }) {
+const projectAds = projectsData.map((project) => ({
+  src: project['ad-image'],
+  project,
+})).filter((item) => item.src);
+
+function AdvertisementRails({ activeSide, onProjectSelect }) {
   const leftRef = useRef(null);
   const rightRef = useRef(null);
-  const [leftImages, setLeftImages] = useState(() => adsData[activeSide]?.left || []);
-  const [rightImages, setRightImages] = useState(() => adsData[activeSide]?.right || []);
+  const leftImages = projectAds.map((item) => item.src);
+  const rightImages = projectAds.map((item) => item.src);
   const prevSideRef = useRef(activeSide);
   const transitionIdRef = useRef(0);
 
   useEffect(() => {
-    const allImages = Object.values(adsData).flatMap((section) => [...section.left, ...section.right]);
-    const seen = new Set();
-    allImages.forEach((src) => {
-      if (!seen.has(src)) {
-        seen.add(src);
-        const img = new Image();
-        img.src = src;
-      }
+    projectAds.forEach((item) => {
+      const img = new Image();
+      img.src = item.src;
     });
   }, []);
 
@@ -36,8 +36,6 @@ function AdvertisementRails({ activeSide }) {
 
       const switchTimer = setTimeout(() => {
         if (transitionIdRef.current !== id) return;
-        setLeftImages(adsData[side]?.left || []);
-        setRightImages(adsData[side]?.right || []);
       }, 80);
 
       const decelTimer = setTimeout(() => {
@@ -53,7 +51,7 @@ function AdvertisementRails({ activeSide }) {
         clearTimeout(decelTimer);
       };
     },
-    [activeSide]
+    []
   );
 
   useEffect(() => {
@@ -62,8 +60,24 @@ function AdvertisementRails({ activeSide }) {
 
   return (
     <>
-      <AdvertisementRail ref={leftRef} images={leftImages} side="left" seed={0} direction={1} />
-      <AdvertisementRail ref={rightRef} images={rightImages} side="right" seed={800} direction={-1} />
+      <AdvertisementRail
+        ref={leftRef}
+        images={leftImages}
+        side="left"
+        seed={0}
+        direction={1}
+        adProjects={projectAds}
+        onProjectSelect={onProjectSelect}
+      />
+      <AdvertisementRail
+        ref={rightRef}
+        images={rightImages}
+        side="right"
+        seed={800}
+        direction={-1}
+        adProjects={projectAds}
+        onProjectSelect={onProjectSelect}
+      />
     </>
   );
 }

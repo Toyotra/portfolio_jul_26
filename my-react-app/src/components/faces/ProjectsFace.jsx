@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import './faces.css';
 import './ProjectsFace.css';
@@ -64,9 +64,7 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
-export default function ProjectsFace() {
-  const [selectedProject, setSelectedProject] = useState(null);
-
+export default function ProjectsFace({ selectedProject, onSelectProject }) {
   return (
     <div className="face projects-face">
       <div className="face-inner">
@@ -77,7 +75,7 @@ export default function ProjectsFace() {
             <ProjectCard
               key={project.name}
               project={project}
-              onClick={() => setSelectedProject(project)}
+              onClick={() => onSelectProject(project)}
             />
           ))}
         </div>
@@ -86,7 +84,7 @@ export default function ProjectsFace() {
           createPortal(
             <ProjectModal
               project={selectedProject}
-              onClose={() => setSelectedProject(null)}
+              onClose={() => onSelectProject(null)}
             />,
             document.body
           )}

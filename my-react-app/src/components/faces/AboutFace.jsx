@@ -1,5 +1,6 @@
 import './faces.css';
 import './AboutFace.css';
+import skillsByCategory from './skills.json';
 
 export default function AboutFace() {
   return (
@@ -9,6 +10,21 @@ export default function AboutFace() {
         <p className="face-subtitle">Passionate about code</p>
         <p className="face-subtitle">Design + Engineering</p>
         <p className="face-subtitle">Making ideas real</p>
+        <div className="skills-container">
+          {Object.entries(skillsByCategory).map(([category, skills]) => (
+            <div className="skill-category" key={category}>
+              <h3 className="category-title">{category}</h3>
+              <div className="skills-grid">
+                {skills.map((skill) => (
+                  <div className="skill-item" key={skill.name}>
+                    <img src={skill.src} alt={skill.name} className="skill-svg" />
+                    <span className="skill-tooltip">{skill.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

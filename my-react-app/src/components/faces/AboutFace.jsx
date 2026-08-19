@@ -7,9 +7,6 @@ export default function AboutFace() {
     <div className="face about-face">
       <div className="face-inner">
         <h1 className="face-title">About Me</h1>
-        <p className="face-subtitle">Passionate about code</p>
-        <p className="face-subtitle">Design + Engineering</p>
-        <p className="face-subtitle">Making ideas real</p>
         <div className="skills-container">
           {Object.entries(skillsByCategory).map(([category, skills]) => (
             <div className="skill-category" key={category}>

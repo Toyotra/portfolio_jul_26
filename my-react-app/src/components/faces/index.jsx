@@ -1,5 +1,5 @@
 import HomeFace from './HomeFace';
-import AboutFace from './AboutFace';
+import SkillsFace from './SkillFace';
 import ExperiencesFace from './ExperiencesFace';
 import ProjectsFace from './ProjectsFace';
 import CatFace from './CatFace';
@@ -7,7 +7,7 @@ import ContactFace from './ContactFace';
 
 export const faceComponents = {
   home: HomeFace,
-  about: AboutFace,
+  skills: SkillsFace,
   experiences: ExperiencesFace,
   projects: ProjectsFace,
   cat: CatFace,

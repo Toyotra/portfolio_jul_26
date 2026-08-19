@@ -2,11 +2,11 @@ import './faces.css';
 import './AboutFace.css';
 import skillsByCategory from './skills.json';
 
-export default function AboutFace() {
+export default function SkillsFace() {
   return (
     <div className="face about-face">
       <div className="face-inner">
-        <h1 className="face-title">About Me</h1>
+        <h1 className="face-title">Skills</h1>
         <div className="skills-container">
           {Object.entries(skillsByCategory).map(([category, skills]) => (
             <div className="skill-category" key={category}>

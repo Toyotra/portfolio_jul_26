@@ -55,17 +55,17 @@ const useShowSidePanels = () => {
 
 const rotations = {
   home: [0, 0, 0],
-  about: [0, -Math.PI / 2, 0],
+  skills: [0, -Math.PI / 2, 0],
   experiences: [0, Math.PI, 0],
   projects: [0, Math.PI / 2, 0],
   cat: [Math.PI / 2, 0, 0],
   contact: [-Math.PI / 2, 0, 0],
 };
 
-const sideOrder = ['about', 'projects', 'cat', 'contact', 'home', 'experiences'];
+const sideOrder = ['skills', 'projects', 'cat', 'contact', 'home', 'experiences'];
 
 const faceConfigs = {
-  about: { position: [1.1, 0, 0], rotation: [0, Math.PI / 2, 0] },
+  skills: { position: [1.1, 0, 0], rotation: [0, Math.PI / 2, 0] },
   projects: { position: [-1.1, 0, 0], rotation: [0, -Math.PI / 2, 0] },
   cat: { position: [0, 1.1, 0], rotation: [-Math.PI / 2, 0, 0] },
   contact: { position: [0, -1.1, 0], rotation: [Math.PI / 2, 0, 0] },
@@ -82,7 +82,7 @@ function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
     const minHeight = 700;
     const maxHeight = 1200;
     const minScale = 0.65;
-    const maxScale = 1.0;
+    const maxScale = 1.2;
 
     const widthScale = width <= minWidth ? minScale : width >= maxWidth ? maxScale : minScale + (maxScale - minScale) * ((width - minWidth) / (maxWidth - minWidth));
     const heightScale = height <= minHeight ? minScale : height >= maxHeight ? maxScale : minScale + (maxScale - minScale) * ((height - minHeight) / (maxHeight - minHeight));

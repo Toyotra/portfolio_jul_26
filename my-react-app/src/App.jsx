@@ -32,6 +32,27 @@ const useShowAdRails = () => {
   return { showRails };
 };
 
+const useShowSidePanels = () => {
+  const [show, setShow] = useState(() => window.innerWidth / window.innerHeight >= 0.75);
+
+  useEffect(() => {
+    let raf;
+    const handleResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        setShow(window.innerWidth / window.innerHeight >= 0.75);
+      });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return show;
+};
+
 const rotations = {
   home: [0, 0, 0],
   about: [0, -Math.PI / 2, 0],
@@ -54,6 +75,20 @@ const faceConfigs = {
 
 function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
   const { width, height } = useThree((state) => state.size);
+
+  const cubeScale = useMemo(() => {
+    const minWidth = 1024;
+    const maxWidth = 1920;
+    const minHeight = 700;
+    const maxHeight = 1200;
+    const minScale = 0.65;
+    const maxScale = 1.0;
+
+    const widthScale = width <= minWidth ? minScale : width >= maxWidth ? maxScale : minScale + (maxScale - minScale) * ((width - minWidth) / (maxWidth - minWidth));
+    const heightScale = height <= minHeight ? minScale : height >= maxHeight ? maxScale : minScale + (maxScale - minScale) * ((height - minHeight) / (maxHeight - minHeight));
+
+    return Math.min(widthScale, heightScale);
+  }, [width, height]);
 
   useFrame((state) => {
     if (!cubeRef.current) return;
@@ -79,7 +114,7 @@ function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
   });
 
   return (
-    <group ref={cubeRef}>
+    <group ref={cubeRef} scale={cubeScale} position={[0.08, 0, 0]}>
       {sideOrder.map((side) => {
         const config = faceConfigs[side];
         const FaceComponent = faceComponents[side];
@@ -130,6 +165,7 @@ function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const cubeRef = useRef();
   const { showRails } = useShowAdRails();
+  const showSidePanels = useShowSidePanels();
 
   const handleStartupComplete = useCallback(() => {
     setStartupComplete(true);
@@ -152,8 +188,8 @@ function App() {
       <BackgroundArchitecture />
       {!startupComplete && <StartupLoader onComplete={handleStartupComplete} />}
       <CustomCursor />
-      <SidePanel side="left" />
-      <SidePanel side="right" />
+      {showSidePanels && <SidePanel side="left" />}
+      {showSidePanels && <SidePanel side="right" />}
       {showRails && <AdvertisementRails activeSide={activeSide} onProjectSelect={handleProjectSelect} />}
 
       <nav className="sidebar">

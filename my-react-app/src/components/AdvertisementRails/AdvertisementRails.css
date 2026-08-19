@@ -8,16 +8,16 @@
 .ad-rail {
   position: fixed;
   top: 0;
-  width: 360px;
+  width: clamp(200px, 22vw, 360px);
   height: 100vh;
   z-index: 3;
-  pointer-events: auto;
+  pointer-events: none;
   user-select: none;
   overflow: visible;
 }
 
-.ad-rail--left  { left: 200px; }
-.ad-rail--right { right: 200px; }
+.ad-rail--left  { left: clamp(60px, 10vw, 150px); }
+.ad-rail--right { right: clamp(60px, 10vw, 150px); }
 
 /* ─── Outer installation frame ───────────────────────────── */
 .ad-rail__frame {
@@ -141,6 +141,7 @@
   transition: filter 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
   opacity: 0.4;
   cursor: pointer;
+  pointer-events: auto;
 }
 
 /* Top edge highlight — subtle screen reflection */
@@ -512,13 +513,6 @@
 }
 
 /* ─── Responsive ─────────────────────────────────────────── */
-@media (max-width: 1200px) {
-  .ad-rail {
-    width: 220px;
-  }
-  .ad-rail--left { left: 160px; }
-  .ad-rail--right { right: 160px; }
-}
 
 @media (max-width: 1024px) {
   .ad-rail {

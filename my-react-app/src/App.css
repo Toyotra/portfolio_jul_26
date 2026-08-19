@@ -21,21 +21,17 @@ body,
   margin: 0;
   font-family: 'JetBrains Mono', monospace;
   overflow: hidden;
-  color: #111111;
-  background: #f5f5f5;
+  color: #e0e0e0;
+  background: #050505;
 }
 
 
-/*grid lines for background*/
+/* architectural background container */
 .app-container {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #f5f5f5;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-  background-size: 12px 12px;
+  background: #050505;
   overflow: hidden;
 }
 
@@ -48,12 +44,13 @@ body,
   flex-direction: row;
   gap: 0;
   z-index: 10;
-  background: rgba(245, 245, 245, 0.9);
+  background: rgba(8, 8, 8, 0.75);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0;
   padding: 0;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 .sidebar-btn {
@@ -62,10 +59,10 @@ body,
   padding: 10px 18px;
   background: transparent;
   border: none;
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
-  color: rgba(0, 0, 0, 0.6);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.45);
   cursor: pointer;
-  transition: color 0.2s ease, box-shadow 0.2s ease;
+  transition: color 0.2s ease, background 0.2s ease;
   text-align: center;
   border-radius: 0;
   white-space: nowrap;
@@ -98,7 +95,7 @@ body,
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   transform: translateX(-101%);
   transition: transform 0.3s ease;
   z-index: -1;
@@ -109,18 +106,18 @@ body,
 }
 
 .sidebar-btn:hover {
-  color: #000000;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2), 0 0 50px rgba(0, 0, 0, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.04), 0 0 40px rgba(255, 255, 255, 0.02);
 }
 
 .sidebar-btn.active {
-  color: #000000;
-  box-shadow: inset 0 -2px 0 0 rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 -2px 0 0 rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.06);
 }
 
 .sidebar-btn.active::before {
   transform: translateX(0);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .canvas-container {

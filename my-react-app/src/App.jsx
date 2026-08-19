@@ -2,6 +2,7 @@ import SidePanel from './SidePanel';
 import CustomCursor from './CustomCursor';
 import AdvertisementRails from './components/AdvertisementRails/AdvertisementRails';
 import StartupLoader from './components/LoadingScreen';
+import BackgroundArchitecture from './BackgroundArchitecture';
 import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
@@ -183,6 +184,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <BackgroundArchitecture />
       {!startupComplete && <StartupLoader onComplete={handleStartupComplete} />}
       <CustomCursor />
       <SidePanel side="left" />

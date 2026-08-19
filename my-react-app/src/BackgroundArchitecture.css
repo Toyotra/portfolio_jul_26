@@ -1,4 +1,8 @@
 .bg-arch {
+  --grid-color: #e5e5e5;
+  --grid-size: 20px;
+  --grid-stroke-width: 1px;
+
   position: fixed;
   inset: 0;
   width: 100%;
@@ -6,7 +10,7 @@
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  background: #050505;
+  background: #fafafa;
 }
 
 .bg-arch__svg {
@@ -15,140 +19,4 @@
   width: 100%;
   height: 100%;
   display: block;
-}
-
-.bg-arch__structural {
-  animation: bg-arch-structural-drift 60s linear infinite;
-}
-
-@keyframes bg-arch-structural-drift {
-  0%, 100% { transform: translate(0, 0); }
-  50%      { transform: translate(0.05%, 0.03%); }
-}
-
-.bg-arch__frame-set-1 {
-  animation: bg-arch-frame-shift-1 40s ease-in-out infinite;
-}
-
-@keyframes bg-arch-frame-shift-1 {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.7; }
-}
-
-.bg-arch__frame-set-2 {
-  animation: bg-arch-frame-shift-2 55s ease-in-out infinite;
-}
-
-@keyframes bg-arch-frame-shift-2 {
-  0%, 100% { opacity: 1; }
-  33%      { opacity: 0.6; }
-  66%      { opacity: 0.85; }
-}
-
-.bg-arch__frame-set-3 {
-  animation: bg-arch-frame-shift-3 70s ease-in-out infinite;
-}
-
-@keyframes bg-arch-frame-shift-3 {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.65; }
-}
-
-.bg-arch__geometric {
-  animation: bg-arch-geometric-drift 80s linear infinite;
-}
-
-@keyframes bg-arch-geometric-drift {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50%      { transform: translate(-0.04%, 0.02%) rotate(0.05deg); }
-}
-
-.bg-arch__perspective {
-  animation: bg-arch-perspective-breathe 90s ease-in-out infinite;
-}
-
-@keyframes bg-arch-perspective-breathe {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.4; }
-}
-
-.bg-arch__columns {
-  animation: bg-arch-columns-breathe 75s ease-in-out infinite;
-}
-
-@keyframes bg-arch-columns-breathe {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.5; }
-}
-
-.bg-arch__seams {
-  animation: bg-arch-seams-breathe 85s ease-in-out infinite;
-}
-
-@keyframes bg-arch-seams-breathe {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.55; }
-}
-
-.bg-arch__arcs {
-  animation: bg-arch-arcs-drift 100s linear infinite;
-}
-
-@keyframes bg-arch-arcs-drift {
-  0%, 100% { transform: translate(0, 0); }
-  50%      { transform: translate(0.03%, -0.02%); }
-}
-
-.bg-arch__accent-lines {
-  animation: bg-arch-accent-breathe 65s ease-in-out infinite;
-}
-
-@keyframes bg-arch-accent-breathe {
-  0%, 100% { opacity: 1; }
-  30%      { opacity: 0.4; }
-  60%      { opacity: 0.75; }
-  85%      { opacity: 0.35; }
-}
-
-.bg-arch__line-travel {
-  animation: bg-arch-line-travel 20s linear infinite;
-}
-
-@keyframes bg-arch-line-travel {
-  0%   { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 8; }
-}
-
-.bg-arch__line-pulse {
-  animation: bg-arch-line-pulse 12s ease-in-out infinite;
-}
-
-@keyframes bg-arch-line-pulse {
-  0%, 100% { stroke: rgba(255,255,255,0.035); }
-  50%      { stroke: rgba(255,255,255,0.07); }
-}
-
-.bg-arch__sweep {
-  animation: bg-arch-light-sweep 15s ease-in-out infinite;
-}
-
-@keyframes bg-arch-light-sweep {
-  0%   { transform: translateX(-30%) scaleX(1); opacity: 1; }
-  40%  { transform: translateX(0%) scaleX(1.3); opacity: 1; }
-  60%  { transform: translateX(0%) scaleX(1.3); opacity: 1; }
-  100% { transform: translateX(30%) scaleX(1); opacity: 1; }
-}
-
-.bg-arch__haze {
-  animation: bg-arch-haze-breathe 25s ease-in-out infinite;
-}
-
-@keyframes bg-arch-haze-breathe {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.5; }
-}
-
-.bg-arch__geometric .bg-arch__line-travel,
-.bg-arch__geometric .bg-arch__line-pulse {
-  animation-duration: 30s;
 }

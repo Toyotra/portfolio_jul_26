@@ -7,15 +7,15 @@
     "ad-image": "/pomme/20260719_082636.jpg",
     "link": "",
     "images": [
-        "public/pomme/20260718_040921 (1).jpg", 
-        "public/pomme/20260719_060426.jpg",
-        "public/pomme/20260719_082636.jpg",
-        "public/pomme/20260719_145901-2.jpg",
-        "public/pomme/fadsfadf.png",
-        "public/pomme/gallery (1).jpg",
-        "public/pomme/S1340027.JPG",
-        "public/pomme/gallery (2).jpg",
-        "public/pomme/gallery (3).jpg"
+        "/pomme/20260718_040921 (1).jpg", 
+        "/pomme/20260719_060426.jpg",
+        "/pomme/20260719_082636.jpg",
+        "/pomme/20260719_145901-2.jpg",
+        "/pomme/fadsfadf.png",
+        "/pomme/gallery (1).jpg",
+        "/pomme/S1340027.JPG",
+        "/pomme/gallery (2).jpg",
+        "/pomme/gallery (3).jpg"
   
   
   ],
@@ -30,18 +30,18 @@
     "name": "sEMG Bionic Arm",
     "date": "2023/06 - 2024/03",
     "description": "Gold + Best Engineering @ Windsor Science Fair. Designed and manufactured a novel bionic arm using a custrom control mechanism that utilizes bicep and tricep electromyographic sensors and custom signal processing algorithms.",
-    "thumbnail": "public/bionic-arm/Media (1).jpeg",
-    "ad-image": "public/bionic-arm/Media (1).jpeg",
+    "thumbnail": "/bionic-arm/Media (1).jpeg",
+    "ad-image": "/bionic-arm/Media (1).jpeg",
     "link": "",
     "images": [
-      "public/bionic-arm/Media (1).jpeg", 
-      "public/bionic-arm/Media (4).jpeg",
-      "public/bionic-arm/Media.jpeg", 
-      "public/bionic-arm/shared image.jpg", 
-      "public/bionic-arm/win.jpeg",
-      "public/bionic-arm/MicrosoftTeams-image (9).png",
-      "public/bionic-arm/MicrosoftTeams-image (1) (1).png",
-      "public/bionic-arm/IMG_7532 (1).jpg"
+      "/bionic-arm/Media (1).jpeg", 
+      "/bionic-arm/Media (4).jpeg",
+      "/bionic-arm/Media.jpeg", 
+      "/bionic-arm/shared image.jpg", 
+      "/bionic-arm/win.jpeg",
+      "/bionic-arm/MicrosoftTeams-image (9).png",
+      "/bionic-arm/MicrosoftTeams-image (1) (1).png",
+      "/bionic-arm/IMG_7532 (1).jpg"
     ],
     "bulletPoints": [
       "Designed a modular CAD design in Fusion 360 via joints and master sketch techniques for modularity and easy iteration",
@@ -54,14 +54,14 @@
     "name": "GCI-Gauntlet: Assistance Device for Patients with Dementia Using Computer Vision and TTS",
     "date": "2025/05",
     "description": "MasseyHacks 2nd Place. Designed a device that uses TTS w/ a Raspberry Pi to scan and identify faces with CV, and speak their name on a Bluetooth speaker.",
-    "thumbnail": "public/gci/thumbnail.jpg",
-    "ad-image": "public/gci/thumbnail.jpg",
+    "thumbnail": "/gci/thumbnail.jpg",
+    "ad-image": "/gci/thumbnail.jpg",
     "link": "",
     "images": [
-      "public/gci/thumbnail.jpg", 
-      "public/gci/2.jpg",
-      "public/gci/3.jpg",
-      "public/gci/1.jpg"],
+      "/gci/thumbnail.jpg", 
+      "/gci/2.jpg",
+      "/gci/3.jpg",
+      "/gci/1.jpg"],
     "bulletPoints": [
       "Built a wearable gauntlet with face recognition and TTS capabilities to assist users with dementia",
       "Designed and 3D-printed a custom chassis and integrated embedded electronics with PWM control for seamless interaction",
@@ -73,58 +73,65 @@
   {
     "name": "Novel Soft Robotic Gripper (Publication Submission Pending)",
     "date": "2025/07 - 2026/08",
-    "description": "",
-    "thumbnail": "public/gci/thumbnail.jpg",
-    "ad-image": "public/gci/thumbnail.jpg",
+    "description": "Designed and manufactured a novel soft robotic agricultural fruit gripper in association with the University of Windsor using kerf-bending techniques",
+    "thumbnail": "/gripper/3.jpg",
+    "ad-image": "/gripper/3.jpg",
     "link": "",
     "images": [
-      "public/gci/thumbnail.jpg", 
-      "public/gci/2.jpg",
-      "public/gci/3.jpg",
-      "public/gci/1.jpg"],
+      "/gripper/1.jpg", 
+      "/gripper/2.jpg",
+      "/gripper/3.jpg",
+      "/gripper/4.jpg",
+      "/gripper/5.png",
+      "/gripper/6.png"
+    ],
     "bulletPoints": [
-      "Built a wearable gauntlet with face recognition and TTS capabilities to assist users with dementia",
-      "Designed and 3D-printed a custom chassis and integrated embedded electronics with PWM control for seamless interaction",
-      "Developed a Flask-based web app for live visual feedback, incorporating a server and database",
-      "Designed and Implemented a custom system where the gauntlet could be pointed at a user, and their name is spoken on a bluetooth speaker using TTS"
+      "Used Fusion 360 CAD and FDM 3D-printed over 20 design iterations, improving on each through preliminary tests",
+      "Created a custom algorithm in Python to calculate maximum gripper deflection and modularize the gripper design process",
+      "Successfully tested and proved the functionality and repeatibility of the gripper with over 250 testing trials",
+      "Designed custom silicone molds via FDM 3D-printing, successfully limiting fruit damage and load-sliping to a minimum",
+      "Used a custom cycloidal negative-space geometry to successfully grip on fruits with diameters ranging from 30mm-140mm"
     ]
   },
   {
-    "name": "GCI-Gauntlet: Assistance Device for Patients with Dementia Using Computer Vision and TTS",
-    "date": "2025-05",
-    "description": "MasseyHacks 1st Place",
-    "thumbnail": "public/gci/thumbnail.jpg",
-    "ad-image": "public/gci/thumbnail.jpg",
+    "name": "Computer Vision Street Fighter",
+    "date": "2025-06",
+    "description": "105% in Grade 12 CS. Built a Street Fighter in Java and Python that uses a custom trained Tensorflow RNN to classify body movements and translate them into moves",
+    "thumbnail": "https://github.com/Toyotra/BloodStainedVisors/blob/main/MenkaraJad-final/Cover.png?raw=true",
+    "ad-image": "https://github.com/Toyotra/BloodStainedVisors/blob/main/MenkaraJad-final/Cover.png?raw=true",
     "link": "",
     "images": [
-      "public/gci/thumbnail.jpg", 
-      "public/gci/2.jpg",
-      "public/gci/3.jpg",
-      "public/gci/1.jpg"],
+      "https://github.com/Toyotra/BloodStainedVisors/blob/main/MenkaraJad-final/Cover.png?raw=true", 
+      "/vision/image.png",
+      "/vision/image2.png"
+      ],
     "bulletPoints": [
-      "Built a wearable gauntlet with face recognition and TTS capabilities to assist users with dementia",
-      "Designed and 3D-printed a custom chassis and integrated embedded electronics with PWM control for seamless interaction",
-      "Developed a Flask-based web app for live visual feedback, incorporating a server and database",
-      "Designed and Implemented a custom system where the gauntlet could be pointed at a user, and their name is spoken on a bluetooth speaker using TTS"
+      "Used Mediapipe and Tensorflow to train an RNN to successfully classify hand gestures and body movements at over 85% accuracy for gameplay translation",
+      "Incorporated a custom data-localization algorithm to treat mediapipe data the same no matter the distance from the camera or rotation",
+      "Used Java to program gameplay including animations, over 6 attack moves, and custom moves for each character for fun playability",
+      "Implemented a local Flask server and two Python instances that communicate to allow for multi-player fighting"
     ]
   },
   {
-    "name": "GCI-Gauntlet: Assistance Device for Patients with Dementia Using Computer Vision and TTS",
-    "date": "2025-05",
-    "description": "MasseyHacks 1st Place",
-    "thumbnail": "public/gci/thumbnail.jpg",
-    "ad-image": "public/gci/thumbnail.jpg",
+    "name": "Exhaust Thermoelectric Generator",
+    "date": "2022/07 - 2023/05",
+    "description": "National Bronze Medal @ Canada Wide Science Fair. Built a novel thermoelectric generator that uses the Peltier effect to generate electricty from exhaust waste heat",
+    "thumbnail": "/generator/image.png",
+    "ad-image": "/generator/image.png",
     "link": "",
     "images": [
-      "public/gci/thumbnail.jpg", 
-      "public/gci/2.jpg",
-      "public/gci/3.jpg",
-      "public/gci/1.jpg"],
+      "/generator/1.png", 
+      "/generator/2.png",
+      "/generator/3.png",
+      "/generator/4.png",
+      "/generator/5.png",
+      "/generator/6.png"
+      ],
     "bulletPoints": [
-      "Built a wearable gauntlet with face recognition and TTS capabilities to assist users with dementia",
-      "Designed and 3D-printed a custom chassis and integrated embedded electronics with PWM control for seamless interaction",
-      "Developed a Flask-based web app for live visual feedback, incorporating a server and database",
-      "Designed and Implemented a custom system where the gauntlet could be pointed at a user, and their name is spoken on a bluetooth speaker using TTS"
+      "Designed, manufactured, and tested a novel device that was successfully proved to generate electricity from exhaust waste heat",
+      "Utilized Autodesk CFD and custom computational fluid dynamics simulations to simulate various geometries' impact on exhaust backpressure, minimizing the device's effects on engine performance",
+      "Used sheet metal bending and custom 3d-printed molds to make complex geometries which sustain high temperatures",
+      "Performed various statistical analysis including an Anova test to prove minimal statistical variance"
     ]
   }
 ]

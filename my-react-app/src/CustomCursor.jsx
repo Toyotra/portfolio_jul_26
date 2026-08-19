@@ -1,10 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './CustomCursor.css';
 
 function CustomCursor() {
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [hoverType, setHoverType] = useState('none');
   const [isClicking, setIsClicking] = useState(false);
+  const cursorRef = useRef(null);
+  const mousePosRef = useRef(mousePos);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    mousePosRef.current = mousePos;
+  }, [mousePos]);
+
+  useEffect(() => {
+    const updateCursor = () => {
+      if (cursorRef.current) {
+        const pos = mousePosRef.current;
+        cursorRef.current.style.left = `${pos.x}px`;
+        cursorRef.current.style.top = `${pos.y}px`;
+      }
+      rafRef.current = requestAnimationFrame(updateCursor);
+    };
+
+    rafRef.current = requestAnimationFrame(updateCursor);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -25,6 +46,10 @@ function CustomCursor() {
       }
     };
 
+    const handleCustomCursorMove = (e) => {
+      setMousePos({ x: e.detail.x, y: e.detail.y });
+    };
+
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
     const handleMouseLeave = () => {
@@ -33,21 +58,24 @@ function CustomCursor() {
       setIsClicking(false);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
     window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('custom-cursor-move', handleCustomCursorMove);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('custom-cursor-move', handleCustomCursorMove);
     };
   }, []);
 
   return (
     <div
+      ref={cursorRef}
       className={`custom-cursor ${hoverType === 'interactive' ? 'hover-interactive' : ''} ${hoverType === 'ad-rail' ? 'hover-ad-rail' : ''} ${isClicking ? 'clicking' : ''}`}
       style={{
         left: mousePos.x,

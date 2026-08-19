@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import './faces.css';
 import './ProjectsFace.css';
@@ -80,19 +80,121 @@ function ProjectModal({ project, onClose }) {
 }
 
 export default function ProjectsFace({ selectedProject, onSelectProject }) {
+  const scrollRef = useRef(null);
+  const thumbRef = useRef(null);
+  const trackRef = useRef(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const drag = useRef({ y: 0, scrollTop: 0 });
+  const thumbHeightRef = useRef(0);
+
+  const updateThumb = useCallback(() => {
+    const el = scrollRef.current;
+    const thumb = thumbRef.current;
+    const track = trackRef.current;
+    if (!el || !thumb || !track) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = el;
+    const overflow = scrollHeight > clientHeight;
+    setHasOverflow(overflow);
+
+    if (!overflow) {
+      thumb.style.height = '0px';
+      thumb.style.transform = 'translateY(0px)';
+      thumbHeightRef.current = 0;
+      return;
+    }
+
+    const trackH = clientHeight;
+    const h = Math.max(30, (trackH / scrollHeight) * trackH);
+    const y = (scrollTop / (scrollHeight - clientHeight)) * (trackH - h);
+
+    thumb.style.height = `${h}px`;
+    thumb.style.transform = `translateY(${y}px)`;
+    thumbHeightRef.current = h;
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateThumb();
+    el.addEventListener('scroll', updateThumb, { passive: true });
+    window.addEventListener('resize', updateThumb);
+    return () => {
+      el.removeEventListener('scroll', updateThumb);
+      window.removeEventListener('resize', updateThumb);
+    };
+  }, [updateThumb]);
+
+  const onThumbMouseDown = (e) => {
+    e.preventDefault();
+    setDragging(true);
+    drag.current = { y: e.clientY, scrollTop: scrollRef.current.scrollTop };
+  };
+
+  useEffect(() => {
+    if (!dragging) return;
+
+    const onMove = (e) => {
+      const el = scrollRef.current;
+      if (!el) return;
+      const { clientHeight, scrollHeight } = el;
+      const dy = e.clientY - drag.current.y;
+      const trackH = clientHeight - thumbHeightRef.current;
+      const range = scrollHeight - clientHeight;
+      if (trackH > 0 && range > 0) {
+        el.scrollTop = Math.max(0, Math.min(drag.current.scrollTop + (dy / trackH) * range, range));
+      }
+    };
+
+    const onUp = () => setDragging(false);
+    const onLeave = () => setDragging(false);
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    document.addEventListener('mouseleave', onLeave);
+
+    return () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      document.removeEventListener('mouseleave', onLeave);
+    };
+  }, [dragging]);
+
+  const onWheel = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <div className="face projects-face">
       <div className="face-inner">
         <h1 className="face-title">Projects</h1>
         <p className="face-subtitle">Click a project to view details</p>
-        <div className="projects-list" onWheel={(e) => e.stopPropagation()}>
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.name}
-              project={project}
-              onClick={() => onSelectProject(project)}
-            />
-          ))}
+        <div className="projects-scroll-container">
+          <div
+            ref={scrollRef}
+            className="projects-list"
+            onWheel={onWheel}
+            onMouseMove={(e) => window.dispatchEvent(new CustomEvent('custom-cursor-move', { detail: { x: e.clientX, y: e.clientY } }))}
+            onMouseLeave={() => window.dispatchEvent(new CustomEvent('custom-cursor-move', { detail: { x: -100, y: -100 } }))}
+          >
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.name}
+                project={project}
+                onClick={() => onSelectProject(project)}
+              />
+            ))}
+          </div>
+          {hasOverflow && (
+            <div ref={trackRef} className="custom-scrollbar-track">
+              <div
+                ref={thumbRef}
+                className="custom-scrollbar-thumb"
+                onMouseDown={onThumbMouseDown}
+              />
+            </div>
+          )}
         </div>
 
         {selectedProject &&

@@ -79,12 +79,16 @@ function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
     geo.setPositions(positions);
     const mat = new LineMaterial({
       color: '#000000',
-      linewidth: 0.035,
+      linewidth: 2.0,
       transparent: true,
-      opacity: 0.5,
+      opacity: 1.0,
+      depthTest: true,
+      depthWrite: true,
     });
     mat.resolution.set(width, height);
     const line = new Line2(geo, mat);
+    line.computeLineDistances();
+    line.scale.set(1.02, 1.02, 1.02);
     return line;
   }, [width, height]);
 
@@ -94,9 +98,10 @@ function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
     }
     if (!cubeRef.current) return;
     const { clock } = state;
+    const tiltX = 0.3;
     cubeRef.current.rotation.x = THREE.MathUtils.lerp(
       cubeRef.current.rotation.x,
-      targetRotation[0],
+      targetRotation[0] + tiltX,
       0.08
     );
     cubeRef.current.rotation.y = THREE.MathUtils.lerp(

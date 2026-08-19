@@ -217,7 +217,7 @@
   background: transparent;
   border: 1px solid rgba(0, 0, 0, 0.2);
   color: #111111;
-  font-family: 'Saiba-45', 'JetBrains Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
@@ -269,6 +269,7 @@
 }
 
 .project-modal-desc {
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   color: rgba(0, 0, 0, 0.75);
   margin: 2px 0;
@@ -285,6 +286,7 @@
 }
 
 .project-bullets li {
+  font-family: 'JetBrains Mono', monospace;
   position: relative;
   padding-left: 16px;
   font-size: 12px;

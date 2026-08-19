@@ -116,7 +116,6 @@
   font-weight: 400;
   letter-spacing: 0.35em;
   color: rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
   opacity: 0;
   animation: textFadeIn 0.5s ease 0.2s forwards;
 }

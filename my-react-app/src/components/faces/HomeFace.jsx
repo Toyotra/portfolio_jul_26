@@ -60,8 +60,8 @@ export default function HomeFace() {
         of Toronto. I build robots! I am most skilled in PCB Design, CAD, simulation software (FEA, CFD, Gazebo etc.).
         I'm also an avid guitarist, hackathon entheusiast (winner, organizer, mentor), and lifter.
       </p>
+      <br></br>
 
-      <br />
 
       <div className="homeImages">
         <img src="/b.jpg" />

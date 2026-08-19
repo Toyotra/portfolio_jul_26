@@ -6,9 +6,6 @@ import BackgroundArchitecture from './BackgroundArchitecture';
 import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
-import { Line2 } from 'three/examples/jsm/lines/Line2';
-import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
-import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial';
 import * as THREE from 'three';
 import './App.css';
 import './SidePanel.css';
@@ -56,46 +53,9 @@ const faceConfigs = {
 };
 
 function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
-  const lineRef = useRef();
   const { width, height } = useThree((state) => state.size);
 
-  const edgeLine = useMemo(() => {
-    const s = 1.1;
-    const positions = [
-      -s, s, s,  s, s, s,
-      s, s, s,  s,-s, s,
-      s,-s, s, -s,-s, s,
-      -s,-s, s, -s, s, s,
-      -s, s,-s,  s, s,-s,
-      s, s,-s,  s,-s,-s,
-      s,-s,-s, -s,-s,-s,
-      -s,-s,-s, -s, s,-s,
-      -s, s, s, -s, s,-s,
-      s, s, s,  s, s,-s,
-      s,-s, s,  s,-s,-s,
-      -s,-s, s, -s,-s,-s,
-    ];
-    const geo = new LineGeometry();
-    geo.setPositions(positions);
-    const mat = new LineMaterial({
-      color: '#000000',
-      linewidth: 2.0,
-      transparent: true,
-      opacity: 1.0,
-      depthTest: true,
-      depthWrite: true,
-    });
-    mat.resolution.set(width, height);
-    const line = new Line2(geo, mat);
-    line.computeLineDistances();
-    line.scale.set(1.02, 1.02, 1.02);
-    return line;
-  }, [width, height]);
-
   useFrame((state) => {
-    if (lineRef.current) {
-      lineRef.current.material.resolution.set(width, height);
-    }
     if (!cubeRef.current) return;
     const { clock } = state;
     const tiltX = 0.3;
@@ -139,8 +99,7 @@ function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
             </Html>
           </group>
         );
-      })}
-      <primitive ref={lineRef} object={edgeLine} />
+      }      )}
     </group>
   );
 }

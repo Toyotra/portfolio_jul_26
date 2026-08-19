@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import './CustomCursor.css';
 
 function CustomCursor() {
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
-  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [hoverType, setHoverType] = useState('none');
   const [isClicking, setIsClicking] = useState(false);
-  const rafRef = useRef();
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -48,34 +46,12 @@ function CustomCursor() {
     };
   }, []);
 
-  useEffect(() => {
-    const speed = 0.4;
-
-    const animate = () => {
-      setCursorPos((prev) => {
-        const dx = mousePos.x - prev.x;
-        const dy = mousePos.y - prev.y;
-        if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
-          return mousePos;
-        }
-        return {
-          x: prev.x + dx * speed,
-          y: prev.y + dy * speed,
-        };
-      });
-      rafRef.current = requestAnimationFrame(animate);
-    };
-
-    rafRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [mousePos]);
-
   return (
     <div
       className={`custom-cursor ${hoverType === 'interactive' ? 'hover-interactive' : ''} ${hoverType === 'ad-rail' ? 'hover-ad-rail' : ''} ${isClicking ? 'clicking' : ''}`}
       style={{
-        left: cursorPos.x,
-        top: cursorPos.y,
+        left: mousePos.x,
+        top: mousePos.y,
       }}
     >
       <svg className="cursor-icon icon-crosshair" viewBox="0 0 24 24" fill="none">

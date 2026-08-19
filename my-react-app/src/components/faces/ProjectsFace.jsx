@@ -85,7 +85,7 @@ export default function ProjectsFace({ selectedProject, onSelectProject }) {
       <div className="face-inner">
         <h1 className="face-title">Projects</h1>
         <p className="face-subtitle">Click a project to view details</p>
-        <div className="projects-list">
+        <div className="projects-list" onWheel={(e) => e.stopPropagation()}>
           {projects.map((project) => (
             <ProjectCard
               key={project.name}

@@ -1,8 +1,8 @@
 import './BackgroundArchitecture.css';
 
 const GRID_SIZE = 20;
-const GRID_STROKE = '#e5e5e5';
-const GRID_STROKE_WIDTH = 1;
+const GRID_STROKE = 'rgba(3, 3, 3, 0.23)';
+const GRID_STROKE_WIDTH = 0.5;
 
 export default function BackgroundArchitecture() {
   return (

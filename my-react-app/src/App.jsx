@@ -2,6 +2,7 @@ import SidePanel from './SidePanel';
 import CustomCursor from './CustomCursor';
 import AdvertisementRails from './components/AdvertisementRails/AdvertisementRails';
 import StartupLoader from './components/LoadingScreen';
+import LiquidChrome from './components/LiquidChrome';
 import BackgroundArchitecture from './BackgroundArchitecture';
 import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
@@ -354,6 +355,15 @@ function App() {
 
   return (
     <div className="app-container">
+      <div style={{ width: '100%', height: '100%', position: 'absolute', inset: 0, zIndex: 0 }}>
+        <LiquidChrome
+          baseColor={[0.4, 0.01, 0.01]}
+          speed={0.2}
+          amplitude={0.9}
+          interactive
+        />
+      </div>
+
       <BackgroundArchitecture />
 
       {!startupComplete && (

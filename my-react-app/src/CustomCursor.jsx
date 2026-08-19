@@ -2,23 +2,28 @@ import { useState, useEffect, useRef } from 'react';
 import './CustomCursor.css';
 
 function CustomCursor() {
-  const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [hoverType, setHoverType] = useState('none');
   const [isClicking, setIsClicking] = useState(false);
   const cursorRef = useRef(null);
-  const mousePosRef = useRef(mousePos);
+  const mousePosRef = useRef({ x: -100, y: -100 });
+  const cursorPosRef = useRef({ x: -100, y: -100 });
   const rafRef = useRef(null);
-
-  useEffect(() => {
-    mousePosRef.current = mousePos;
-  }, [mousePos]);
 
   useEffect(() => {
     const updateCursor = () => {
       if (cursorRef.current) {
-        const pos = mousePosRef.current;
-        cursorRef.current.style.left = `${pos.x}px`;
-        cursorRef.current.style.top = `${pos.y}px`;
+        const mouse = mousePosRef.current;
+        const current = cursorPosRef.current;
+
+        const lerp = 0.15;
+
+        const nextX = current.x + (mouse.x - current.x) * lerp;
+        const nextY = current.y + (mouse.y - current.y) * lerp;
+
+        cursorPosRef.current = { x: nextX, y: nextY };
+
+        cursorRef.current.style.left = `${nextX}px`;
+        cursorRef.current.style.top = `${nextY}px`;
       }
       rafRef.current = requestAnimationFrame(updateCursor);
     };
@@ -29,7 +34,7 @@ function CustomCursor() {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      mousePosRef.current = { x: e.clientX, y: e.clientY };
 
       const target = e.target;
       const interactiveEl = target.closest(
@@ -47,13 +52,13 @@ function CustomCursor() {
     };
 
     const handleCustomCursorMove = (e) => {
-      setMousePos({ x: e.detail.x, y: e.detail.y });
+      mousePosRef.current = { x: e.detail.x, y: e.detail.y };
     };
 
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
     const handleMouseLeave = () => {
-      setMousePos({ x: -100, y: -100 });
+      mousePosRef.current = { x: -100, y: -100 };
       setHoverType('none');
       setIsClicking(false);
     };
@@ -77,10 +82,6 @@ function CustomCursor() {
     <div
       ref={cursorRef}
       className={`custom-cursor ${hoverType === 'interactive' ? 'hover-interactive' : ''} ${hoverType === 'ad-rail' ? 'hover-ad-rail' : ''} ${isClicking ? 'clicking' : ''}`}
-      style={{
-        left: mousePos.x,
-        top: mousePos.y,
-      }}
     >
       <svg className="cursor-icon icon-crosshair" viewBox="0 0 24 24" fill="none">
         <line

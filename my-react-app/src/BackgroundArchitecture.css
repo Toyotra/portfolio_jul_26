@@ -1,5 +1,5 @@
 .bg-arch {
-  --grid-color: #e5e5e5;
+  --grid-color: #e5e5e55d;
   --grid-size: 20px;
   --grid-stroke-width: 1px;
 
@@ -7,10 +7,11 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   user-select: none;
-  background: #fafafa;
+  background: #fafafa4e;
+  opacity: 0.3;
 }
 
 .bg-arch__svg {

@@ -143,7 +143,7 @@
 /* ─── Cube edges ────────────────────────────────────────────── */
 .startup-cube-edge {
   stroke: rgba(255, 255, 255, 0.85);
-  stroke-width: 1;
+  stroke-width: 1.5;
   stroke-linecap: square;
   stroke-dasharray: 300;
   stroke-dashoffset: 300;

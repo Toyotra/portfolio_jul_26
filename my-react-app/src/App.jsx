@@ -59,6 +59,8 @@ function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
     if (!cubeRef.current) return;
     const { clock } = state;
     const tiltX = 0.3;
+    const tiltY = -0.25;
+    const tiltZ = 0;
     cubeRef.current.rotation.x = THREE.MathUtils.lerp(
       cubeRef.current.rotation.x,
       targetRotation[0] + tiltX,
@@ -66,15 +68,14 @@ function Cube({ cubeRef, targetRotation, selectedProject, onSelectProject }) {
     );
     cubeRef.current.rotation.y = THREE.MathUtils.lerp(
       cubeRef.current.rotation.y,
-      targetRotation[1],
+      targetRotation[1] + tiltY,
       0.08
     );
     cubeRef.current.rotation.z = THREE.MathUtils.lerp(
       cubeRef.current.rotation.z,
-      targetRotation[2],
+      targetRotation[2] + tiltZ,
       0.08
     );
-    cubeRef.current.position.y = Math.sin(clock.elapsedTime * 0.8) * 0.08;
   });
 
   return (

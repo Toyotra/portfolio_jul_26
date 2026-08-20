@@ -127,7 +127,7 @@ const TickZone = ({ ticks, dur, delay }) => (
 );
 
 /* ─── Light bar segments ─────────────────────────────────── */
-const SegBar = ({ dur, segDelays }) => (
+const SegBar = ({ dur: _dur, segDelays }) => (
   <div className="sp-bar-track">
     {segDelays.map((d, i) => (
       <div key={i} className="sp-bar-seg" style={{ '--seg-delay': d }} />

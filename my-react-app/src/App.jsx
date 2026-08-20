@@ -1,16 +1,18 @@
+import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import SidePanel from './SidePanel';
 import CustomCursor from './CustomCursor';
 import AdvertisementRails from './components/AdvertisementRails/AdvertisementRails';
 import StartupLoader from './components/LoadingScreen';
 import LiquidChrome from './components/LiquidChrome';
 import BackgroundArchitecture from './BackgroundArchitecture';
-import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
+import projectsRaw from './data/projects.json';
+import experiencesRaw from './data/experiences.json';
+import { faceComponents } from './components/faces';
 import './App.css';
 import './SidePanel.css';
-import { faceComponents } from './components/faces';
 
 const useShowAdRails = () => {
   const [showRails, setShowRails] = useState(() => window.innerWidth > 1024);
@@ -20,7 +22,6 @@ const useShowAdRails = () => {
 
     const handleResize = () => {
       cancelAnimationFrame(raf);
-
       raf = requestAnimationFrame(() => {
         setShowRails(window.innerWidth > 1024);
       });
@@ -47,7 +48,6 @@ const useShowSidePanels = () => {
 
     const handleResize = () => {
       cancelAnimationFrame(raf);
-
       raf = requestAnimationFrame(() => {
         setShow(window.innerWidth / window.innerHeight >= 0.75);
       });
@@ -64,10 +64,6 @@ const useShowSidePanels = () => {
   return show;
 };
 
-/*
- * The tilt is kept separate from the face rotation.
- * This is the SAME tilt you had originally.
- */
 const TILT = new THREE.Euler(
   0.3,
   -0.25,
@@ -111,6 +107,73 @@ const sideOrder = [
   'contact',
 ];
 
+const CAT_PHOTOS = [
+  '/cat_photos/cat_1.jpg',
+  '/cat_photos/cat_2.jpg',
+  '/cat_photos/cat_3.jpg',
+  '/cat_photos/cat_4.jpg',
+];
+
+const STATIC_IMAGES = [
+  '/b.jpg',
+  '/portfolio_website_photo.png',
+  '/typing.png',
+];
+
+function usePreloadAssets() {
+  const [loadedCount, setLoadedCount] = useState(0);
+
+  const imageUrls = useMemo(() => {
+    const urls = new Set();
+
+    const add = (url) => {
+      if (url && typeof url === 'string') urls.add(url);
+    };
+
+    (projectsRaw || []).forEach((p) => {
+      add(p.thumbnail);
+      (p.images || []).forEach(add);
+    });
+
+    const work = (experiencesRaw && experiencesRaw.work) || [];
+    const volunteer = (experiencesRaw && experiencesRaw.volunteer) || [];
+    [...work, ...volunteer].forEach((e) => {
+      add(e.thumbnail);
+      (e.images || []).forEach(add);
+    });
+
+    CAT_PHOTOS.forEach(add);
+    STATIC_IMAGES.forEach(add);
+
+    return [...urls];
+  }, []);
+
+  useEffect(() => {
+    if (imageUrls.length === 0) {
+      setLoadedCount(0);
+      return;
+    }
+
+    let count = 0;
+    imageUrls.forEach((src) => {
+      const img = new Image();
+      img.onload = () => {
+        count += 1;
+        setLoadedCount(count);
+      };
+      img.onerror = () => {
+        count += 1;
+        setLoadedCount(count);
+      };
+      img.src = src;
+    });
+
+    setLoadedCount(0);
+  }, [imageUrls]);
+
+  return { loadedCount, totalItems: imageUrls.length };
+}
+
 function Cube({
   cubeRef,
   targetQuaternion,
@@ -151,14 +214,6 @@ function Cube({
 
   useFrame(() => {
     if (!cubeRef.current) return;
-
-    /*
-     * Smoothly interpolate the quaternion instead of
-     * independently interpolating X/Y/Z Euler angles.
-     *
-     * This prevents the cube from taking a weird path
-     * when switching between X-axis and Y-axis faces.
-     */
     cubeRef.current.quaternion.slerp(targetQuaternion, 0.08);
   });
 
@@ -249,10 +304,6 @@ function Scene({
 function App() {
   const [activeSide, setActiveSide] = useState('home');
 
-  /*
-   * The initial orientation is exactly the same as before:
-   * [0.3, -0.25, 0]
-   */
   const initialQuaternion = useMemo(() => {
     return new THREE.Quaternion().setFromEuler(TILT);
   }, []);
@@ -262,31 +313,25 @@ function App() {
 
   const [startupComplete, setStartupComplete] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [canvasReady, setCanvasReady] = useState(false);
 
   const cubeRef = useRef();
 
   const { showRails } = useShowAdRails();
   const showSidePanels = useShowSidePanels();
+  const { loadedCount, totalItems } = usePreloadAssets();
 
   const handleStartupComplete = useCallback(() => {
     setStartupComplete(true);
   }, []);
 
+  const handleCanvasReady = useCallback(() => {
+    setCanvasReady(true);
+  }, []);
+
   const handleSideClick = useCallback((side) => {
     setActiveSide(side);
 
-    /*
-     * Get the rotation of the selected FACE itself.
-     *
-     * For example:
-     *
-     * home        -> [0, 0, 0]
-     * skills      -> [0, +90°, 0]
-     * projects    -> [0, -90°, 0]
-     * cat         -> [-90°, 0, 0]
-     * contact     -> [+90°, 0, 0]
-     * experiences -> [0, 180°, 0]
-     */
     const faceEuler = new THREE.Euler(
       faceConfigs[side].rotation[0],
       faceConfigs[side].rotation[1],
@@ -297,29 +342,8 @@ function App() {
     const faceQuaternion = new THREE.Quaternion()
       .setFromEuler(faceEuler);
 
-    /*
-     * We need the inverse of the face rotation because
-     * we are rotating the CUBE, not the face itself.
-     *
-     * This brings the selected face back to the camera.
-     */
     const faceAlignment = faceQuaternion.clone().invert();
 
-    /*
-     * Apply the SAME tilt that the home screen starts with.
-     *
-     * IMPORTANT:
-     *
-     * We multiply the tilt AFTER aligning the face.
-     *
-     * This means:
-     *
-     * 1. Face points toward camera.
-     * 2. Entire cube gets the same visual tilt.
-     *
-     * This is fundamentally different from adding
-     * Euler angles together.
-     */
     const tiltQuaternion = new THREE.Quaternion()
       .setFromEuler(TILT);
 
@@ -354,9 +378,11 @@ function App() {
 
       <BackgroundArchitecture />
 
-      {!startupComplete && (
-        <StartupLoader onComplete={handleStartupComplete} />
-      )}
+      <StartupLoader
+        onComplete={handleStartupComplete}
+        loadedCount={loadedCount}
+        totalItems={totalItems}
+      />
 
       <CustomCursor />
 
@@ -388,29 +414,28 @@ function App() {
       </nav>
 
       <div className="canvas-container">
-        {startupComplete && (
-          <Canvas
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-            resize={{ scroll: false }}
-            camera={{
-              position: [0, 0, 5.5],
-              fov: 45,
-            }}
-            gl={{
-              antialias: true,
-            }}
-          >
-            <Scene
-              cubeRef={cubeRef}
-              targetQuaternion={targetQuaternion}
-              selectedProject={selectedProject}
-              onSelectProject={handleProjectSelect}
-            />
-          </Canvas>
-        )}
+        <Canvas
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+          resize={{ scroll: false }}
+          camera={{
+            position: [0, 0, 5.5],
+            fov: 45,
+          }}
+          gl={{
+            antialias: true,
+          }}
+          onCreated={handleCanvasReady}
+        >
+          <Scene
+            cubeRef={cubeRef}
+            targetQuaternion={targetQuaternion}
+            selectedProject={selectedProject}
+            onSelectProject={handleProjectSelect}
+          />
+        </Canvas>
       </div>
     </div>
   );

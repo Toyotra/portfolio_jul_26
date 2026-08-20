@@ -2,17 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import './LoadingScreen.css';
 
 const CUBE_EDGES = [
-  // Front face (drawn first)
   { x1: 140, y1: 140, x2: 260, y2: 140, delay: '0.00s' },
   { x1: 260, y1: 140, x2: 260, y2: 260, delay: '0.08s' },
   { x1: 260, y1: 260, x2: 140, y2: 260, delay: '0.16s' },
   { x1: 140, y1: 260, x2: 140, y2: 140, delay: '0.24s' },
-  // Back face
   { x1: 170, y1: 170, x2: 290, y2: 170, delay: '0.38s' },
   { x1: 290, y1: 170, x2: 290, y2: 290, delay: '0.46s' },
   { x1: 290, y1: 290, x2: 170, y2: 290, delay: '0.54s' },
   { x1: 170, y1: 290, x2: 170, y2: 170, delay: '0.62s' },
-  // Depth connectors
   { x1: 140, y1: 140, x2: 170, y2: 170, delay: '0.74s' },
   { x1: 260, y1: 140, x2: 290, y2: 170, delay: '0.82s' },
   { x1: 260, y1: 260, x2: 290, y2: 290, delay: '0.90s' },
@@ -20,12 +17,10 @@ const CUBE_EDGES = [
 ];
 
 const ARCH_LINES = [
-  // Extension lines from front corners
   { x1: 140, y1: 140, x2: 100, y2: 100, delay: '0.70s' },
   { x1: 260, y1: 140, x2: 300, y2: 100, delay: '0.75s' },
   { x1: 260, y1: 260, x2: 300, y2: 300, delay: '0.80s' },
   { x1: 140, y1: 260, x2: 100, y2: 300, delay: '0.85s' },
-  // Extension lines from back corners
   { x1: 170, y1: 170, x2: 130, y2: 130, delay: '0.90s' },
   { x1: 290, y1: 170, x2: 330, y2: 130, delay: '0.95s' },
   { x1: 290, y1: 290, x2: 330, y2: 330, delay: '1.00s' },
@@ -51,44 +46,54 @@ const CROSS_LINES = [
 const PROGRESS_SEGMENTS = 28;
 const ANIMATION_DURATION = 2200;
 
-function StartupLoader({ onComplete }) {
+function StartupLoader({ onComplete, loadedCount, totalItems }) {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const hasCompleted = useRef(false);
+  const onCompleteRef = useRef(onComplete);
+  const startTimeRef = useRef(Date.now());
+  const rafRef = useRef(null);
 
   useEffect(() => {
-    const startTime = Date.now();
-    let rafId;
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
-    const tick = () => {
-      const elapsed = Date.now() - startTime;
-      const raw = Math.min(elapsed / ANIMATION_DURATION, 1);
-      const eased = raw < 0.65
-        ? raw * 1.35
-        : 0.8775 + (raw - 0.65) * 0.35;
-      setProgress(Math.min(eased, 1));
-      if (raw < 1) {
-        rafId = requestAnimationFrame(tick);
-      }
-    };
+  useEffect(() => {
+    const done = loadedCount >= totalItems && totalItems > 0;
+    if (!done) return;
 
-    rafId = requestAnimationFrame(tick);
+    const elapsed = Date.now() - startTimeRef.current;
+    const remaining = Math.max(0, ANIMATION_DURATION - elapsed);
 
     const exitTimer = setTimeout(() => {
       if (!hasCompleted.current) {
         hasCompleted.current = true;
         setIsExiting(true);
         setTimeout(() => {
-          onComplete();
+          onCompleteRef.current();
         }, 500);
       }
-    }, ANIMATION_DURATION);
+    }, remaining);
 
-    return () => {
-      cancelAnimationFrame(rafId);
-      clearTimeout(exitTimer);
+    return () => clearTimeout(exitTimer);
+  }, [loadedCount, totalItems]);
+
+  useEffect(() => {
+    const tick = () => {
+      const elapsed = Date.now() - startTimeRef.current;
+      const raw = Math.min(elapsed / ANIMATION_DURATION, 1);
+      const eased = raw < 0.65
+        ? raw * 1.35
+        : 0.8775 + (raw - 0.65) * 0.35;
+      setProgress(Math.min(eased, 1));
+      rafRef.current = requestAnimationFrame(tick);
     };
-  }, [onComplete]);
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   const activeSegments = Math.floor(progress * PROGRESS_SEGMENTS);
 
@@ -186,7 +191,9 @@ function StartupLoader({ onComplete }) {
               />
             ))}
           </div>
-          <div className="startup-progress-pct">{Math.floor(progress * 100)}%</div>
+          <div className="startup-progress-pct">
+            {totalItems > 0 ? `${Math.floor((loadedCount / totalItems) * 100)}%` : '...'}
+          </div>
         </div>
       </div>
 

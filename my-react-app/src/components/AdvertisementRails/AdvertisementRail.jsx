@@ -2,7 +2,6 @@ import { forwardRef, useImperativeHandle, useMemo, useRef, useState, useEffect, 
 import './AdvertisementRails.css';
 
 const NORMAL_SPEED = 0.3;
-const FAST_SPEED = 14;
 const LERP_FACTOR = 0.18;
 
 const toLowRes = (src) => {

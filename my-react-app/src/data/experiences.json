@@ -1,0 +1,140 @@
+{
+  "work": [
+    {
+      "name": "Surgical Robotics Engineer Intern",
+      "company": "OrbSurgical",
+      "date": "2026/05 - 2026/08",
+      "description": "Working on surgical robot R&D Design in Fusion360, ROS2, and KiCAD",
+      "thumbnail": "/orb.jpeg",
+      "link": "",
+      "images": [
+        
+      ],
+      "bulletPoints": [
+        "Details under NDA"
+      ]
+    },
+    {
+      "name": "Engineering Research Assistant",
+      "company": "University of Windsor: IMPACT Engineering Lab",
+      "date": "2025/05 - 2026/08",
+      "description": "Designed, Manufactured, and tested a novel soft robotic gripper for pending publication submission.",
+      "thumbnail": "/uwindsorlogo.png",
+      "link": "/uwindsorlogo.png",
+      "images": [
+        
+      ],
+      "bulletPoints": [
+        "Designed, manufactured, and tested a novel, compliant, soft-robotic gripper with Fusion 360 and FDM 3D printing for agricultural automation through gripping produce",
+        "Performed silicone mold making and material testing on gripper components to improve compliance and range of fruit handling",
+        "Developed a Python program to optimize design parameters for a wide variety of agricultural handling applications",
+        "Currently writing a manuscript for an upcoming 1st author publication submission to a peer reviewed journal"
+      ]
+    },
+    {
+      "name": "Surgical Robotics Research Assistant",
+      "company": "University of Calgary: neuroArm Lab",
+      "date": "2024/05 - 2026/08",
+      "description": "Designed a novel neurosurgical robot prototype for inner-brain tumors",
+      "thumbnail": "/ucalgary.jpg",
+      "link": "",
+      "images": [
+      ],
+      "bulletPoints": [
+        "Details under NDA"
+      ]
+    },
+    {
+      "name": "Avionics Team Member",
+      "company": "Georgia Tech Propulsive Lander Rocket Team",
+      "date": "2026/05 - 2026/08",
+      "description": "Recruited in high school (they found me). Single handedly designed all of their PCBs",
+      "thumbnail": "/GTLogo.png",
+      "link": "",
+      "images": [
+        
+      ],
+      "bulletPoints": [
+        "Designed Multiple PCBs in KiCAD and Altium incorporating 4 layers for ground, signalling, and high power rails",
+        "Implemeneted several flood planes to support over 10A of current and supporting peripherals using 3.3-12V",
+        "Led physical PCB design and assisted in component selection for a hybrid rocket's PCB, capable of withstanding high altitudes and extreme temperature/pressure"
+      ]
+    }
+  ],
+  "volunteer": [
+    {
+      "name": "Non-profit Co-Founder and Director",
+      "company": "BotBuilders Robotics Program",
+      "date": "2024/10 - 2026/06",
+      "description": "Created the best free robotics program in Southwestern, Ontario for K8 Students",
+      "thumbnail": "/builderbots-logo.png",
+      "link": "",
+      "images": [
+      ],
+      "bulletPoints": [
+        "Founded a free robotics program for middle school students, introducing them to engineering fundamentals",
+        "Secured $3000+ in sponsorships, enabling free access to take-home robotics kits and learning materials",
+        "Mentored over 25 students, successfully allowing each to create their first robot",
+        "Provided students the opportunity to learn robotics without paying for exclusive programs",
+        "Developed an interactive website using ReactJS and authored structured lesson plans for the program",
+        "Led a team of 8 to distribute tasks and run the program effectively"
+      ]
+    },
+    {
+      "name": "Sponsorship Lead",
+      "company": "GeeseHacks",
+      "date": "2025/08 - 2026/05",
+      "description": "Led Sponsorships",
+      "thumbnail": "/geesehacks_logo.jpeg",
+      "link": "",
+      "images": [
+      ],
+      "bulletPoints": [
+        "Sent a bunch of emails"
+      ]
+    },
+    {
+      "name": "Outreach Co-Lead",
+      "company": "Hack Canada",
+      "date": "2024/07 - 2025/08",
+      "description": "Sponsorships and leadership!",
+      "thumbnail": "/hackcanadaLogo.png",
+      "link": "",
+      "images": [
+      ],
+      "bulletPoints": [
+        "Sent A LOT of emails"
+      ]
+    },
+    {
+      "name": "Teacher Assistant",
+      "company": "CodeReach Non-profit",
+      "date": "2024/08 - 2026/06",
+      "description": "Teaching students coding",
+      "thumbnail": "/codeReach-cropped.svg",
+      "link": "",
+      "images": [
+      ],
+      "bulletPoints": [
+        "Taught 50+ middle-school students Python fundamentals and Pygame for interactive game design",
+        "Introduced core algorithms and math concepts to build problem-solving skills in young learners",
+        "Taught weekly lessons for over 10 months"
+      ]
+    },
+    {
+      "name": "Chapter President",
+      "company": "Hack Club: Vincent Massey Secondary School Chapter",
+      "date": "2022/09 - 2026/06",
+      "description": "Created the best free robotics program in Southwestern, Ontario for K8 Students",
+      "thumbnail": "/hackclub.png",
+      "link": "",
+      "images": [
+      ],
+      "bulletPoints": [
+        "Increased club membership by 300% through new workshops and community partnerships",
+        "Led a 5 person team to successfully run the club, organize a bake sale for funding, and allocate various tasks like web development, lesson planning, etc.",
+        "Delivered weekly sessions on CAD, PCB design, microcontrollers, and web development to 25+ students"
+      ]
+    }
+  ]
+}

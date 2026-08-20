@@ -9,3 +9,19 @@
 .contact-face .face-subtitle {
   color: rgba(0, 0, 0, 0.6);
 }
+
+.contact-face a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: opacity 0.2s ease, text-underline-offset 0.2s ease;
+  cursor: pointer;
+  color:blue;
+}
+
+.contact-face a:hover {
+  opacity: 0.65;
+  text-underline-offset: 6px;
+  color:red;
+}

@@ -56,11 +56,15 @@ export default function HomeFace() {
 
       <br />
       <p className="face-subtitle" id="face-subtitle-A">
-        Hi! I'm Jad, an electrical (int.) engineering student at the University
-        of Toronto. I build robots! I am most skilled in PCB Design, CAD, simulation software (FEA, CFD, Gazebo etc.).
-        I'm also an avid guitarist, hackathon entheusiast (winner, organizer, mentor), and lifter.
-      </p>
-      <br></br>
+        
+        - National Science Fair (CWSF) winner<br></br>
+        - IEEE First Author @ 17 (pending)<br></br>
+        - Paid Surgical Robotics Research since 15<br></br>
+        - Recruited by T20 rocket team in high school<br></br>
+        - 6x Hackathon Winner<br></br>
+        - University of Toronto EE (int.)
+         </p>
+         <br></br>
 
 
       <div className="homeImages">

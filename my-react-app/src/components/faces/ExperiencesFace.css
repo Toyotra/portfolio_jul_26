@@ -1,11 +1,339 @@
+@font-face {
+  font-family: 'Saiba-45';
+  src: url('/saiba-45/SAIBA-45.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .experiences-face .face {
   background: #ffffff;
 }
 
-.experiences-face .face-title {
-  color: #111111;
+.experiences-face .face-inner {
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 0px;
+  background: transparent;
 }
 
-.experiences-face .face-subtitle {
+.experiences-face .face-title {
+  color: #111111;
+
+  
+}
+
+.experiences-columns {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.experiences-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.experience-column-title {
+  font-family: 'Saiba-45', 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  margin: 0;
+  padding: 0 0 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.experience-scroll-container {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  position: relative;
+  margin-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.experience-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-right: 12px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.experience-list::-webkit-scrollbar {
+  display: none;
+}
+
+.experience-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 0;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: inherit;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.experience-card:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-bottom-color: rgba(0, 0, 0, 0.35);
+  transform: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15), 0 0 40px rgba(0, 0, 0, 0.08);
+}
+
+.experience-thumb {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+.experience-card-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  
+}
+
+.experience-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.experience-name {
+  font-family: 'Saiba-45', 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: #111111;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  white-space: normal;      
+  word-break: normal;       
+  overflow-wrap: break-word; 
+}
+
+.experience-company {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
   color: rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.experience-date {
+  font-family: 'Saiba-45', 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.experience-desc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  margin: 2px 0 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;          
+  overflow: hidden;     
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
+
+.custom-scrollbar-track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.custom-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  pointer-events: auto;
+}
+
+.experience-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(245, 245, 245, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5vw;
+  box-sizing: border-box;
+}
+
+.experience-modal {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  padding: 24px 24px 20px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.experience-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: #111111;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 0;
+  transition: all 0.2s;
+}
+
+.experience-modal-close:hover {
+  color: #000000;
+  border-color: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25), 0 0 50px rgba(0, 0, 0, 0.15);
+}
+
+.experience-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 4px;
+}
+
+.experience-modal-thumb {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.experience-modal-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  color: #111111;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.experience-modal-company {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 2px;
+  display: block;
+  letter-spacing: 0.06em;
+}
+
+.experience-modal-date {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+  margin-top: 4px;
+  display: block;
+  letter-spacing: 0.08em;
+}
+
+.experience-modal-desc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.75);
+  margin: 2px 0;
+  line-height: 1.6;
+}
+
+.experience-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.experience-bullets li {
+  font-family: 'JetBrains Mono', monospace;
+  position: relative;
+  padding-left: 16px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+}
+
+.experience-bullets li::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  color: #111111;
+  font-size: 12px;
+}
+
+.experience-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.experience-image {
+  flex: 1 1 48%;
+  height: 120px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }

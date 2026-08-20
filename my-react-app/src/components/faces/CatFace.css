@@ -1,13 +1,16 @@
 .cat-face .face {
   background: #ffffff;
+  padding: clamp(12px, 4%, 50px);
 }
 
 .cat-face .face-inner {
-  padding: 2vw;
+  padding: clamp(6px, 2%, 24px);
+  container-type: inline-size;
 }
 
 .cat-face .face-title {
   color: #111111;
+  font-size: clamp(16px, 3.5%, 26px);
 }
 
 .cat-face .face-subtitle {
@@ -17,9 +20,9 @@
 .cat-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: clamp(4px, 2%, 12px);
   width: 100%;
-  padding-top: 20px;
+  padding-top: clamp(6px, 2%, 20px);
 }
 
 .cat-photo-item {
@@ -51,7 +54,13 @@
 @media (max-width: 480px) {
   .cat-grid {
     grid-template-columns: 1fr;
-    max-width: 350px;
+    max-width: 90vw;
+  }
+}
+
+@container (max-width: 320px) {
+  .cat-grid {
+    grid-template-columns: 1fr;
   }
 }
 

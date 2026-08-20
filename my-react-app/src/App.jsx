@@ -64,54 +64,6 @@ const useShowSidePanels = () => {
   return show;
 };
 
-const faceConfigs = {
-
-  home: {
-    position: [0, 0, 1.1],
-    rotation: [0, 0, 0],
-  },
-
-  experiences: {
-    position: [0, 0, -1.1],
-    rotation: [0, Math.PI, 0],
-  },
-
-
-  projects: {
-    position: [-1.1, 0, 0],
-    rotation: [0, -Math.PI / 2, 0],
-  },
-
-  skills: {
-    position: [1.1, 0, 0],
-    rotation: [0, Math.PI / 2, 0],
-  },
-
-
-  cat: {
-    position: [0, 1.1, 0],
-    rotation: [-Math.PI / 2, 0, 0],
-  },
-
-  contact: {
-    position: [0, -1.1, 0],
-    rotation: [Math.PI / 2, 0, 0],
-  },
-
-  
-
-  
-};
-
-const sideOrder = [
-  'home',
-  'experiences',
-  'projects',
-  'skills',
-  'cat',
-  'contact',
-];
-
 /*
  * The tilt is kept separate from the face rotation.
  * This is the SAME tilt you had originally.
@@ -122,6 +74,42 @@ const TILT = new THREE.Euler(
   0,
   'XYZ'
 );
+
+const faceConfigs = {
+  home: {
+    position: [0, 0, 1.1],
+    rotation: [0, 0, 0],
+  },
+  experiences: {
+    position: [0, 0, -1.1],
+    rotation: [0, Math.PI, 0],
+  },
+  projects: {
+    position: [-1.1, 0, 0],
+    rotation: [0, -Math.PI / 2, 0],
+  },
+  skills: {
+    position: [1.1, 0, 0],
+    rotation: [0, Math.PI / 2, 0],
+  },
+  cat: {
+    position: [0, 1.1, 0],
+    rotation: [-Math.PI / 2, 0, 0],
+  },
+  contact: {
+    position: [0, -1.1, 0],
+    rotation: [Math.PI / 2, 0, 0],
+  },
+};
+
+const sideOrder = [
+  'home',
+  'experiences',
+  'projects',
+  'skills',
+  'cat',
+  'contact',
+];
 
 function Cube({
   cubeRef,
@@ -400,27 +388,29 @@ function App() {
       </nav>
 
       <div className="canvas-container">
-        <Canvas
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-          resize={{ scroll: false }}
-          camera={{
-            position: [0, 0, 5.5],
-            fov: 45,
-          }}
-          gl={{
-            antialias: true,
-          }}
-        >
-          <Scene
-            cubeRef={cubeRef}
-            targetQuaternion={targetQuaternion}
-            selectedProject={selectedProject}
-            onSelectProject={handleProjectSelect}
-          />
-        </Canvas>
+        {startupComplete && (
+          <Canvas
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+            resize={{ scroll: false }}
+            camera={{
+              position: [0, 0, 5.5],
+              fov: 45,
+            }}
+            gl={{
+              antialias: true,
+            }}
+          >
+            <Scene
+              cubeRef={cubeRef}
+              targetQuaternion={targetQuaternion}
+              selectedProject={selectedProject}
+              onSelectProject={handleProjectSelect}
+            />
+          </Canvas>
+        )}
       </div>
     </div>
   );

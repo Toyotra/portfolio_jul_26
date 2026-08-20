@@ -13,7 +13,6 @@ const ROLES = [
 const TYPE_SPEED = 100;
 const DELETE_SPEED = 50;
 const PAUSE_AFTER_TYPE = 2000;
-const PAUSE_AFTER_DELETE = 500;
 
 export default function HomeFace() {
   const [text, setText] = useState('');
@@ -36,7 +35,6 @@ export default function HomeFace() {
         } else {
           setIsDeleting(false);
           setRoleIndex((roleIndex + 1) % ROLES.length);
-          setTimeout(() => {}, PAUSE_AFTER_DELETE);
         }
       }
     }, isDeleting ? DELETE_SPEED : TYPE_SPEED);
@@ -68,7 +66,7 @@ export default function HomeFace() {
 
 
       <div className="homeImages">
-        <img src="/b.jpg" />
+        <img src="/b.jpg" alt="Home" loading="lazy" />
       </div>
     </div>
   );

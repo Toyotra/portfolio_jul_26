@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { createPortal } from 'react-dom';
 import './faces.css';
 import './ExperiencesFace.css';
 import experiences from '../../data/experiences.json';
 
-function ExperienceCard({ experience, onClick }) {
+const ExperienceCard = memo(function ExperienceCard({ experience, onClick }) {
   return (
     <button className="experience-card" onClick={onClick} aria-label={`Open ${experience.name}`}>
       <img
@@ -23,7 +23,7 @@ function ExperienceCard({ experience, onClick }) {
       </div>
     </button>
   );
-}
+});
 
 function ExperienceModal({ experience, onClose }) {
   useEffect(() => {

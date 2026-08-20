@@ -39,7 +39,7 @@ export default function CatFace() {
               onClick={() => setSelectedPhoto(src)}
               aria-label={`Open cat photo ${index + 1}`}
             >
-              <img src={src} alt={`Cat photo ${index + 1}`} />
+              <img src={src} alt={`Cat photo ${index + 1}`} loading="lazy" />
             </button>
           ))}
         </div>

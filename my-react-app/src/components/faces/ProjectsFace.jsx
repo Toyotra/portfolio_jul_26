@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { createPortal } from 'react-dom';
 import './faces.css';
 import './ProjectsFace.css';
 import projects from '../../data/projects.json';
 
-function ProjectCard({ project, onClick }) {
+const ProjectCard = memo(function ProjectCard({ project, onClick }) {
   return (
     <button className="project-card" onClick={onClick} aria-label={`Open ${project.name}`}>
       <img
@@ -37,7 +37,7 @@ function ProjectCard({ project, onClick }) {
       </div>
     </button>
   );
-}
+});
 
 function ProjectModal({ project, onClose }) {
   useEffect(() => {

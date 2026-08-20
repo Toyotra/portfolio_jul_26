@@ -1,11 +1,3 @@
-@font-face {
-  font-family: 'Saiba-45';
-  src: url('/saiba-45/SAIBA-45.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 .projects-face .face {
   background: #ffffff;
 }

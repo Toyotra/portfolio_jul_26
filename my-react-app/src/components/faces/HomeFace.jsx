@@ -56,7 +56,7 @@ export default function HomeFace() {
       <p className="face-subtitle" id="face-subtitle-A">
         
         - National Science Fair (CWSF) winner<br></br>
-        - IEEE First Author @ 17 (pending)<br></br>
+        {/*- IEEE First Author @ 17 (pending)<br></br>*/}
         - Paid Surgical Robotics Research since 15<br></br>
         - Recruited by T20 rocket team in high school<br></br>
         - 6x Hackathon Winner<br></br>

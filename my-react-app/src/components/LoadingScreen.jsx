@@ -79,6 +79,11 @@ function StartupLoader({ onComplete, loadedCount, totalItems }) {
   }, [loadedCount, totalItems]);
 
   useEffect(() => {
+    if (isExiting && rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
+
     const tick = () => {
       const elapsed = Date.now() - startTimeRef.current;
       const raw = Math.min(elapsed / ANIMATION_DURATION, 1);
@@ -93,7 +98,7 @@ function StartupLoader({ onComplete, loadedCount, totalItems }) {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [isExiting]);
 
   const activeSegments = Math.floor(progress * PROGRESS_SEGMENTS);
 

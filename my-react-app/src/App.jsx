@@ -311,9 +311,7 @@ function App() {
   const [targetQuaternion, setTargetQuaternion] =
     useState(initialQuaternion);
 
-  const [startupComplete, setStartupComplete] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [canvasReady, setCanvasReady] = useState(false);
 
   const cubeRef = useRef();
 
@@ -322,11 +320,6 @@ function App() {
   const { loadedCount, totalItems } = usePreloadAssets();
 
   const handleStartupComplete = useCallback(() => {
-    setStartupComplete(true);
-  }, []);
-
-  const handleCanvasReady = useCallback(() => {
-    setCanvasReady(true);
   }, []);
 
   const handleSideClick = useCallback((side) => {
@@ -427,7 +420,6 @@ function App() {
           gl={{
             antialias: true,
           }}
-          onCreated={handleCanvasReady}
         >
           <Scene
             cubeRef={cubeRef}

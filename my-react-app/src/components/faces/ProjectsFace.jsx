@@ -7,6 +7,7 @@ import projects from '../../data/projects.json';
 const ProjectCard = memo(function ProjectCard({ project, onClick }) {
   return (
     <button className="project-card" onClick={onClick} aria-label={`Open ${project.name}`}>
+      
       <img
         className="project-thumb"
         src={project.thumbnail}
@@ -15,24 +16,18 @@ const ProjectCard = memo(function ProjectCard({ project, onClick }) {
       />
       <div className="project-card-body">
         <div className="project-card-head">
-          <span className="project-name">{project.name}</span>
+          <span className="project-name">
+            {project.name}
+            
+            </span>
+          
           <div className="project-card-meta">
-            {project.link ? (
-              <a
-                className="project-link-widget"
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                aria-label={`Open ${project.name} link`}
-                title={project.link}
-              >
-                ↗
-              </a>
-            ) : null}
+            <a href={project.link}><i class="fa-solid fa-link"></i></a>
             <span className="project-date">{project.date}</span>
           </div>
         </div>
+        
+
         <p className="project-desc">{project.description}</p>
       </div>
     </button>

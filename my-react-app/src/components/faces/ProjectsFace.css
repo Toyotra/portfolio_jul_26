@@ -125,6 +125,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
+  margin-bottom:0px;
 }
 
 .project-date {
@@ -132,6 +133,7 @@
   font-size: 11px;
   color: rgba(0, 0, 0, 0.45);
   white-space: nowrap;
+  margin-bottom:0px;
 }
 
 .project-link-widget {
@@ -309,3 +311,16 @@
   border-radius: 0;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+.fa-link {
+  font-size: 16px;
+  transition:0.4s;
+}
+.fa-link:hover {
+  color:rgb(0, 153, 255)
+}
+
+.project-card a {
+  margin:0px;
+}
+

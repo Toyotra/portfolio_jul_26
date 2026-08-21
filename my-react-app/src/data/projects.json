@@ -71,6 +71,24 @@
     ]
   },
   {
+    "name": "Monoprop PCBs",
+    "date": "2025/09 - 2026/08",
+    "description": "Designed numerous PCB's to handle avionics of Monoprop superdrone for Georgia Tech's Propulsive Landers Team",
+    "thumbnail": "/monoprop/mono.jpg",
+    "ad-image": "/monoprop/mono.jpg",
+    "link": "#",
+    "images": [
+      "/monoprop/mono.jpg", 
+      "/monoprop/image (2).png",
+      "/monoprop/image (3).png"
+    ],
+    "bulletPoints": [
+      "Designed multiple PCB's in KiCAD and Altium to sustain high temperature and pressures for a superdrone system",
+      "Incorporated 4 PCB layers (2x signal, power, ground) for power distribution without shorts and overheating",
+      "Designed to handle over 12V, with multiple signal lines to support low voltage peripherals and different protocols (I2C, UART, SPI)"
+    ]
+  },
+  {
     "name": "Novel Soft Robotic Gripper (Publication Submission Pending)",
     "date": "2025/07 - 2026/08",
     "description": "Publication in progress. Designed and manufactured a novel soft robotic agricultural fruit gripper in association with the University of Windsor using kerf-bending techniques",

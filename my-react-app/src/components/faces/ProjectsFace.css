@@ -322,5 +322,17 @@
 
 .project-card a {
   margin:0px;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card a:hover {
+  transform: scale(1.2);
+  color: #000000;
+  text-shadow: 0 0 10px rgba(0, 153, 255, 0.7);
 }
 

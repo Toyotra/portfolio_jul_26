@@ -22,7 +22,7 @@ const ProjectCard = memo(function ProjectCard({ project, onClick }) {
             </span>
           
           <div className="project-card-meta">
-            <a href={project.link}><i class="fa-solid fa-link"></i></a>
+            <a href={project.link} target="_blank"><i class="fa-solid fa-link"></i></a>
             <span className="project-date">{project.date}</span>
           </div>
         </div>

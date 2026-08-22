@@ -55,6 +55,7 @@ function ProjectModal({ project, onClose }) {
             <h2 className="project-modal-title">{project.name}</h2>
             <span className="project-modal-date">{project.date}</span>
           </div>
+          <a href={project.link} className="project-modal-link" aria-label={`Open ${project.name} link`}><i class="fa-solid fa-link"></i></a>
         </div>
         <p className="project-modal-desc">{project.description}</p>
         <ul className="project-bullets">

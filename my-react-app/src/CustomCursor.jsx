@@ -38,7 +38,7 @@ function CustomCursor() {
 
       const target = e.target;
       const interactiveEl = target.closest(
-        'button, .sidebar-btn, input, textarea, [role="button"], .interactive'
+        'button, .sidebar-btn, input, textarea, [role="button"], .interactive, a'
       );
       const adRailEl = target.closest('.ad-rail__image');
 

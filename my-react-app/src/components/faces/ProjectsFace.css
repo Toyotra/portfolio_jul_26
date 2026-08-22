@@ -336,3 +336,26 @@
   text-shadow: 0 0 10px rgba(0, 153, 255, 0.7);
 }
 
+.project-modal-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  font-size: 12px;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.55);
+  text-decoration: none;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-modal-link:hover {
+  transform: scale(1.35);
+  color: #000000;
+  text-shadow: 0 0 10px rgba(0, 153, 255, 0.7);
+}
+

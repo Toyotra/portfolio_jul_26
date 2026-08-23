@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import awards from '../../data/awards.json';
 import './faces.css';
 import './HomeFace.css';
 
@@ -14,10 +16,40 @@ const TYPE_SPEED = 100;
 const DELETE_SPEED = 50;
 const PAUSE_AFTER_TYPE = 2000;
 
+function AwardsModal({ onClose }) {
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  return (
+    <div className="awards-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
+      <div className="awards-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="awards-modal-close" onClick={onClose} aria-label="Close">
+          ×
+        </button>
+        <h2 className="awards-modal-title">Awards</h2>
+        <ul className="awards-list">
+          {awards.map((award, i) => (
+            <li key={i}>
+              <span className="award-title">{award.title}</span>
+              <span className="award-date">{award.date}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 export default function HomeFace() {
   const [text, setText] = useState('');
   const [roleIndex, setRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showAwards, setShowAwards] = useState(false);
 
   useEffect(() => {
     const currentRole = ROLES[roleIndex];
@@ -67,7 +99,16 @@ export default function HomeFace() {
 
       <div className="homeImages">
         <img src="/b.jpg" alt="Home" loading="lazy" />
+        <button className="awards-button" onClick={() => setShowAwards(true)}>
+          Awards
+        </button>
       </div>
+
+      {showAwards &&
+        createPortal(
+          <AwardsModal onClose={() => setShowAwards(false)} />,
+          document.body
+        )}
     </div>
   );
 }

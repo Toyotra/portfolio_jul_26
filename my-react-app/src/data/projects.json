@@ -1,8 +1,8 @@
 [
   {
-    "name": "Pomme - Autonomous Agricultural Automation Robot w/LiDAR and CV",
+    "name": "Qualcomm Award ($2000 value) @ Hack The 6ix - Autonomous Fruit Picker Robot",
     "date": "2026/07",
-    "description": "Hack The 6ix Winner. Built an autonomous rover+robotic arm robot that uses SLAM and computer vision to autonomous navigate and pikc up fruits, automating a largely hand-done process.",
+    "description": "Designed an autonomous rover and robotic arm that uses 2D LiDAR+SLAM and YOLO computer vision to scout and pick fruits.",
     "thumbnail": "/pomme/20260719_082636.jpg",
     "ad-image": "/pomme/20260719_082636.jpg",
     "link": "https://devpost.com/software/autoagrinator",
@@ -18,18 +18,17 @@
         "/pomme/gallery (3).jpg"
   
   
-  ],
+    ],
     "bulletPoints": [
       "Designed a 3D-printed, 400mm, 4-DOF robotic arm capable of holding fruits 3-70mm in diameter, and up to 500g, for <$100",
-      "Implemented seamless, low latency communication between a Raspberry Pi 5 (Ubuntu), and an Arduino Uno Q (Debian), using a Flask server in under 36 hours",
-      "Designed and manufactured a custom rover, 100cm in length, 50cm in width, capable of carrying up to 10kg for under $150",
-      "Designed to successfully run autonomously using 2D LiDAR+SLAM and computer vision (yolo) running in parallel"
+      "Designed and built a rover, 100cm in length, 50cm in width, capable of carrying up to 10kg for under $150",
+      "Designed to successfully run autonomously (scout for fruits, and pick them up) using 2D LiDAR+SLAM and computer vision (YOLO) running in parallel"
     ]
   },
   {
-    "name": "sEMG Bionic Arm",
-    "date": "2023/06 - 2024/03",
-    "description": "Gold + Best Engineering @ Windsor Science Fair. Designed and manufactured a novel bionic arm using a custrom control mechanism that utilizes bicep and tricep electromyographic sensors and custom signal processing algorithms.",
+    "name": "WRSTEF Gold - EMG-Based Bionic Prosthesis",
+    "date": "2023/07 - 2024/03",
+    "description": "Designed a transhumeral bionic prosthesis with custom tendon-driven actuation, sEMG control, and a custom PCB for 5-DOF servo control.",
     "thumbnail": "/bionic-arm/Media (1).jpeg",
     "ad-image": "/bionic-arm/Media (1).jpeg",
     "link": "https://www.linkedin.com/posts/dorothy-zheng07_this-weekend-jad-menkara-and-i-competed-in-activity-7177809048770150400-L_4d?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEpzeNUBPpfWjnNlIorSE5EAeiJjYYntvqM",
@@ -44,10 +43,10 @@
       "/bionic-arm/IMG_7532 (1).jpg"
     ],
     "bulletPoints": [
-      "Designed a modular CAD design in Fusion 360 via joints and master sketch techniques for modularity and easy iteration",
-      "Engineered a custom tendon-driven finger actuation system, fabricated via FDM 3D-printing for precise finger movement",
-      "Implemented and assisted in programming a Raspberry Pi Pico MCU for device control",
-      "Designed and soldered a custom 20A PCB, implementing sEMG control, 5DOF via servos, and easy peripheral access"
+      "Designed full CAD for a transhumeral bionic prosthesis including a custom modular tendon-driven actuation system, lowering elbow-motor torque requirements and decreasing the bulk on the palm",
+      "Used silicone molding, FDM 3D-printing, and MCU-control to grip onto various objects",
+      "Programmed a Raspberry Pi Pico in micro-Python, implementing numerous control algorithms to filter surface-electromyography signals (low-pass, high-pass, root-mean-square",
+      "Designed and soldered a custom 20A PCB in KiCAD, implementing sEMG control, 5-DOF via servos, and easy peripheral access"
     ]
   },
   {

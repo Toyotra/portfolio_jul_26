@@ -1,10 +1,12 @@
 import './style.css';
 import './bg.js';
+import './cursor.js';
 import face from './data/face.json';
 import projects from './data/projects.json';
 import experiences from './data/experiences.json';
 import awards from './data/awards.json';
 import cats from './data/cats.json';
+import music from './data/music.json';
 
 import home from './data/home.json';
 import sections from './data/sections.json';
@@ -46,11 +48,7 @@ const fmt = (str, accentTag = 'span class="acc"') => {
 
 const work = experiences.work;
 const volunteer = experiences.volunteer;
-
-/* ------------------------------------------------------------------- clock */
-const clock = $('#clock');
-const tick = () => { clock.textContent = new Date().toLocaleTimeString('en-GB', { hour12: false }); };
-tick(); setInterval(tick, 1000);
+const fellowships = experiences.fellowships || [];
 
 /* -------------------------------------------------------------------- cube */
 const CUBE = (() => {
@@ -60,7 +58,6 @@ const CUBE = (() => {
   const cube = $('#cube');
   const panels = [...cube.querySelectorAll('.panel')];
   const nav = $('#facenav');
-  const counter = $('#face-count');
   let cur = 0;
   let ry = 0, rx = 0;            // accumulated rotation (so spins take the short way round)
 
@@ -77,8 +74,6 @@ const CUBE = (() => {
 
   function apply() {
     cube.style.transform = `translateZ(calc(var(--s) / -2)) rotateX(${rx}deg) rotateY(${ry}deg)`;
-    const f = (v) => { const n = ((v % 360) + 360) % 360; return String(n).padStart(3, '0'); };
-    $('#hud-rot').textContent = `rot x ${f(rx)}° · y ${f(ry)}°`;
   }
 
   function to(id, { instant = false } = {}) {
@@ -103,7 +98,6 @@ const CUBE = (() => {
       p.inert = !on;
     });
     nav.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.face === id));
-    counter.textContent = `[${String(i + 1).padStart(2, '0')}/${String(FACES.length).padStart(2, '0')}] ${f.label.toUpperCase()}`;
     if (location.hash.slice(1) !== id) window.history.replaceState(null, '', '#' + id);
     if (id === 'home' && matchMedia('(pointer: fine)').matches) setTimeout(() => $('#cmd').focus({ preventScroll: true }), instant ? 0 : 700);
   }
@@ -198,10 +192,8 @@ const FACE = (() => {
       const start = (Math.random() * (rowEls.length - 6)) | 0;
       const torn = rowEls.slice(start, start + 2 + ((Math.random() * 5) | 0));
       torn.forEach((r) => { r.style.transform = `translateX(${(Math.random() * 6 - 3).toFixed(1)}ch)`; r.classList.add('gl'); });
-      $('.name').classList.add('glitch');
       setTimeout(() => {
         torn.forEach((r) => { r.style.transform = ''; r.classList.remove('gl'); });
-        $('.name').classList.remove('glitch');
       }, 90 + Math.random() * 110);
     }
     setTimeout(glitchLoop, 100);
@@ -220,10 +212,9 @@ const FACE = (() => {
 
 /* -------------------------------------------------------------------- bio */
 // Hero text + bio beside the portrait — all from src/data/home.json.
-$('.eyebrow').textContent = home.eyebrow || '';
 $('.name').setAttribute('aria-label', (home.name || []).join(' '));
-$('.name').innerHTML = (home.name || []).map((n, i) => `<span class="name-line${i ? ' outline' : ''}">${esc(n)}</span>`).join('');
-$('.lede').innerHTML = fmt(home.tagline, 'em');
+$('.name').innerHTML = (home.name || []).map((n, i) => `<span class="name-line">${esc(n)}</span>`).join('');
+$('.lede').innerHTML = fmt(home.tagline, 'b');
 const BIO = (home.bio?.paragraphs || []).map((p) => fmt(p));
 $('#sysinfo').innerHTML = `
   <div class="bio-head"><span class="who">${esc(home.bio?.title || '')}</span><span class="muted">${esc(home.bio?.subtitle || '')}</span></div>
@@ -312,6 +303,13 @@ const COMMANDS = {
       ...volunteer.map((w) => `  <span class="dim">${esc(w.date.padEnd(20))}</span>${esc(w.name)} <span class="dim">@ ${esc(w.company)}</span>`),
     ]),
   },
+  fellowships: {
+    desc: 'fellowships + cohorts',
+    run: () => typeOut([
+      '<span class="acc">// fellowships</span>',
+      ...fellowships.map((w) => `  <span class="dim">${esc(w.date.padEnd(20))}</span>${esc(w.name)} <span class="dim">@ ${esc(w.company)}</span>`),
+    ]),
+  },
   builds: {
     desc: 'list projects',
     run: () => typeOut([
@@ -374,6 +372,16 @@ const COMMANDS = {
     run: (a) => (a && /hire/.test(a))
       ? COMMANDS.hire.run()
       : print('<span class="dim">[sudo] password for guest: ******** — </span>nice try. jad is already root.'),
+  },
+  music: {
+    desc: 'favorite albums + the music vault',
+    run: () => {
+      typeOut([
+        '<span class="acc">// favorite albums</span>',
+        ...ALBUMS.map((a) => `  ${esc(a.title.padEnd(32))}<span class="dim">${esc(a.artist)}</span>`),
+        '<button class="link" data-vault>→ open the music vault</button>',
+      ]);
+    },
   },
   hire: {
     desc: 'the correct command',
@@ -480,7 +488,7 @@ $('#log').addEventListener('click', (e) => {
 });
 document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('active', x === t));
-  renderLog(t.dataset.tab === 'work' ? work : volunteer);
+  renderLog({ work, volunteer, fellowships }[t.dataset.tab] || work);
 }));
 
 const WIDE = new Set([0, 3, 6]);  // 2-col grid: wide, pair, wide, pair, wide
@@ -512,6 +520,13 @@ const LINKS = [
 $('#links').innerHTML = LINKS.map(([href, label, hint]) =>
   `<a href="${esc(href)}" ${href === '#resume' ? 'data-resume' : href.startsWith('mailto') ? '' : 'target="_blank" rel="noopener"'}>${esc(label)} <span>${esc(hint)}</span></a>`).join('');
 
+/* ------------------------------------------------------- top-right links */
+$('#corner').innerHTML = [
+  ...CONTACT_LINKS.filter(([label]) => label !== 'email').map(([label, href]) => `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(label)} <span>↗</span></a>`),
+  CONTACT.email && `<a href="mailto:${esc(CONTACT.email)}">email</a>`,
+  CONTACT.resume && '<a href="#resume" data-resume class="primary">résumé</a>',
+].filter(Boolean).join('');
+
 /* ------------------------------------------------------------ resume popup */
 const resumeEl = $('#resume-modal');
 let resumeFocus = null;
@@ -532,6 +547,53 @@ document.addEventListener('click', (e) => {
 $('#r-close').addEventListener('click', closeResume);
 resumeEl.addEventListener('click', (e) => { if (e.target === resumeEl) closeResume(); });
 addEventListener('keydown', (e) => { if (!resumeEl.hidden && e.key === 'Escape') closeResume(); });
+
+/* ------------------------------------------------------------- music vault */
+const ALBUMS = music.albums || [];
+$('#albums').innerHTML = ALBUMS.map((a, i) => `
+  <li><button data-vault="${i}" title="${esc(a.title)} — ${esc(a.artist)}">
+    <img src="${esc(a.cover)}" alt="" loading="lazy" />
+    <span><span class="t">${esc(a.title)}</span><span class="a">${esc(a.artist)}</span></span>
+  </button></li>`).join('');
+$('#vault-grid').innerHTML = ALBUMS.map((a, i) => `
+  <figure class="album" data-i="${i}" style="--r:${((i * 37) % 5 - 2) * 0.6}deg">
+    <img src="${esc(a.cover)}" alt="${esc(a.title)} by ${esc(a.artist)} — album cover" loading="lazy" />
+    <figcaption><b>${esc(a.title)}</b><span>${esc(a.artist)} · ${esc(a.year)}</span></figcaption>
+  </figure>`).join('');
+$('#v-covers-title').textContent = music.guitarCovers?.title || 'Guitar Covers';
+$('#v-covers-status').textContent = music.guitarCovers?.status || 'Coming soon';
+$('#v-yt').href = music.youtube?.url || '#';
+$('#v-yt-handle').textContent = music.youtube?.handle || 'YouTube';
+$('#v-yt-note').textContent = music.youtube?.note || '';
+
+const vault = $('#vault');
+let vaultFocus = null;
+function openVault(i = null) {
+  vaultFocus = document.activeElement;
+  vault.hidden = false;
+  $('#v-close').focus();
+  vault.querySelectorAll('.album.flash').forEach((el) => el.classList.remove('flash'));
+  if (i != null && !Number.isNaN(i)) {
+    const el = vault.querySelector(`.album[data-i="${i}"]`);
+    if (el) {
+      el.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+      void el.offsetWidth; el.classList.add('flash');
+    }
+  }
+}
+function closeVault() {
+  vault.hidden = true;
+  vaultFocus?.focus?.({ preventScroll: true });
+}
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-vault]');
+  if (!b) return;
+  e.preventDefault();
+  openVault(b.dataset.vault === '' ? null : parseInt(b.dataset.vault, 10));
+});
+$('#v-close').addEventListener('click', closeVault);
+vault.addEventListener('click', (e) => { if (e.target === vault) closeVault(); });
+addEventListener('keydown', (e) => { if (!vault.hidden && e.key === 'Escape') closeVault(); });
 
 /* ----------------------------------------------------------------- dossier */
 const dossier = $('#dossier');

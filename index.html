@@ -11,29 +11,24 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Jad Menkara" />
     <meta name="twitter:description" content="jad builds robots" />
-    <meta name="theme-color" content="#050b1c" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23050b1c'/><path d='M6 6h20v20H6z' fill='none' stroke='%233d8bff' stroke-width='3'/><path d='M11 11h10v10H11z' fill='%233d8bff'/></svg>" />
+    <meta name="theme-color" content="#0d111c" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23f8f4ea'/><path d='M6 6h20v20H6z' fill='none' stroke='%231f1d19' stroke-width='3'/><path d='M11 11h10v10H11z' fill='%23c0392b'/></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
     <canvas id="bg" aria-hidden="true"></canvas>
     <div class="grain" aria-hidden="true"></div>
     <div id="boot" aria-hidden="true"><pre id="boot-log"></pre></div>
 
-    <header class="topbar">
-      <a href="#home" class="mark" data-face="home" aria-label="Home"><span class="mark-box"></span>JM</a>
-      <div class="face-count" id="face-count" aria-live="polite">[01/06] JAD MENKARA</div>
-      <div class="status"><span class="dot"></span><span id="clock">--:--:--</span></div>
-    </header>
+    <!-- top-right quick links (filled from src/data/contact.json) -->
+    <nav class="corner" id="corner" aria-label="Quick links"></nav>
 
     <div class="layout">
       <!-- left rail: identity + face navigation -->
       <aside class="side">
         <!-- text filled from src/data/home.json -->
-        <p class="eyebrow"></p>
         <h1 class="name"></h1>
         <p class="lede"></p>
         <nav class="facenav" id="facenav" aria-label="Cube faces"></nav>
@@ -57,6 +52,14 @@
                     <pre class="face" id="face" aria-label="ASCII portrait of Jad"></pre>
                     <div class="sysinfo" id="sysinfo"></div>
                   </div>
+                  <!-- favorite albums (src/data/music.json) -->
+                  <section class="albums" aria-label="Favorite albums">
+                    <div class="albums-head">
+                      <h3>Favorite albums</h3>
+                      <button class="vault-btn" data-vault>open music vault →</button>
+                    </div>
+                    <ul class="albums-list" id="albums"></ul>
+                  </section>
                   <div class="out" id="out" aria-live="polite"></div>
                   <label class="prompt-line" for="cmd">
                     <span class="ps1"><b>jad</b>@menkara<span class="muted">:</span><span class="path">~</span><span class="muted">$</span></span>
@@ -73,10 +76,10 @@
               <section class="panel" data-face="work" aria-label="Field log">
                 <div class="scroll">
                   <div class="section-head"><span class="idx">02</span><h2>Field log</h2></div>
-                  <p class="kicker">Labs, teams and companies that trusted me with the expensive parts.</p>
                   <div class="tabs" role="tablist">
                     <button role="tab" class="tab active" data-tab="work">industry + research</button>
                     <button role="tab" class="tab" data-tab="volunteer">community</button>
+                    <button role="tab" class="tab" data-tab="fellowships">fellowships</button>
                   </div>
                   <ol class="log" id="log"></ol>
                 </div>
@@ -126,12 +129,6 @@
       </div>
     </div>
 
-    <footer class="hud" aria-hidden="true">
-      <span><span class="dot"></span> sys.online</span>
-      <span class="hud-rot" id="hud-rot">rot x 000° · y 000°</span>
-      <span class="hud-hint">← → / 1–6 rotate</span>
-    </footer>
-
     <!-- project dossier -->
     <div class="dossier" id="dossier" hidden>
       <div class="dossier-inner" role="dialog" aria-modal="true" aria-labelledby="d-title">
@@ -158,6 +155,30 @@
         <p class="d-tag">resume.pdf</p>
         <h3 id="r-title">Up-to-date resume</h3>
         <p class="d-desc">Email <a id="r-email" class="d-link"></a> for an up-to-date resume.</p>
+      </div>
+    </div>
+
+    <!-- music vault -->
+    <div class="dossier" id="vault" hidden>
+      <div class="vault-inner" role="dialog" aria-modal="true" aria-labelledby="v-title">
+        <button class="close" id="v-close" aria-label="Close">esc ✕</button>
+        <div class="vault-main">
+          <p class="d-tag">music vault</p>
+          <h3 id="v-title">Favorite albums</h3>
+          <div class="vault-grid" id="vault-grid"></div>
+        </div>
+        <aside class="vault-side">
+          <div class="vault-card soon">
+            <p class="d-tag">recordings</p>
+            <h4 id="v-covers-title"></h4>
+            <span class="stamp" id="v-covers-status"></span>
+          </div>
+          <a class="vault-card yt" id="v-yt" target="_blank" rel="noopener">
+            <p class="d-tag">youtube ↗</p>
+            <h4 id="v-yt-handle"></h4>
+            <p id="v-yt-note"></p>
+          </a>
+        </aside>
       </div>
     </div>
 

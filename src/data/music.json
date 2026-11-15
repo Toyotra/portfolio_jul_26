@@ -1,0 +1,19 @@
+{
+  "_help": "Favorite albums shown on the front of the cube and in the music vault. Covers live in public/img/albums/.",
+  "albums": [
+    { "title": "Heavener", "artist": "Invent Animate", "year": 2023, "cover": "/img/albums/heavener.webp" },
+    { "title": "Three Cheers for Sweet Revenge", "artist": "My Chemical Romance", "year": 2004, "cover": "/img/albums/three-cheers.webp" },
+    { "title": "Ascendancy", "artist": "Trivium", "year": 2005, "cover": "/img/albums/ascendancy.webp" },
+    { "title": "POST HUMAN: NeX GEn", "artist": "Bring Me The Horizon", "year": 2024, "cover": "/img/albums/nex-gen.webp" },
+    { "title": "The Plot In You", "artist": "The Plot In You", "year": 2026, "cover": "/img/albums/the-plot-in-you.webp" },
+    { "title": "Suicide Season", "artist": "Bring Me The Horizon", "year": 2008, "cover": "/img/albums/suicide-season.webp" },
+    { "title": "Shadows Are Security", "artist": "As I Lay Dying", "year": 2005, "cover": "/img/albums/shadows-are-security.webp" },
+    { "title": "Soul Elegy", "artist": "Termina", "year": 2023, "cover": "/img/albums/soul-elegy.webp" }
+  ],
+  "guitarCovers": { "title": "Guitar Covers", "status": "Coming soon" },
+  "youtube": {
+    "url": "https://www.youtube.com/@WaterUser12345",
+    "handle": "@WaterUser12345",
+    "note": "My old, very out-of-date guitar covers."
+  }
+}

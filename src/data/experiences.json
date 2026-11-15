@@ -121,5 +121,18 @@
         "Delivered weekly sessions on CAD, PCB design, microcontrollers, and web development to 25+ students"
       ]
     }
+  ],
+  "fellowships": [
+    {
+      "name": "Fellow, Cohort 01",
+      "company": "Null Fellows",
+      "date": "Cohort 01",
+      "description": "1% acceptance rate. Null Fellows discovers and champions the great entrepreneurial minds of the decades ahead.",
+      "thumbnail": "/img/nullfellows-logo.svg",
+      "link": "https://nullfellows.com",
+      "bulletPoints": [
+        "Selected for the inaugural cohort of Null Fellows (1% acceptance rate), a program that discovers and champions the great entrepreneurial minds of the decades ahead"
+      ]
+    }
   ]
 }

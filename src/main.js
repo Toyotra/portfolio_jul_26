@@ -30,7 +30,7 @@ const FACES = [
   { id: 'contact', rx: 90,  ry: 0 },
 ].map((f) => ({ ...f, label: sections[f.id]?.nav || f.id }));
 const narrow = () => innerWidth < 900;
-const baseTilt = () => (narrow() ? { x: -9, y: 9 } : { x: -13, y: 17 }); // resting tilt so you can see it's a cube
+const baseTilt = () => (narrow() ? { x: -5, y: 6 } : { x: -13, y: 17 }); // resting tilt so you can see it's a cube
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s, el = document) => el.querySelector(s);
@@ -68,7 +68,9 @@ const CUBE = (() => {
 
   function size() {
     const r = stage.getBoundingClientRect();
-    const s = Math.floor(Math.max(240, Math.min(r.width * (narrow() ? 0.8 : 0.86), r.height * 0.84, 900) * 0.92));
+    const s = Math.floor(Math.max(240, narrow()
+      ? Math.min(r.width * 0.9, r.height * 0.84)
+      : Math.min(r.width * 0.86, r.height * 0.84, 900) * 0.92));
     setTilt();
     document.documentElement.style.setProperty('--s', s + 'px');
   }
@@ -208,7 +210,7 @@ const FACE = (() => {
   function fit() {
     const body = $('#console-body');
     const avail = body.clientWidth - 30;
-    const target = avail > 560 ? avail * 0.44 : avail * 0.8;
+    const target = avail > 560 ? avail * 0.44 : avail < 420 ? avail * 0.55 : avail * 0.8;
     const fs = Math.max(3, Math.min(10, target / (W * 0.6)));
     el.style.setProperty('--face-fs', fs.toFixed(2) + 'px');
   }

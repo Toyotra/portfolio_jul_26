@@ -1,6 +1,4 @@
 [
   { "value": "$56K+", "label": "in scholarships" },
-  { "value": "14", "label": "honors" },
-  { "value": "7", "label": "builds shipped" },
-  { "value": "300+", "label": "gripper test trials" }
+  { "value": "14", "label": "honors" }
 ]

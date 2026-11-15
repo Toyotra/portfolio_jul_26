@@ -19,12 +19,12 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const root = document.documentElement;
 
 const COL = {
-  cu: 'rgba(200, 158, 88, .2)',      // top copper
-  bot: 'rgba(140, 175, 240, .16)',     // bottom copper (seen through the board)
-  pad: 'rgba(222, 184, 112, .36)',
-  pour: 'rgba(70, 120, 220, .06)',    // copper under blue mask shows as lighter blue
+  cu: 'rgba(200, 158, 88, .07)',      // top copper
+  bot: 'rgba(140, 175, 240, .055)',     // bottom copper (seen through the board)
+  pad: 'rgba(222, 184, 112, .12)',
+  pour: 'rgba(70, 120, 220, .02)',    // copper under blue mask shows as lighter blue
   pourHi: 'rgba(120, 170, 255, .22)',
-  silk: 'rgba(232, 236, 245, .26)',  // white silkscreen
+  silk: 'rgba(232, 236, 245, .09)',  // white silkscreen
   hole: '#06080e',
   hi: 'rgba(255, 220, 150, .95)',
   hiBot: 'rgba(170, 200, 255, .95)',
@@ -63,7 +63,7 @@ let comps, pins, nets, alias, bItems, gnd, refCount, sigCount;
 let L, pourHi, builder, built;
 let hovered = null, pulses = [], pings = [];
 // animation state
-let buses = [], vias = [], twinkles = [], leds = [], chipGlow = new Map();
+let buses = [], vias = [], twinkles = [], leds = [], chipGlow = new Map(), pourRipples = [];
 let scanX = -1, scanT = 3, busT = 2, lampA = 0;
 const ptr = { x: 0, y: 0, on: false };
 
@@ -98,7 +98,7 @@ function setup() {
   comps = []; pins = []; nets = [null]; alias = []; bItems = []; refCount = {}; sigCount = {};
   L = { bot: mkLayer(), pour: mkLayer(), top: mkLayer(), over: mkLayer() };
   pourHi = null; hovered = null; pulses = []; pings = []; built = false;
-  buses = []; vias = []; twinkles = []; leds = []; chipGlow = new Map(); scanX = -1; scanT = 3; busT = 2;
+  buses = []; vias = []; twinkles = []; leds = []; chipGlow = new Map(); pourRipples = []; scanX = -1; scanT = 3; busT = 2;
   gnd = newNet('GND', true);
   builder = build();
 }
@@ -353,7 +353,7 @@ function drawComp(c) {
     }
     case 'hole': {
       const cx = X(c.x0 + 3), cy = Y(c.y0 + 3), x = L.over.x;
-      x.fillStyle = 'rgba(222, 184, 112, .2)'; x.beginPath(); x.arc(cx, cy, G * 2.5, 0, Math.PI * 2); x.fill();
+      x.fillStyle = 'rgba(222, 184, 112, .07)'; x.beginPath(); x.arc(cx, cy, G * 2.5, 0, Math.PI * 2); x.fill();
       x.fillStyle = COL.hole; x.beginPath(); x.arc(cx, cy, G * 1.6, 0, Math.PI * 2); x.fill();
       s.beginPath(); s.arc(cx, cy, G * 3.2, 0, Math.PI * 2); s.stroke();
       break;
@@ -659,7 +659,7 @@ function* pour() {
     for (let dy = -1; dy <= 1 && ok; dy++) for (let dx = -1; dx <= 1; dx++) if (!pourMask[c + dy * cols + dx]) { ok = false; break; }
     if (!ok) continue;
     occ[c] = gnd.id;
-    drawVia(P, c, 'rgba(200, 158, 88, .17)');
+    drawVia(P, c, 'rgba(200, 158, 88, .06)');
   }
 }
 
@@ -790,6 +790,7 @@ function arrive(p) {
 
 function burst(h, x, y) {
   pings.push({ x, y, t: 0 });
+  if (h?.type === 'gnd') pourRipples.push({ x, y, t: 0 });
   if (h?.type === 'net') {
     const n = nets[h.id];
     pulse(n, true); pulse(n, false);
@@ -853,14 +854,15 @@ addEventListener('pointermove', (e) => {
   const b = blocked(e);
   ptr.x = e.clientX; ptr.y = e.clientY; ptr.on = !b && e.pointerType === 'mouse';
   if (b) return setHover(null);
-  setHover(hitAt(e.clientX, e.clientY), e.clientX, e.clientY);
+  const h = hitAt(e.clientX, e.clientY);
+  setHover(h?.type === 'gnd' ? null : h, e.clientX, e.clientY); // empty pour stays quiet on hover
 }, { passive: true });
 document.addEventListener('pointerleave', () => { ptr.on = false; });
 
 /* -------------------------------------------------------------- effects */
 // re-draw the copper inside a rect, masked by `shade`, and add it on top → that area glows
 const fx = document.createElement('canvas'), fxx = fx.getContext('2d');
-function reveal(x, y, w, h, shade) {
+function reveal(x, y, w, h, shade, layers = [L.bot, L.top, L.over]) {
   if (x < 0) { w += x; x = 0; }
   if (y < 0) { h += y; y = 0; }
   w = Math.min(w, VW - x); h = Math.min(h, VH - y);
@@ -869,7 +871,7 @@ function reveal(x, y, w, h, shade) {
   if (fx.width < W2 || fx.height < H2) { fx.width = Math.max(fx.width, W2); fx.height = Math.max(fx.height, H2); }
   fxx.globalCompositeOperation = 'source-over';
   fxx.clearRect(0, 0, W2, H2);
-  for (const l of [L.bot, L.top, L.over]) fxx.drawImage(l.c, x * dpr, y * dpr, W2, H2, 0, 0, W2, H2);
+  for (const l of layers) fxx.drawImage(l.c, x * dpr, y * dpr, W2, H2, 0, 0, W2, H2);
   fxx.globalCompositeOperation = 'destination-in';
   shade(fxx, W2, H2, x * dpr, y * dpr);
   ctx.save();
@@ -890,10 +892,10 @@ function drawEffects(dt, now) {
       reveal(x - bw, 0, bw * 2, VH, (g, w, h, gx) => {
         const cx = x * dpr - gx;
         const gr = g.createLinearGradient(cx - bw * dpr, 0, cx + bw * dpr, 0);
-        gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.5, 'rgba(0,0,0,.9)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+        gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.5, 'rgba(0,0,0,.5)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
         g.fillStyle = gr; g.fillRect(0, 0, w, h);
       });
-      ctx.strokeStyle = 'rgba(140, 180, 255, .22)'; ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(140, 180, 255, .1)'; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, VH); ctx.stroke();
       if (x > VW + bw) { scanX = -1; scanT = rand(6, 11); }
     }
@@ -906,17 +908,31 @@ function drawEffects(dt, now) {
     reveal(ptr.x - R, ptr.y - R, R * 2, R * 2, (g, w, h, gx, gy) => {
       const cx = ptr.x * dpr - gx, cy = ptr.y * dpr - gy;
       const gr = g.createRadialGradient(cx, cy, 0, cx, cy, R * dpr);
-      gr.addColorStop(0, `rgba(0,0,0,${0.9 * lampA})`); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      gr.addColorStop(0, `rgba(0,0,0,${0.55 * lampA})`); gr.addColorStop(1, 'rgba(0,0,0,0)');
       g.fillStyle = gr; g.fillRect(0, 0, w, h);
     });
   }
 
+  // clicking the ground pour: a small soft ripple of pour lights up around the click
+  if (pourRipples.length && !pourHi) { pourHi = mkLayer(); paintPour(pourHi.x, COL.pourHi); }
+  for (const r of pourRipples) {
+    r.t += dt;
+    const k = Math.min(1, r.t / 0.7), R = 30 + k * 110, a = 0.6 * (1 - k);
+    reveal(r.x - R, r.y - R, R * 2, R * 2, (g, w, h, gx, gy) => {
+      const cx = r.x * dpr - gx, cy = r.y * dpr - gy;
+      const gr = g.createRadialGradient(cx, cy, 0, cx, cy, R * dpr);
+      gr.addColorStop(0, `rgba(0,0,0,${a})`); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    }, [pourHi]);
+  }
+  pourRipples = pourRipples.filter((r) => r.t < 0.7);
+
   // chips light up when a signal lands on them
   for (const [c, v] of chipGlow) {
     const [bx, by, bw, bh] = c.body;
-    ctx.fillStyle = `rgba(255, 220, 150, ${v * 0.07})`;
+    ctx.fillStyle = `rgba(255, 220, 150, ${v * 0.04})`;
     ctx.fillRect(ox + bx * G, oy + by * G, bw * G, bh * G);
-    ctx.strokeStyle = `rgba(255, 220, 150, ${v * 0.75})`; ctx.lineWidth = 1.5;
+    ctx.strokeStyle = `rgba(255, 220, 150, ${v * 0.4})`; ctx.lineWidth = 1.5;
     ctx.strokeRect(ox + bx * G + 1.5, oy + by * G + 1.5, bw * G - 3, bh * G - 3);
     const nv = v - dt * 1.6;
     if (nv <= 0) chipGlow.delete(c); else chipGlow.set(c, nv);
@@ -932,11 +948,11 @@ function drawEffects(dt, now) {
     l.flash = Math.max(0, l.flash - dt * 2);
     b = Math.min(1, b + l.flash);
     const gr = ctx.createRadialGradient(l.x, l.y, 0, l.x, l.y, G * 2.8);
-    gr.addColorStop(0, `rgba(${l.rgb}, ${0.55 * b})`); gr.addColorStop(1, `rgba(${l.rgb}, 0)`);
+    gr.addColorStop(0, `rgba(${l.rgb}, ${0.28 * b})`); gr.addColorStop(1, `rgba(${l.rgb}, 0)`);
     ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(l.x, l.y, G * 2.8, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = `rgba(${l.rgb}, ${0.25 + 0.75 * b})`;
+    ctx.fillStyle = `rgba(${l.rgb}, ${0.15 + 0.45 * b})`;
     ctx.beginPath(); ctx.arc(l.x, l.y, G * 0.32, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = `rgba(255, 255, 255, ${0.8 * b})`;
+    ctx.fillStyle = `rgba(255, 255, 255, ${0.4 * b})`;
     ctx.beginPath(); ctx.arc(l.x, l.y, G * 0.14, 0, Math.PI * 2); ctx.fill();
   }
 
@@ -947,7 +963,7 @@ function drawEffects(dt, now) {
     const k = w.t / 0.8, a = Math.sin(Math.PI * Math.min(1, k));
     const x = X(w.cell % cols), y = Y((w.cell / cols) | 0);
     const gr = ctx.createRadialGradient(x, y, 0, x, y, G * 1.4);
-    gr.addColorStop(0, `rgba(255, 236, 190, ${0.7 * a})`); gr.addColorStop(1, 'rgba(255, 236, 190, 0)');
+    gr.addColorStop(0, `rgba(255, 236, 190, ${0.35 * a})`); gr.addColorStop(1, 'rgba(255, 236, 190, 0)');
     ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(x, y, G * 1.4, 0, Math.PI * 2); ctx.fill();
   }
   twinkles = twinkles.filter((w) => w.t < 0.8);
@@ -967,7 +983,7 @@ addEventListener('pointerdown', (e) => {
   const h = hitAt(e.clientX, e.clientY);
   burst(h, e.clientX, e.clientY);
   if (e.pointerType === 'touch') {
-    setHover(h, e.clientX, e.clientY);
+    setHover(h?.type === 'gnd' ? null : h, e.clientX, e.clientY);
     clearTimeout(tipTimer);
     tipTimer = setTimeout(() => setHover(null), 1600);
   }
@@ -1002,7 +1018,7 @@ function frame(now) {
       const dd = p.d - k * 4;
       if (dd < 0 || dd > p.total) continue;
       const [x, y] = pointAt(p, dd);
-      ctx.fillStyle = `rgba(${COL.pulse}, ${(1 - k / 14) * (p.ambient ? 0.4 : p.bus ? 0.85 : 1)})`;
+      ctx.fillStyle = `rgba(${COL.pulse}, ${(1 - k / 14) * (p.ambient ? 0.25 : p.bus ? 0.5 : 1)})`;
       ctx.beginPath(); ctx.arc(x, y, k === 0 ? 2.8 : 2.1, 0, Math.PI * 2); ctx.fill();
     }
     if (!p.arrived && p.d >= p.total) { p.arrived = true; arrive(p); }

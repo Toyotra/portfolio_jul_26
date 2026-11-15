@@ -1,0 +1,7 @@
+{
+  "cad + design": ["Fusion 360", "SolidWorks", "Autodesk Inventor", "FEA / CFD", "Figma"],
+  "electronics": ["KiCAD", "Altium Designer", "STM32CubeIDE", "Teensy · Arduino · RPi", "I2C · SPI · UART"],
+  "software": ["Python", "C++", "Java", "OpenCV · YOLO", "TensorFlow · PyTorch", "Flask"],
+  "robotics + sim": ["ROS2", "Gazebo", "MATLAB Simulink", "LiDAR + SLAM", "Linux · Git · Docker"],
+  "fabrication": ["FDM + SLA printing", "Silicone molding", "DFM for CNC", "Sheet metal", "Soldering"]
+}

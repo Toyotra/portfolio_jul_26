@@ -1,0 +1,33 @@
+{
+  "_help": "Text formatting: *word* = red highlight, _word_ = grey. Everything else is plain text.",
+  "eyebrow": "// robotics · mechatronics · hardware",
+  "name": ["JAD", "MENKARA"],
+  "tagline": "I build machines that operate on *brains*, fly on *rockets*, and pick *fruit* by themselves.",
+  "bio": {
+    "title": "jad menkara",
+    "subtitle": "robotics + mechatronics",
+    "paragraphs": [
+      "First-year engineering student at the University of Toronto _(intended EE major)_.",
+      "- Recruited by Georgia Tech rocket team in high school",
+      "- Won at the national science fair in 9th grade",
+      "- Surgical Robotics Research since 15",
+      "- 6 hackathon awards",
+      "- Part-time metalcore musician"
+    ]
+  },
+  "consoleGreeting": [
+    "type *help* to look around, or *builds* to see the good stuff."
+  ],
+  "quickCommands": ["help", "whoami", "builds", "work", "honors", "spin", "cat", "hire"],
+  "bootLines": [
+    "JadOS bootloader v2.0 — nov 2026",
+    "[*ok*] mounting /dev/brain",
+    "[*ok*] loading kernel module: mechatronics.ko",
+    "[*ok*] spi0: 2× teensy 4.1 handshake",
+    "[*ok*] ros2 daemon started",
+    "[*ok*] assembling cube: 6/6 faces",
+    "[*ok*] safety limits: disabled",
+    "",
+    "welcome back."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "_help": "One entry per cube face, in nav order. 'nav' = menu label, 'title' = big heading, 'kicker' = line under it, contact 'bigLine' = the big serif line. Don't change the ids (home, work, ...). *word* = red highlight.",
+  "home": {
+    "nav": "jad menkara"
+  },
+  "work": {
+    "nav": "field log",
+    "title": "Field log",
+    "kicker": "Labs, teams and companies that trusted me with the expensive parts."
+  },
+  "builds": {
+    "nav": "builds",
+    "title": "Builds",
+    "kicker": "Hardware that left the CAD file. Hit any build for the dossier."
+  },
+  "honors": {
+    "nav": "honors",
+    "title": "Honors",
+    "kicker": "Receipts."
+  },
+  "stack": {
+    "nav": "toolchain",
+    "title": "Toolchain",
+    "kicker": "What's loaded in the environment."
+  },
+  "contact": {
+    "nav": "contact",
+    "title": "Contact",
+    "bigLine": "Let's build something *unreasonable.*",
+    "footer": "© 2026 Jad Menkara · built in a terminal · rendered on a cube"
+  }
+}

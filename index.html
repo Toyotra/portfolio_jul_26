@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Jad Menkara</title>
+    <meta name="description" content="Jad Menkara builds surgical robots, rocket avionics, bionic arms and soft grippers." />
+    <meta name="theme-color" content="#050b1c" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23050b1c'/><path d='M6 6h20v20H6z' fill='none' stroke='%233d8bff' stroke-width='3'/><path d='M11 11h10v10H11z' fill='%233d8bff'/></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+    <canvas id="bg" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+    <div id="boot" aria-hidden="true"><pre id="boot-log"></pre></div>
+
+    <header class="topbar">
+      <a href="#home" class="mark" data-face="home" aria-label="Home"><span class="mark-box"></span>JM</a>
+      <div class="face-count" id="face-count" aria-live="polite">[01/06] JAD MENKARA</div>
+      <div class="status"><span class="dot"></span><span id="clock">--:--:--</span></div>
+    </header>
+
+    <div class="layout">
+      <!-- left rail: identity + face navigation -->
+      <aside class="side">
+        <!-- text filled from src/data/home.json -->
+        <p class="eyebrow"></p>
+        <h1 class="name"></h1>
+        <p class="lede"></p>
+        <nav class="facenav" id="facenav" aria-label="Cube faces"></nav>
+      </aside>
+
+      <!-- the cube -->
+      <div class="stage" id="stage">
+        <div class="tilt" id="tilt">
+          <div class="spin" id="spin">
+            <div class="cube" id="cube">
+
+              <!-- FRONT: console -->
+              <section class="panel console" data-face="home" aria-label="Console">
+                <div class="console-bar">
+                  <span class="lights"><i></i><i></i><i></i></span>
+                  <span class="console-title">jad@menkara: ~ — zsh</span>
+                  <span class="console-flag">LIVE</span>
+                </div>
+                <div class="console-body" id="console-body">
+                  <div class="fetch">
+                    <pre class="face" id="face" aria-label="ASCII portrait of Jad"></pre>
+                    <div class="sysinfo" id="sysinfo"></div>
+                  </div>
+                  <div class="out" id="out" aria-live="polite"></div>
+                  <label class="prompt-line" for="cmd">
+                    <span class="ps1"><b>jad</b>@menkara<span class="muted">:</span><span class="path">~</span><span class="muted">$</span></span>
+                    <span class="input-wrap">
+                      <input id="cmd" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Console command" />
+                      <span class="ghost" id="ghost"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="chips" id="chips"></div>
+              </section>
+
+              <!-- RIGHT: work -->
+              <section class="panel" data-face="work" aria-label="Field log">
+                <div class="scroll">
+                  <div class="section-head"><span class="idx">02</span><h2>Field log</h2></div>
+                  <p class="kicker">Labs, teams and companies that trusted me with the expensive parts.</p>
+                  <div class="tabs" role="tablist">
+                    <button role="tab" class="tab active" data-tab="work">industry + research</button>
+                    <button role="tab" class="tab" data-tab="volunteer">community</button>
+                  </div>
+                  <ol class="log" id="log"></ol>
+                </div>
+              </section>
+
+              <!-- BACK: builds -->
+              <section class="panel" data-face="builds" aria-label="Builds">
+                <div class="scroll">
+                  <div class="section-head"><span class="idx">03</span><h2>Builds</h2></div>
+                  <p class="kicker">Hardware that left the CAD file. Hit any build for the dossier.</p>
+                  <div class="grid" id="grid"></div>
+                </div>
+              </section>
+
+              <!-- LEFT: honors -->
+              <section class="panel" data-face="honors" aria-label="Honors">
+                <div class="scroll">
+                  <div class="section-head"><span class="idx">04</span><h2>Honors</h2></div>
+                  <p class="kicker">Receipts.</p>
+                  <div class="stats" id="stats"></div>
+                  <ul class="honors" id="honor-list"></ul>
+                </div>
+              </section>
+
+              <!-- TOP: toolchain -->
+              <section class="panel" data-face="stack" aria-label="Toolchain">
+                <div class="scroll">
+                  <div class="section-head"><span class="idx">05</span><h2>Toolchain</h2></div>
+                  <p class="kicker">What's loaded in the environment.</p>
+                  <div class="stack" id="stack-list"></div>
+                </div>
+              </section>
+
+              <!-- BOTTOM: contact -->
+              <section class="panel" data-face="contact" aria-label="Contact">
+                <div class="scroll contact">
+                  <div class="section-head"><span class="idx">06</span><h2>Contact</h2></div>
+                  <p class="big-line">Let's build something <em>unreasonable.</em></p>
+                  <div class="links" id="links"></div>
+                  <p class="foot">© 2026 Jad Menkara · built in a terminal · rendered on a cube</p>
+                </div>
+              </section>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="hud" aria-hidden="true">
+      <span><span class="dot"></span> sys.online</span>
+      <span class="hud-rot" id="hud-rot">rot x 000° · y 000°</span>
+      <span class="hud-hint">← → / 1–6 rotate</span>
+    </footer>
+
+    <!-- project dossier -->
+    <div class="dossier" id="dossier" hidden>
+      <div class="dossier-inner" role="dialog" aria-modal="true" aria-labelledby="d-title">
+        <button class="close" id="d-close" aria-label="Close">esc ✕</button>
+        <div class="d-media">
+          <img id="d-img" alt="" />
+          <div class="d-thumbs" id="d-thumbs"></div>
+        </div>
+        <div class="d-text">
+          <p class="d-tag" id="d-tag"></p>
+          <h3 id="d-title"></h3>
+          <p class="d-date" id="d-date"></p>
+          <p class="d-desc" id="d-desc"></p>
+          <ul class="d-bullets" id="d-bullets"></ul>
+          <a class="d-link" id="d-link" target="_blank" rel="noopener">view source / writeup ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- resume popup -->
+    <div class="dossier" id="resume-modal" hidden>
+      <div class="resume-inner" role="dialog" aria-modal="true" aria-labelledby="r-title">
+        <button class="close" id="r-close" aria-label="Close">esc ✕</button>
+        <p class="d-tag">resume.pdf</p>
+        <h3 id="r-title">Up-to-date resume</h3>
+        <p class="d-desc">Email <a id="r-email" class="d-link"></a> for an up-to-date resume.</p>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

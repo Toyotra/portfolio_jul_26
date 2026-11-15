@@ -37,7 +37,7 @@
       "bulletPoints": [
         "Designed and manufactured a novel compliant soft-robotic gripper that uses complex rigid-body geometry and custom-tuned servos to switch its state from flexible to rigid for agricultural produce handling",
         "Incorporated silicone molding, FDM-3D printing, and a rotational-linear motion converter to grip fruits 4cm-12cm in diameter",
-        "Wrote computer-vision software in OpenCV and Python to monitor fruit displacement in real-time and generate over 10,000 frames of validated payload position data",
+        "Wrote computer-vision software in OpenCV and Python to monitor fruit displacement in real-time",
         "Conducted over 300 trials, including control trials, proving gripper durability, functionality, and repeatability on varying size/textured fruits using statistical analysis (t-tests, anova, shapiro-wilks)",
         "Writing a paper manuscript on the gripper (in progress)"
       ]

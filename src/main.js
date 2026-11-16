@@ -72,8 +72,12 @@ const CUBE = (() => {
     document.documentElement.style.setProperty('--s', s + 'px');
   }
 
+  // The rotation is applied per panel (via --rot), not on .cube itself: a
+  // .cube rotated a quarter turn is edge-on to the viewer, and Chrome then
+  // can't hit-test anything inside it (top/bottom faces became unclickable
+  // whenever the mouse parallax tilted the view past that edge).
   function apply() {
-    cube.style.transform = `translateZ(calc(var(--s) / -2)) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    cube.style.setProperty('--rot', `rotateX(${rx}deg) rotateY(${ry}deg)`);
   }
 
   function to(id, { instant = false } = {}) {
@@ -87,7 +91,7 @@ const CUBE = (() => {
     else { rx = near(f.rx, rx, 360); ry = near(0, ry, 360); }
     cur = i;
     if (instant || reduceMotion) {
-      cube.style.transition = 'none'; apply(); void cube.offsetWidth; cube.style.transition = '';
+      cube.classList.add('no-anim'); apply(); void cube.offsetWidth; cube.classList.remove('no-anim');
     } else {
       apply();
       spin.classList.remove('go'); void spin.offsetWidth; spin.classList.add('go');

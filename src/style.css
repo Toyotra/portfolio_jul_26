@@ -124,25 +124,29 @@ button { font: inherit; }
 .tilt { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
 .spin.go { animation: spinz .95s cubic-bezier(.7,0,.2,1); }
 @keyframes spinz { 45% { transform: scale(.74); } }
+/* .cube only pushes back; the rotation (--rot, set by main.js) is prepended to
+   each panel's own transform so .cube never sits edge-on (see apply()). */
 .cube {
-  position: relative;
-  transition: transform .95s cubic-bezier(.7,0,.2,1);
+  position: relative; --rot: rotateX(0deg) rotateY(0deg);
+  transform: translateZ(calc(var(--s) / -2));
 }
 .panel {
+  transition: transform .95s cubic-bezier(.7,0,.2,1);
   position: absolute; inset: 0; width: var(--s); height: var(--s);
   background-color: var(--panel);
-  border: 1px solid #2e3648;
+  border: 2px solid #56627e;
   box-shadow: inset 0 0 60px rgba(0, 0, 0, .25);
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
   overflow: hidden; display: flex; flex-direction: column;
   container-type: size;
 }
-.panel[data-face="home"]    { transform: translateZ(calc(var(--s) / 2)); }
-.panel[data-face="work"]    { transform: rotateY(90deg) translateZ(calc(var(--s) / 2)); }
-.panel[data-face="builds"]  { transform: rotateY(180deg) translateZ(calc(var(--s) / 2)); }
-.panel[data-face="honors"]  { transform: rotateY(-90deg) translateZ(calc(var(--s) / 2)); }
-.panel[data-face="stack"]   { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); }
-.panel[data-face="contact"] { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
+.no-anim .panel { transition: none; }
+.panel[data-face="home"]    { transform: var(--rot) rotateY(0deg) translateZ(calc(var(--s) / 2)); }
+.panel[data-face="work"]    { transform: var(--rot) rotateY(90deg) translateZ(calc(var(--s) / 2)); }
+.panel[data-face="builds"]  { transform: var(--rot) rotateY(180deg) translateZ(calc(var(--s) / 2)); }
+.panel[data-face="honors"]  { transform: var(--rot) rotateY(-90deg) translateZ(calc(var(--s) / 2)); }
+.panel[data-face="stack"]   { transform: var(--rot) rotateX(90deg) translateZ(calc(var(--s) / 2)); }
+.panel[data-face="contact"] { transform: var(--rot) rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
 /* a different kind of paper on each face */
 .panel[data-face="home"]    { background-image: radial-gradient(rgba(140,170,230,.13) 1px, transparent 1.3px); background-size: 20px 20px; }  /* dot grid */
 .panel[data-face="work"],
@@ -159,8 +163,13 @@ button { font: inherit; }
   background-size: 60px 60px, 60px 60px, 12px 12px, 12px 12px;
 }
 .panel[data-face="honors"]  { background-color: #1a1f2b; } /* plain sheet */
+/* The active face sits exactly in the plane of its .tilt/.spin wrappers, so
+   rounding can put part of it "behind" them in 3D hit-testing (the contact
+   face lost its top row of links). Wrappers never take the pointer. */
+.tilt, .spin, .cube { pointer-events: none; }
 .panel:not(.active) { pointer-events: none; }
-.panel.active { border-color: #3f4a63; }
+.panel.active { pointer-events: auto; }
+.panel.active { border-color: #7a87a6; }
 /* soft paper shadow under the cube */
 .stage::after {
   content: ''; position: absolute; left: 50%; top: 50%; width: calc(var(--s) * 1.15); height: calc(var(--s) * .22);
@@ -475,12 +484,12 @@ button { font: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; }
-  .cube, .tilt { transition-duration: .01s !important; }
+  .panel, .tilt { transition-duration: .01s !important; }
 }
 
 /* ------------------------------------------------------------ background */
 /* interactive PCB canvas (src/bg.js) */
-#bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+#bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; opacity: .3; }
 
 /* --------------------------------------------------------------- cursor */
 /* src/cursor.js — only on mouse/trackpad devices */
@@ -490,17 +499,32 @@ button { font: inherit; }
   opacity: 0; transition: opacity .2s; will-change: transform;
 }
 .cur-on .cur-dot, .cur-on .cur-ring { opacity: 1; }
+/* crosshair: four arms with a gap, plus a centre pip */
 .cur-dot {
-  width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%;
-  background: var(--desk-red);
+  width: 15px; height: 15px; margin: -7.5px 0 0 -7.5px;
+  --c: var(--desk-red);
+  background:
+    linear-gradient(var(--c), var(--c)) center / 3px 3px no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 50% / 4px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 50% / 4px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) 50% 0 / 1.5px 4px no-repeat,
+    linear-gradient(var(--c), var(--c)) 50% 100% / 1.5px 4px no-repeat;
 }
+/* gear ring + lock-on brackets */
 .cur-ring {
-  width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
-  border: 1.5px solid rgba(239, 233, 220, .75);
+  width: 40px; height: 40px; margin: -20px 0 0 -20px;
+  color: rgba(239, 233, 220, .55);
   mix-blend-mode: difference;
-  transition: opacity .2s, background-color .2s, border-color .2s;
+  transition: opacity .2s, color .15s;
 }
-.cur-ring.hot { background-color: rgba(239, 233, 220, .12); border-color: rgba(239, 233, 220, .95); }
+.cur-ring svg { position: absolute; inset: 0; overflow: visible; }
+.cur-gear { will-change: transform; }
+.cur-brk {
+  opacity: 0; transform: scale(1.15);
+  transition: opacity .2s, transform .25s ease-out;
+}
+.cur-ring.hot { color: rgba(239, 233, 220, .85); }
+.cur-ring.hot .cur-brk { opacity: 1; transform: scale(1); }
 
 /* dark backing so the hero text stays readable over the board */
 .side::before {

@@ -217,7 +217,7 @@ const FACE = (() => {
 /* -------------------------------------------------------------------- bio */
 // Hero text + bio beside the portrait — all from src/data/home.json.
 $('.name').setAttribute('aria-label', (home.name || []).join(' '));
-$('.name').innerHTML = (home.name || []).map((n, i) => `<span class="name-line">${esc(n)}</span>`).join('');
+$('.name').innerHTML = (home.name || []).map((n, i) => `<span class="name-line" data-text="${esc(n)}">${esc(n)}</span>`).join('');
 $('.lede').innerHTML = fmt(home.tagline, 'b');
 const BIO = (home.bio?.paragraphs || []).map((p) => fmt(p));
 $('#sysinfo').innerHTML = `

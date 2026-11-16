@@ -19,18 +19,20 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const root = document.documentElement;
 
 const COL = {
-  cu: 'rgba(200, 158, 88, .07)',      // top copper
-  bot: 'rgba(140, 175, 240, .055)',     // bottom copper (seen through the board)
-  pad: 'rgba(222, 184, 112, .12)',
-  pour: 'rgba(70, 120, 220, .02)',    // copper under blue mask shows as lighter blue
-  pourHi: 'rgba(120, 170, 255, .22)',
-  silk: 'rgba(232, 236, 245, .09)',  // white silkscreen
-  hole: '#06080e',
-  hi: 'rgba(255, 220, 150, .95)',
-  hiBot: 'rgba(170, 200, 255, .95)',
-  hiPad: 'rgb(255, 234, 186)',
-  lit: 'rgba(255, 220, 150, .4)',
-  pulse: '255, 244, 214',
+  // white PCB: white soldermask, copper showing through as faint warm grey,
+  // gold (ENIG) pads, black silkscreen
+  cu: 'rgba(120, 104, 78, .13)',      // top copper under the mask
+  bot: 'rgba(70, 90, 130, .06)',      // bottom copper (seen through the board)
+  pad: 'rgba(196, 156, 74, .42)',     // gold pads
+  pour: 'rgba(120, 104, 78, .03)',
+  pourHi: 'rgba(120, 104, 78, .1)',
+  silk: 'rgba(20, 22, 28, .3)',       // black silkscreen
+  hole: '#c9cbd0',
+  hi: 'rgba(214, 120, 20, .95)',
+  hiBot: 'rgba(40, 90, 200, .9)',
+  hiPad: 'rgb(222, 140, 30)',
+  lit: 'rgba(214, 120, 20, .35)',
+  pulse: '232, 108, 20',
 };
 
 const DX = [1, 1, 0, -1, -1, -1, 0, 1];
@@ -82,8 +84,9 @@ function mkLayer() {
 
 function setup() {
   VW = innerWidth; VH = innerHeight;
-  dpr = Math.min(devicePixelRatio || 1, 2);
-  if (VW * VH * dpr * dpr > 7e6) dpr = Math.max(1, Math.sqrt(7e6 / (VW * VH)));
+  // render at the screen's real resolution (cap only truly huge screens)
+  dpr = Math.min(devicePixelRatio || 1, 3);
+  if (VW * VH * dpr * dpr > 16e6) dpr = Math.max(1, Math.sqrt(16e6 / (VW * VH)));
   canvas.width = Math.round(VW * dpr); canvas.height = Math.round(VH * dpr);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.lineCap = ctx.lineJoin = 'round';
@@ -353,7 +356,7 @@ function drawComp(c) {
     }
     case 'hole': {
       const cx = X(c.x0 + 3), cy = Y(c.y0 + 3), x = L.over.x;
-      x.fillStyle = 'rgba(222, 184, 112, .07)'; x.beginPath(); x.arc(cx, cy, G * 2.5, 0, Math.PI * 2); x.fill();
+      x.fillStyle = 'rgba(196, 156, 74, .3)'; x.beginPath(); x.arc(cx, cy, G * 2.5, 0, Math.PI * 2); x.fill();
       x.fillStyle = COL.hole; x.beginPath(); x.arc(cx, cy, G * 1.6, 0, Math.PI * 2); x.fill();
       s.beginPath(); s.arc(cx, cy, G * 3.2, 0, Math.PI * 2); s.stroke();
       break;
@@ -659,7 +662,7 @@ function* pour() {
     for (let dy = -1; dy <= 1 && ok; dy++) for (let dx = -1; dx <= 1; dx++) if (!pourMask[c + dy * cols + dx]) { ok = false; break; }
     if (!ok) continue;
     occ[c] = gnd.id;
-    drawVia(P, c, 'rgba(200, 158, 88, .06)');
+    drawVia(P, c, 'rgba(196, 156, 74, .22)');
   }
 }
 
@@ -862,7 +865,7 @@ document.addEventListener('pointerleave', () => { ptr.on = false; });
 /* -------------------------------------------------------------- effects */
 // re-draw the copper inside a rect, masked by `shade`, and add it on top → that area glows
 const fx = document.createElement('canvas'), fxx = fx.getContext('2d');
-function reveal(x, y, w, h, shade, layers = [L.bot, L.top, L.over]) {
+function reveal(x, y, w, h, shade, layers = L.board ? [L.board] : [L.bot, L.top, L.over]) {
   if (x < 0) { w += x; x = 0; }
   if (y < 0) { h += y; y = 0; }
   w = Math.min(w, VW - x); h = Math.min(h, VH - y);
@@ -875,7 +878,7 @@ function reveal(x, y, w, h, shade, layers = [L.bot, L.top, L.over]) {
   fxx.globalCompositeOperation = 'destination-in';
   shade(fxx, W2, H2, x * dpr, y * dpr);
   ctx.save();
-  ctx.globalCompositeOperation = 'lighter';
+  ctx.globalCompositeOperation = 'source-over'; // re-stamping the copper darkens it on a white board
   ctx.drawImage(fx, 0, 0, W2, H2, x, y, w, h);
   ctx.restore();
 }
@@ -895,7 +898,7 @@ function drawEffects(dt, now) {
         gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.5, 'rgba(0,0,0,.5)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
         g.fillStyle = gr; g.fillRect(0, 0, w, h);
       });
-      ctx.strokeStyle = 'rgba(140, 180, 255, .1)'; ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(40, 80, 200, .14)'; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, VH); ctx.stroke();
       if (x > VW + bw) { scanX = -1; scanT = rand(6, 11); }
     }
@@ -914,7 +917,6 @@ function drawEffects(dt, now) {
   }
 
   // clicking the ground pour: a small soft ripple of pour lights up around the click
-  if (pourRipples.length && !pourHi) { pourHi = mkLayer(); paintPour(pourHi.x, COL.pourHi); }
   for (const r of pourRipples) {
     r.t += dt;
     const k = Math.min(1, r.t / 0.7), R = 30 + k * 110, a = 0.6 * (1 - k);
@@ -923,16 +925,16 @@ function drawEffects(dt, now) {
       const gr = g.createRadialGradient(cx, cy, 0, cx, cy, R * dpr);
       gr.addColorStop(0, `rgba(0,0,0,${a})`); gr.addColorStop(1, 'rgba(0,0,0,0)');
       g.fillStyle = gr; g.fillRect(0, 0, w, h);
-    }, [pourHi]);
+    });
   }
   pourRipples = pourRipples.filter((r) => r.t < 0.7);
 
   // chips light up when a signal lands on them
   for (const [c, v] of chipGlow) {
     const [bx, by, bw, bh] = c.body;
-    ctx.fillStyle = `rgba(255, 220, 150, ${v * 0.04})`;
+    ctx.fillStyle = `rgba(214, 120, 20, ${v * 0.05})`;
     ctx.fillRect(ox + bx * G, oy + by * G, bw * G, bh * G);
-    ctx.strokeStyle = `rgba(255, 220, 150, ${v * 0.4})`; ctx.lineWidth = 1.5;
+    ctx.strokeStyle = `rgba(214, 120, 20, ${v * 0.5})`; ctx.lineWidth = 1.5;
     ctx.strokeRect(ox + bx * G + 1.5, oy + by * G + 1.5, bw * G - 3, bh * G - 3);
     const nv = v - dt * 1.6;
     if (nv <= 0) chipGlow.delete(c); else chipGlow.set(c, nv);
@@ -963,7 +965,7 @@ function drawEffects(dt, now) {
     const k = w.t / 0.8, a = Math.sin(Math.PI * Math.min(1, k));
     const x = X(w.cell % cols), y = Y((w.cell / cols) | 0);
     const gr = ctx.createRadialGradient(x, y, 0, x, y, G * 1.4);
-    gr.addColorStop(0, `rgba(255, 236, 190, ${0.35 * a})`); gr.addColorStop(1, 'rgba(255, 236, 190, 0)');
+    gr.addColorStop(0, `rgba(214, 150, 40, ${0.4 * a})`); gr.addColorStop(1, 'rgba(214, 150, 40, 0)');
     ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(x, y, G * 1.4, 0, Math.PI * 2); ctx.fill();
   }
   twinkles = twinkles.filter((w) => w.t < 0.8);
@@ -990,6 +992,15 @@ addEventListener('pointerdown', (e) => {
 });
 document.addEventListener('pointerleave', () => setHover(null));
 
+// once routing is done, flatten the four layers into one full-res image
+// (less memory, one draw per frame)
+function bake() {
+  const b = mkLayer();
+  b.x.setTransform(1, 0, 0, 1, 0, 0);
+  for (const l of [L.bot, L.pour, L.top, L.over]) { b.x.drawImage(l.c, 0, 0); l.c.width = l.c.height = 0; }
+  L.board = b;
+}
+
 /* ------------------------------------------------------------------ frame */
 let last = performance.now(), ambientT = 1;
 function frame(now) {
@@ -998,14 +1009,12 @@ function frame(now) {
 
   if (!built) {
     const t0 = performance.now();
-    while (performance.now() - t0 < 8) if (builder.next().done) { built = true; break; }
+    while (performance.now() - t0 < 8) if (builder.next().done) { built = true; bake(); break; }
   }
 
   ctx.clearRect(0, 0, VW, VH);
-  ctx.drawImage(L.bot.c, 0, 0, VW, VH);
-  ctx.drawImage(L.pour.c, 0, 0, VW, VH);
-  ctx.drawImage(L.top.c, 0, 0, VW, VH);
-  ctx.drawImage(L.over.c, 0, 0, VW, VH);
+  if (L.board) ctx.drawImage(L.board.c, 0, 0, VW, VH);
+  else for (const l of [L.bot, L.pour, L.top, L.over]) ctx.drawImage(l.c, 0, 0, VW, VH);
 
   drawEffects(dt, now);
   if (hovered) drawHover(hovered);
@@ -1028,7 +1037,7 @@ function frame(now) {
   for (const g of pings) {
     g.t += dt;
     const life = g.small ? 0.35 : 0.6, k = g.t / life;
-    ctx.strokeStyle = `rgba(255, 220, 150, ${Math.max(0, 1 - k) * 0.8})`;
+    ctx.strokeStyle = `rgba(214, 120, 20, ${Math.max(0, 1 - k) * 0.7})`;
     ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.arc(g.x, g.y, (g.small ? 4 : 6) + k * (g.small ? 12 : 46), 0, Math.PI * 2); ctx.stroke();
   }

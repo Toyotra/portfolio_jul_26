@@ -32,7 +32,7 @@ const FACES = [
   { id: 'contact', rx: 90,  ry: 0 },
 ].map((f) => ({ ...f, label: sections[f.id]?.nav || f.id }));
 const narrow = () => innerWidth < 900;
-const baseTilt = () => (narrow() ? { x: -5, y: 6 } : { x: -13, y: 17 }); // resting tilt so you can see it's a cube
+const baseTilt = () => (narrow() ? { x: -4, y: 5 } : { x: -8, y: 11 }); // resting tilt so you can see it's a cube
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s, el = document) => el.querySelector(s);
